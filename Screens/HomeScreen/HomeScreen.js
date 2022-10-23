@@ -7,37 +7,28 @@ import {
   Dimensions,
   ScrollView,
   SafeAreaView,
-  StatusBar,
 } from 'react-native'
-import { useState } from 'react'
 import { ImageSlider } from "react-native-image-slider-banner";
 import Icon from 'react-native-vector-icons/Ionicons'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import HomeScreenFlatlist from './HomeScreenFlatlist'
 import SachKinhTe from '../BookData/SachKinhTe'
 import SachKyNang from '../BookData/SachKyNang'
 import SachTonGiao from '../BookData/SachTonGiao'
 import SachVanHoc from '../BookData/SachVanHoc'
+import { useSelector } from 'react-redux';
+import { getBookData } from '../../redux/actions/DetailScreenAction';
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
 export default function HomeScreen({ navigation, route }) {
-  const [imgActive, setImgActive] = useState(0)
-
-  const onchange = (onEvent) => {
-    if (onEvent) {
-      const slide = Math.ceil(onEvent.contentOffset.x / onEvent.layoutMeasurement.width);
-      if (slide != imgActive) {
-        setImgActive(slide)
-      }
-    }
-  }
-
+  useEffect(()=>{
+    getBookData()
+  },[])
   const handleDetail = (route) => {
     navigation.navigate('DetailScreen', route)
   }
-
   const renderView = ({ item }) => (
     <TouchableOpacity
       onPress={() => { handleDetail(item) }}
@@ -52,6 +43,29 @@ export default function HomeScreen({ navigation, route }) {
   const handleAllBook = (route) => {
     navigation.navigate('AllBooksScreen', route)
   }
+
+  const flatListData = [
+    {
+      title: 'Sách Kinh Tế',
+      type: 'Kinh Tế',
+      data: SachKinhTe
+    },
+    {
+      title: 'Sách Kỹ Năng',
+      type: 'Kỹ Năng',
+      data: SachKyNang
+    },
+    {
+      title: 'Sách Tôn Giáo',
+      type: 'Tôn Giáo',
+      data: SachTonGiao
+    },
+    {
+      title: 'Sách Văn Học',
+      type: 'Văn Học',
+      data: SachVanHoc
+    },
+  ]
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,18 +85,18 @@ export default function HomeScreen({ navigation, route }) {
         {/* Image Slider */}
         <ImageSlider
           data={[
-            {img: 'https://theme.hstatic.net/200000020612/1000524269/14/hmodule_banner_img2_1.jpg?v=768'},
-            {img: 'https://bizweb.dktcdn.net/100/370/339/themes/744741/assets/slider_3_image.jpg?1632297125018'},
-            {img: 'https://theme.hstatic.net/200000017360/1000763157/14/ms_banner_img5.jpg?v=112'},
-            {img: 'https://theme.hstatic.net/200000510041/1000879666/14/hmodule_banner_img1_1.jpg?v=128'},
-            {img: 'https://sunibooks.com/wp-content/uploads/2022/01/Banner-sach-giao-duc-2.png'},
+            { img: 'https://theme.hstatic.net/200000020612/1000524269/14/hmodule_banner_img2_1.jpg?v=768' },
+            { img: 'https://bizweb.dktcdn.net/100/370/339/themes/744741/assets/slider_3_image.jpg?1632297125018' },
+            { img: 'https://theme.hstatic.net/200000017360/1000763157/14/ms_banner_img5.jpg?v=112' },
+            { img: 'https://theme.hstatic.net/200000510041/1000879666/14/hmodule_banner_img1_1.jpg?v=128' },
+            { img: 'https://sunibooks.com/wp-content/uploads/2022/01/Banner-sach-giao-duc-2.png' },
           ]}
           autoPlay={true}
           preview={false}
           timer={4000}
-          caroselImageContainerStyle={{width: windowWidth, height: windowHeight*0.25}}
-          caroselImageStyle={{width: '100%', height: '100%', resizeMode: 'cover'}}
-          indicatorContainerStyle={{bottom: 0}}
+          caroselImageContainerStyle={{ width: windowWidth, height: windowHeight * 0.25 }}
+          caroselImageStyle={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+          indicatorContainerStyle={{ bottom: 0 }}
           closeIconColor="#fff"
         />
 
@@ -103,36 +117,7 @@ export default function HomeScreen({ navigation, route }) {
   )
 }
 
-// const imagesSlider = [
-//   require('../../assets/HomeScreen/imageslide1.jpg'),
-//   require('../../assets/HomeScreen/imageslide2.jpg'),
-//   require('../../assets/HomeScreen/imageslide3.jpg'),
-//   require('../../assets/HomeScreen/imageslide4.jpg'),
-//   require('../../assets/HomeScreen/imageslide5.jpg'),
-// ]
 
-const flatListData = [
-  {
-    title: 'Sách Kinh Tế',
-    type: 'Kinh Tế',
-    data: SachKinhTe.filter((item, index) => index < 5)
-  },
-  {
-    title: 'Sách Kỹ Năng',
-    type: 'Kỹ Năng',
-    data: SachKyNang.filter((item, index) => index < 5)
-  },
-  {
-    title: 'Sách Tôn Giáo',
-    type: 'Tôn Giáo',
-    data: SachTonGiao.filter((item, index) => index < 5)
-  },
-  {
-    title: 'Sách Văn Học',
-    type: 'Văn Học',
-    data: SachVanHoc.filter((item, index) => index < 5)
-  },
-]
 
 const styles = StyleSheet.create({
   container: {

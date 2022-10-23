@@ -1,25 +1,19 @@
-export const FAV_BOOK = 'FAV_BOOK'
+export const GET_BOOK_DATA = 'GET_BOOK_DATA'
 
-const initialState = [
-    {
-        title: '',
-        image: require(''),
-        author: "",
-        type: '',
-        desc: '',
-        status: '',
-    },
-]
-    
-
-const DetailScreenReducer = (state = initialState, action) => {
-    switch(action.type){
-        case FAV_BOOK:
-            return {...state, isLogin: true, email: action.payload}
-        
-        default:
-            return state
-    }
+const initialState = {
+    bookData: []
 }
 
-export default DetailScreenReducer
+const detailScreenReducer = (state = initialState, action) => {
+    switch(action.type){
+        case GET_BOOK_DATA:
+            return {...state, bookData: action.payload} 
+        default:
+            return state
+            
+    } 
+
+}
+
+
+export default detailScreenReducer

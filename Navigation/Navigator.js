@@ -13,12 +13,13 @@ import UserScreen from '../Screens/UserScreen/UserScreen';
 import BooksTypeScreen from '../Screens/BooksTypeScreen/BooksTypeScreen';
 import DetailScreen from '../Screens/DetailScreen/DetailScreen';
 import AllBooksScreen from '../Screens/AllBooksScreen/AllBooksScreen';
-
+import ReadingScreen from '../Screens/ReadingScreen/ReadingScreen';
 
 const Tabs = createBottomTabNavigator()
 const LoginStack = createNativeStackNavigator()
 const DetailStack = createNativeStackNavigator()
 const AllBookStack = createNativeStackNavigator()
+const ReadingStack = createNativeStackNavigator()
 
 const LoginStackNavigator = () => (
     <LoginStack.Navigator screenOptions={{headerShown:false}}>
@@ -31,7 +32,8 @@ const AllBookStackNavigator = () => (
     <AllBookStack.Navigator screenOptions={{headerShown:false}}>
         <AllBookStack.Screen name='BooksTypeScreen' component={BooksTypeScreen}/>
         <AllBookStack.Screen name='AllBooksScreen' component={AllBooksScreen}/>
-        <DetailStack.Screen name='DetailScreen' component={DetailScreen} />
+        <AllBookStack.Screen name='DetailScreen' component={DetailScreen} />
+        <AllBookStack.Screen name='ReadingScreen' component={ReadingScreen}/>
     </AllBookStack.Navigator>
 )
 
@@ -40,7 +42,15 @@ const DetailStackNavigator = () => (
         <DetailStack.Screen name='HomeScreen' component={HomeScreen} />
         <DetailStack.Screen name='AllBooksScreen' component={AllBooksScreen} />
         <DetailStack.Screen name='DetailScreen' component={DetailScreen} />
+        <DetailStack.Screen name='ReadingScreen' component={ReadingScreen} />
     </DetailStack.Navigator>
+)
+
+const ReadingStackNavigator = () => (
+    <ReadingStack.Navigator screenOptions={{headerShown:false}}>
+        <ReadingStack.Screen name='DetailScreen' component={DetailScreen} />
+        <ReadingStack.Screen name='ReadingScreen' component={ReadingScreen} />
+    </ReadingStack.Navigator>
 )
 
 const TabsNavigator = () => (

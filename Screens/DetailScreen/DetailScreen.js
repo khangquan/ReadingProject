@@ -15,7 +15,6 @@ import MenuIconBar from './MenuIconBar'
 import ViewMoreText from 'react-native-view-more-text'
 import DetailScreenFlatlist from './DetailScreenFlatlist'
 import TongHopSach from '../BookData/TongHopSach'
-import { ColorPropType } from 'deprecated-react-native-prop-types'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -61,6 +60,10 @@ export default function DetailScreen({ navigation, route }) {
     navigation.navigate('AllBooksScreen', route)
   }
 
+  const handleReadingScreen = () => {
+    navigation.navigate('ReadingScreen')
+  }
+
   const handleLikeBook = () => {
       setIsLike(!isLike)
   }
@@ -88,7 +91,7 @@ export default function DetailScreen({ navigation, route }) {
           <View style={styles.titleButtonStyle}>
             <Text style={styles.titleText}>{params.title}</Text>
             <Text style={styles.authorText}>{params.author}</Text>
-            <TouchableOpacity style={styles.readButton}>
+            <TouchableOpacity onPress={handleReadingScreen} style={styles.readButton}>
               <Text style={styles.buttonText}>ĐỌC NGAY</Text>
             </TouchableOpacity>
           </View>

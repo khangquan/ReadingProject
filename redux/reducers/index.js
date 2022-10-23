@@ -1,5 +1,6 @@
 //import { combineReducers } from 'redux'
 import loginScreenReducer from './LoginScreenReducer'
+import detailScreenReducer from './DetailScreenReducer'
 
 // const rootReducer = combineReducers({
 //     loginScreen: loginScreenReducer,
@@ -7,8 +8,8 @@ import loginScreenReducer from './LoginScreenReducer'
 // })
 
 const rootReducer = {
-    loginScreen: loginScreenReducer,
-
+    loginScreen : loginScreenReducer,
+    bookData : detailScreenReducer,
 }
 
 export default rootReducer
