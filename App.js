@@ -10,9 +10,9 @@ LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
 export default function App() {
-  // let configureStore = store()
+  let configureStore = store()
   return (
-    <Provider store={store}>
+    <Provider store={configureStore}>
       <StatusBar
         barStyle={Platform.OS === 'ios'?'dark-content':'light-content'}
       />

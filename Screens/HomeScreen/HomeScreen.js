@@ -16,19 +16,31 @@ import SachKinhTe from '../BookData/SachKinhTe'
 import SachKyNang from '../BookData/SachKyNang'
 import SachTonGiao from '../BookData/SachTonGiao'
 import SachVanHoc from '../BookData/SachVanHoc'
-import { useSelector } from 'react-redux';
-import { getBookData } from '../../redux/actions/DetailScreenAction';
+import { useSelector, useDispatch } from 'react-redux';
+import { getBookData, getBookType } from '../../redux/actions/GetBookAction'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
 export default function HomeScreen({ navigation, route }) {
-  useEffect(()=>{
-    getBookData()
-  },[])
-  const handleDetail = (route) => {
-    navigation.navigate('DetailScreen', route)
+
+  const dispatch = useDispatch()
+  const { allBooksData } = useSelector(state => state.bookGetData)
+
+  useEffect(() => {
+    dispatch(getBookData())
+  }, [])
+
+  const handleDetail = (item) => {
+    dispatch(getBookType(item))
+    navigation.navigate('DetailScreen')
   }
+
+  const handleAllBook = (item) => {
+    dispatch(getBookType(item))
+    navigation.navigate('AllBooksScreen')
+  }
+
   const renderView = ({ item }) => (
     <TouchableOpacity
       onPress={() => { handleDetail(item) }}
@@ -40,30 +52,26 @@ export default function HomeScreen({ navigation, route }) {
     </TouchableOpacity>
   )
 
-  const handleAllBook = (route) => {
-    navigation.navigate('AllBooksScreen', route)
-  }
-
   const flatListData = [
     {
       title: 'Sách Kinh Tế',
       type: 'Kinh Tế',
-      data: SachKinhTe
+      data: allBooksData.filter((item, index) => item.type === 'Kinh Tế')
     },
     {
       title: 'Sách Kỹ Năng',
       type: 'Kỹ Năng',
-      data: SachKyNang
+      data: allBooksData.filter((item, index) => item.type === 'Kỹ Năng')
     },
     {
       title: 'Sách Tôn Giáo',
       type: 'Tôn Giáo',
-      data: SachTonGiao
+      data: allBooksData.filter((item, index) => item.type === 'Tôn Giáo')
     },
     {
       title: 'Sách Văn Học',
       type: 'Văn Học',
-      data: SachVanHoc
+      data: allBooksData.filter((item, index) => item.type === 'Văn Học')
     },
   ]
 

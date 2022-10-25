@@ -9,33 +9,30 @@ import {
   StatusBar
 } from 'react-native'
 import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getBookData, getBookType } from '../../redux/actions/GetBookAction'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MenuIconBar from './MenuIconBar'
 import ViewMoreText from 'react-native-view-more-text'
 import DetailScreenFlatlist from './DetailScreenFlatlist'
-import TongHopSach from '../BookData/TongHopSach'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
-export default function DetailScreen({ navigation, route }) {
-  const { params } = route
-  const [booksData, setBooksData] = useState([])
+export default function DetailScreen({ navigation }) {
+  const { allBooksData, bookData } = useSelector(state => state.bookGetData)
+  const dispatch = useDispatch()
+
   const [isLike, setIsLike] = useState(false)
 
   useEffect(() => {
-    setData()
-  },[])
-
-  const setData = () => {
-    setBooksData(TongHopSach.filter((item,index) => item.type === params.type))
-    return booksData
-  }
+    dispatch(getBookData())
+  }, [])
 
   const renderView = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate('DetailScreen', item)}
+      onPress={() => navigation.navigate('DetailScreen', bookData)}
       style={styles.renderViewStyle}
     >
       <Image style={styles.flatListImg} source={item.image} />
@@ -44,20 +41,21 @@ export default function DetailScreen({ navigation, route }) {
     </TouchableOpacity>
   )
 
-  const renderViewMore= (onPress) => {
+  const renderViewMore = (onPress) => {
     return (
-      <Text style={{fontSize:17, fontWeight:'500'}} onPress={onPress}>Xem thêm</Text>
+      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>Xem thêm</Text>
     )
   }
 
-  const renderViewLess= (onPress) => {
+  const renderViewLess = (onPress) => {
     return (
-      <Text style={{fontSize:17, fontWeight:'500'}} onPress={onPress}>Thu gọn</Text>
+      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>Thu gọn</Text>
     )
   }
 
-  const handleAllBook = (route) => {
-    navigation.navigate('AllBooksScreen', route)
+  const handleAllBook = (item) => {
+    dispatch(getBookType(item))
+    navigation.navigate('AllBooksScreen')
   }
 
   const handleReadingScreen = () => {
@@ -65,7 +63,7 @@ export default function DetailScreen({ navigation, route }) {
   }
 
   const handleLikeBook = () => {
-      setIsLike(!isLike)
+    setIsLike(!isLike)
   }
 
   return (
@@ -77,20 +75,20 @@ export default function DetailScreen({ navigation, route }) {
         <Image
           style={styles.imageBG}
           blurRadius={10}
-          source={params.image}
+          source={bookData.image}
         />
-        <TouchableOpacity onPress={() => { navigation.goBack()}} style={styles.backStyle}>
+        <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backStyle}>
           <Icon name="chevron-back-outline" size={35} color={'#FB7849'} />
         </TouchableOpacity>
 
         <View style={styles.bookContent}>
           <Image
             style={styles.bookImage}
-            source={params.image}
+            source={bookData.image}
           />
           <View style={styles.titleButtonStyle}>
-            <Text style={styles.titleText}>{params.title}</Text>
-            <Text style={styles.authorText}>{params.author}</Text>
+            <Text style={styles.titleText}>{bookData.title}</Text>
+            <Text style={styles.authorText}>{bookData.author}</Text>
             <TouchableOpacity onPress={handleReadingScreen} style={styles.readButton}>
               <Text style={styles.buttonText}>ĐỌC NGAY</Text>
             </TouchableOpacity>
@@ -100,7 +98,7 @@ export default function DetailScreen({ navigation, route }) {
 
       <View style={styles.botContent}>
         <View style={styles.iconMenuBar}>
-          <MenuIconBar color={isLike?'red':null} title={'heart'} textTitle={'Thích'} onEvent={handleLikeBook}/>
+          <MenuIconBar color={isLike ? 'red' : null} title={'heart'} textTitle={'Thích'} onEvent={handleLikeBook} />
           <MenuIconBar
             title={'chatbubble-ellipses-outline'}
             textTitle={'Bình luận'}
@@ -117,22 +115,24 @@ export default function DetailScreen({ navigation, route }) {
             renderViewMore={renderViewMore}
             renderViewLess={renderViewLess}
           >
-            <Text style={{fontSize: 18}}>{params.desc}</Text>
+            <Text style={{ fontSize: 18 }}>{bookData.desc}</Text>
           </ViewMoreText>
         </View>
 
         <View style={styles.detailStyle}>
           <Text style={styles.botTitleText}>Thông Tin</Text>
-          <Text style={styles.infoText}>Thể loại: {params.type}</Text>
+          <Text style={styles.infoText}>Thể loại: {bookData.type}</Text>
           <Text style={styles.infoText}>Lượt Xem: 0</Text>
-          <Text style={styles.infoText}>Trạng Thái: {params.status}</Text>
+          <Text style={styles.infoText}>Trạng Thái: {bookData.status}</Text>
         </View>
 
         <DetailScreenFlatlist
           title={'Có thể bạn quan tâm'}
-          data={booksData.filter((item,index) => index < 5)}
+          data={allBooksData.filter((item, index) => 
+            item.type === bookData.type
+          )}
           renderView={renderView}
-          onEvent={() => handleAllBook(params)}
+          onEvent={() => handleAllBook(bookData)}
         />
       </View>
     </ScrollView>

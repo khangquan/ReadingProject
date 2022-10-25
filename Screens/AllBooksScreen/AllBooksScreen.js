@@ -10,27 +10,24 @@ import {
 } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getBookData, getBookType } from '../../redux/actions/GetBookAction'
 import Icon from 'react-native-vector-icons/Ionicons'
-import TongHopSach from '../BookData/TongHopSach'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
 export default function AllBooksScreen({ navigation, route }) {
-    const { params } = route
-    const [booksData, setBooksData] = useState([])
+    const dispatch = useDispatch()
+    const { allBooksData, bookData } = useSelector(state => state.bookGetData)
 
     useEffect(() => {
-        setData()
+        dispatch(getBookData())
     }, [])
 
-    const setData = () => {
-        setBooksData(TongHopSach.filter(item => item.type === params.type))
-        return booksData
-    }
-
-    const handleDetail = (route) => {
-        navigation.navigate('DetailScreen',route)
+    const handleDetail = (item) => {
+        dispatch(getBookType(item))
+        navigation.navigate('DetailScreen')
     }
 
     const renderView = ({ item }) => (
@@ -50,7 +47,7 @@ export default function AllBooksScreen({ navigation, route }) {
                     <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backStyle}>
                         <Icon name="chevron-back-outline" size={35} color={'white'} />
                     </TouchableOpacity>
-                    <Text style={styles.topTextStyle}>{params.type}</Text>
+                    <Text style={styles.topTextStyle}>{bookData.type}</Text>
                     <TouchableOpacity>
                         <Icon name="search" size={30} color="white" />
                     </TouchableOpacity>
@@ -58,7 +55,7 @@ export default function AllBooksScreen({ navigation, route }) {
             </View>
 
             <FlatList
-                data={booksData}
+                data={allBooksData.filter(item => item.type === bookData.type)}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderView}
                 numColumns={3}

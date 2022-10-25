@@ -1,15 +1,15 @@
-//import { combineReducers } from 'redux'
+import { combineReducers } from 'redux'
 import loginScreenReducer from './LoginScreenReducer'
-import detailScreenReducer from './DetailScreenReducer'
+import getBookReducer from './GetBookReducer'
 
-// const rootReducer = combineReducers({
-//     loginScreen: loginScreenReducer,
-//     userScreen: UserScreenReducer
-// })
+const rootReducer = combineReducers({
+    loginScreen: loginScreenReducer,
+    bookGetData: getBookReducer
+})
 
-const rootReducer = {
-    loginScreen : loginScreenReducer,
-    bookData : detailScreenReducer,
-}
+// const rootReducer = {
+//     loginScreen : loginScreenReducer,
+//     bookData : detailScreenReducer,
+// }
 
 export default rootReducer
