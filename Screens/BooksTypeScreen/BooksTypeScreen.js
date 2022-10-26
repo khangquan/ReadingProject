@@ -6,38 +6,42 @@ import {
   Dimensions,
   Image,
   FlatList,
-  SafeAreaView
-} from 'react-native'
-import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
+  SafeAreaView,
+} from 'react-native';
+import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {useSelector, useDispatch} from 'react-redux';
+import { useEffect } from 'react';
+import { getBookType, getBookData } from '../../redux/actions/GetBookAction';
 
-const windowHeight = Dimensions.get('window').height
-const windownWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height;
+const windownWidth = Dimensions.get('window').width;
 
-export default function BooksTypeScreen({ navigation }) {
-  const handleAllBook = (route) => {
-    navigation.navigate('AllBooksScreen', route)
-  }
+export default function BooksTypeScreen({navigation}) {
+  const dispatch = useDispatch();
+ 
+  const handleAllBook = (item) => {
+    dispatch(getBookType(item))
+    navigation.navigate('AllBooksScreen');
+  };
 
-  const renderView = ({ item }) => (
+  const renderView = ({item}) => (
     <TouchableOpacity
       onPress={() => handleAllBook(item)}
-     style={styles.renderViewStyle}
-     >
+      style={styles.renderViewStyle}
+    >
       <Image style={styles.flatListImg} source={item.image} />
       <View style={styles.flatListTextWrapper}>
         <Text style={styles.flatListTitle}>{item.type}</Text>
       </View>
     </TouchableOpacity>
-  )
-  
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
-          <TouchableOpacity>
-            
-          </TouchableOpacity>
+          <TouchableOpacity></TouchableOpacity>
           <Text style={styles.topTextStyle}>Thể Loại</Text>
           <TouchableOpacity>
             <Icon name="search" size={30} color="white" />
@@ -52,27 +56,27 @@ export default function BooksTypeScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
-  )
+  );
 }
 
 const DATA = [
   {
     type: 'Văn Học',
-    image: require('../../assets/BookTypeScreen/vanhoc.jpg')
+    image: require('../../assets/BookTypeScreen/vanhoc.jpg'),
   },
   {
     type: 'Tôn Giáo',
-    image: require('../../assets/BookTypeScreen/tongiao.jpg')
+    image: require('../../assets/BookTypeScreen/tongiao.jpg'),
   },
   {
     type: 'Kỹ Năng',
-    image: require('../../assets/BookTypeScreen/kynang.jpg')
+    image: require('../../assets/BookTypeScreen/kynang.jpg'),
   },
   {
     type: 'Kinh Tế',
-    image: require('../../assets/BookTypeScreen/kinhte.jpg')
+    image: require('../../assets/BookTypeScreen/kinhte.jpg'),
   },
-]
+];
 
 const styles = StyleSheet.create({
   container: {
@@ -119,13 +123,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'white',
     borderWidth: 1,
-    backgroundColor: 'rgba(52, 52, 52, 0.4)'
+    backgroundColor: 'rgba(52, 52, 52, 0.4)',
   },
   flatListTitle: {
     width: '100%',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
-    color: 'white'
+    color: 'white',
   },
-})
+});

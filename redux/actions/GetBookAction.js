@@ -16,7 +16,7 @@ export const getBookType = (param) => (
 )
 
 // export const getBookDataAPI = () => (
-//     async (dispatch, getState) => {
+//     async (dispatch) => {
 //         fetch('https://cattechsolutions.com/TongHopSach.json')
 //             .then((response) => response.json())
 //             .then((json) => {

@@ -32,7 +32,10 @@ export default function DetailScreen({ navigation }) {
 
   const renderView = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate('DetailScreen', bookData)}
+      onPress={() =>{ 
+        dispatch(getBookType(item))
+        navigation.navigate('DetailScreen')
+      }}
       style={styles.renderViewStyle}
     >
       <Image style={styles.flatListImg} source={item.image} />
