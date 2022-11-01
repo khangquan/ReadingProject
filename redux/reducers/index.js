@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import loginScreenReducer from './LoginScreenReducer'
 import getBookReducer from './GetBookReducer'
+import createAccountReducer from './CreateAccountReducer'
 
 const rootReducer = combineReducers({
     loginScreen: loginScreenReducer,
-    bookGetData: getBookReducer
+    newAccount: createAccountReducer,
+    bookGetData: getBookReducer,
 })
 
 // const rootReducer = {

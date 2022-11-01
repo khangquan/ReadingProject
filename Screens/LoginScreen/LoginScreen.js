@@ -9,7 +9,7 @@ import {
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import TextBox from './TextBox'
-import { appLogin } from '../../redux/actions/LoginScreenAction'
+import { appLogin, storeEmail } from '../../redux/actions/LoginScreenAction'
 
 export default function LoginScreen({ navigation }) {
     const LOGIN = 'LOGIN'
@@ -26,11 +26,26 @@ export default function LoginScreen({ navigation }) {
             setErrorBox(true)
             alert('Please input email and password!')
         } else {
-            dispatch(appLogin(email))
+            dispatch(appLogin(email,pass))
         }
     }
+
     const handleShowPass = () => {
         setSecure(!secure)
+    }
+
+    //Register
+    const [fullname, setFullname] = useState('')
+    const [newEmail, setNewEmail] = useState('')
+    const [newPass, setNewPass] = useState('')
+    const [confirmPass, setConfirmPass] = useState('')
+    const [ErrorCreateAccBox, setErrorCreateAccBox] = useState(false)
+
+    const handleCreateAccount = () => {
+        if(fullname.length === 0 || newEmail.length === 0 || newPass.length === 0 || confirmPass.length === 0){
+            setErrorCreateAccBox(true)
+            alert('Please fullfill your infomation!')
+        }
     }
 
     return (
@@ -83,17 +98,35 @@ export default function LoginScreen({ navigation }) {
                     :
 
                     <KeyboardAvoidingView style={styles.inputContent}>
+
                         <Text style={styles.text}>Full Name</Text>
-                        <TextBox title={'Enter your fullname'} />
+                        <TextBox title={'Enter your fullname'} 
+                        value={value => setFullname(value)}
+                        isBlank={ErrorCreateAccBox}
+                        />
+
                         <Text style={styles.text}>Email</Text>
-                        <TextBox title={'Enter your email address'} />
+                        <TextBox title={'Enter your email address'} 
+                        value={value => setNewEmail(value)}
+                        isBlank={ErrorCreateAccBox}
+                        />
+
                         <Text style={styles.text}>Password</Text>
-                        <TextBox title={'Enter your password'} isSecure={true} />
+                        <TextBox title={'Enter your password'} 
+                        isSecure={true} 
+                        value={value => setNewPass(value)}
+                        isBlank={ErrorCreateAccBox}
+                        />
+
                         <Text style={styles.text}>Confirm Password</Text>
-                        <TextBox title={'Enter your password'} isSecure={true} />
+                        <TextBox title={'Enter your password'} 
+                        isSecure={true} 
+                        value={value => setConfirmPass(value)}
+                        isBlank={ErrorCreateAccBox}
+                        />
 
                         <View style={styles.buttonContent}>
-                            <TouchableOpacity style={styles.buttonLoginWrapper} onPress={() => { }}>
+                            <TouchableOpacity style={styles.buttonLoginWrapper} onPress={handleCreateAccount}>
                                 <Text style={styles.buttonLogin}>Create Account</Text>
                             </TouchableOpacity>
                             <Text style={styles.TermsOfServices}>By creating an account you are accepting our Terms of Services</Text>

@@ -10,12 +10,32 @@ import {
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 import UserMenu from './UserMenu'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { appLogout } from '../../redux/actions/LoginScreenAction'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function UserScreen({ navigation }) {
   const dispatch = useDispatch()
   const { email } = useSelector((state) => state.loginScreen)
+
+  // const [email, setEmail] = useState('')
+  // useEffect(() => {
+  //   getEmailData()
+  // }, [])
+
+  // const getEmailData = async () => {
+  //   try {
+  //     await AsyncStorage.getItem('Email')
+  //       .then((value) => {
+  //         if (value != null)
+  //           setEmail(value)
+  //       })
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
   const handleLogout = (item) => {
     if (item === 'Đăng xuất') {
       Alert.alert('Lưu ý!', 'Bạn có muốn đăng xuất?', [
@@ -27,11 +47,17 @@ export default function UserScreen({ navigation }) {
         },
         {
           text: 'No',
-          onPress: () => {},
+          onPress: () => { },
         },
       ])
     }
   }
+
+  const handleUserInfo = () => {
+      navigation.navigate('UserInfoScreen')
+  }
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topMenu}>
@@ -51,6 +77,7 @@ export default function UserScreen({ navigation }) {
             <UserMenu
               title={'Thông tin tài khoản'}
               iconName={'person-outline'}
+              onEvent={handleUserInfo}
             />
             <UserMenu
               title={'Danh sách yêu thích'}
@@ -65,6 +92,7 @@ export default function UserScreen({ navigation }) {
                 <UserMenu
                   iconName={item.iconName}
                   title={item.title}
+                  
                 />
               )
             })}

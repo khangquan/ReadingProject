@@ -1,11 +1,10 @@
-import {View, Text, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from '../Screens/HomeScreen/HomeScreen';
 import LoginScreen from '../Screens/LoginScreen/LoginScreen';
@@ -15,43 +14,34 @@ import DetailScreen from '../Screens/DetailScreen/DetailScreen';
 import AllBooksScreen from '../Screens/AllBooksScreen/AllBooksScreen';
 import ReadingScreen from '../Screens/ReadingScreen/ReadingScreen';
 import SearchScreen from '../Screens/SearchScreen/SearchScreen';
+import UserInfoScreen from '../Screens/UserScreen/UserInfoScreen';
 
 const Tabs = createBottomTabNavigator();
 const LoginStack = createNativeStackNavigator();
-const DetailStack = createNativeStackNavigator();
-const AllBookStack = createNativeStackNavigator();
-const SearchStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
 
 const LoginStackNavigator = () => (
-  <LoginStack.Navigator screenOptions={{headerShown: false}}>
+  <LoginStack.Navigator initialRouteName='LoginScreen' screenOptions={{ headerShown: false }}>
     <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
     <LoginStack.Screen name="HomeScreen" component={HomeScreen} />
   </LoginStack.Navigator>
 );
 
-const DetailStackNavigator = () => (
-  <DetailStack.Navigator screenOptions={{headerShown: false}}>
-    <DetailStack.Screen name="HomeScreen" component={SearchStackNavigator} />
-    <DetailStack.Screen name="SearchScreen" component={SearchScreen} />
-    <DetailStack.Screen name="AllBooksScreen" component={AllBooksScreen} />
-    <DetailStack.Screen name="DetailScreen" component={DetailScreen} />
-    <DetailStack.Screen name="ReadingScreen" component={ReadingScreen} />
-  </DetailStack.Navigator>
-);
-
-const SearchStackNavigator = () => (
-  <SearchStack.Navigator screenOptions={{headerShown: false}}>
-    <SearchStack.Screen name="HomeScreen" component={TabsNavigator} />
-    <SearchStack.Screen name="SearchScreen" component={SearchScreen} />
-    <DetailStack.Screen name="DetailScreen" component={DetailScreen} />
-    <DetailStack.Screen name="ReadingScreen" component={ReadingScreen} />
-  </SearchStack.Navigator>
+const HomeStackNavigator = () => (
+  <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Screen name="HomeScreen" component={TabsNavigator} />
+    <HomeStack.Screen name="SearchScreen" component={SearchScreen} />
+    <HomeStack.Screen name="AllBooksScreen" component={AllBooksScreen} />
+    <HomeStack.Screen name="DetailScreen" component={DetailScreen} />
+    <HomeStack.Screen name="ReadingScreen" component={ReadingScreen} />
+    <HomeStack.Screen name="UserInfoScreen" component={UserInfoScreen} />
+  </HomeStack.Navigator>
 );
 
 const TabsNavigator = () => (
   <Tabs.Navigator
-    screenOptions={({route}) => ({
-      tabBarIcon: ({focused, color, size}) => {
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
         let iconName;
         if (route.name === 'Trang Chủ') {
           iconName = focused ? 'home' : 'home-outline';
@@ -84,10 +74,16 @@ const TabsNavigator = () => (
 );
 
 export default function Navigator() {
-  const appLogin = useSelector(state => state.loginScreen);
+  const { isLogin } = useSelector(state => state.loginScreen);
   return (
     <NavigationContainer>
-      {appLogin?.isLogin ? <DetailStackNavigator /> : <LoginStackNavigator />}
+      {
+        isLogin
+          ?
+          <HomeStackNavigator />
+          :
+          <LoginStackNavigator />
+      }
     </NavigationContainer>
   );
 }
