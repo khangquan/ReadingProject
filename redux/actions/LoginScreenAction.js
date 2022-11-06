@@ -1,9 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { APP_LOGIN, APP_LOGOUT } from '../reducers/LoginScreenReducer'
 
-export const appLogin = (email,pass) => (
+export const appLogin = (fullname, email, pass) => (
     {
         type: APP_LOGIN,
+        fullname: fullname,
         email: email,
         pass: pass
     }
@@ -15,15 +16,3 @@ export const appLogout = () => (
     }
 )
 
-
-
-
-// export const storeEmail = (value) => (
-//     async () => {
-//         try {
-//             await AsyncStorage.setItem.dispatch(appLogin(value))
-//         } catch (error) {
-//             console.log(error)
-//         }
-//     }
-// )

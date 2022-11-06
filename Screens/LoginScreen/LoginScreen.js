@@ -7,9 +7,10 @@ import {
     ImageBackground,
 } from 'react-native'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import TextBox from './TextBox'
-import { appLogin, storeEmail } from '../../redux/actions/LoginScreenAction'
+import { appLogin } from '../../redux/actions/LoginScreenAction'
+import { register } from '../../redux/actions/RegisterAction'
 
 export default function LoginScreen({ navigation }) {
     const LOGIN = 'LOGIN'
@@ -20,16 +21,24 @@ export default function LoginScreen({ navigation }) {
     const [pass, setPass] = useState('')
     const [errorBox, setErrorBox] = useState(false)
     const dispatch = useDispatch()
+    const {userAccounts} = useSelector(state => state.register)
 
+    //Login Account
     const handleLogin = () => {
         if (email.length === 0 || pass.length === 0) {
             setErrorBox(true)
             alert('Please input email and password!')
         } else {
-            dispatch(appLogin(email,pass))
+            let result = userAccounts.find(user => user.email === email && user.pass === pass)
+            if (result) {
+                dispatch(appLogin(fullname, email, pass))
+            } else {
+                alert('You have input wrong email or password!')
+            }
         }
     }
 
+    //Show or Hide Password
     const handleShowPass = () => {
         setSecure(!secure)
     }
@@ -42,9 +51,13 @@ export default function LoginScreen({ navigation }) {
     const [ErrorCreateAccBox, setErrorCreateAccBox] = useState(false)
 
     const handleCreateAccount = () => {
-        if(fullname.length === 0 || newEmail.length === 0 || newPass.length === 0 || confirmPass.length === 0){
+        if (fullname.length === 0 || newEmail.length === 0 || newPass.length === 0 || confirmPass.length === 0) {
             setErrorCreateAccBox(true)
             alert('Please fullfill your infomation!')
+        } else {
+            dispatch(register(fullname, newEmail, newPass))
+            alert('Success!!')
+            setShowScreen(LOGIN)
         }
     }
 
@@ -76,7 +89,7 @@ export default function LoginScreen({ navigation }) {
                     <KeyboardAvoidingView style={styles.inputContent}>
                         <Text style={styles.text}>Email</Text>
                         <TextBox title={'Email address'} isBlank={errorBox}
-                            value={(value) => setEmail(value)} 
+                            value={(value) => setEmail(value)}
                         />
 
                         <Text style={styles.text}>Password</Text>
@@ -100,29 +113,29 @@ export default function LoginScreen({ navigation }) {
                     <KeyboardAvoidingView style={styles.inputContent}>
 
                         <Text style={styles.text}>Full Name</Text>
-                        <TextBox title={'Enter your fullname'} 
-                        value={value => setFullname(value)}
-                        isBlank={ErrorCreateAccBox}
+                        <TextBox title={'Enter your fullname'}
+                            value={value => setFullname(value)}
+                            isBlank={ErrorCreateAccBox}
                         />
 
                         <Text style={styles.text}>Email</Text>
-                        <TextBox title={'Enter your email address'} 
-                        value={value => setNewEmail(value)}
-                        isBlank={ErrorCreateAccBox}
+                        <TextBox title={'Enter your email address'}
+                            value={value => setNewEmail(value)}
+                            isBlank={ErrorCreateAccBox}
                         />
 
                         <Text style={styles.text}>Password</Text>
-                        <TextBox title={'Enter your password'} 
-                        isSecure={true} 
-                        value={value => setNewPass(value)}
-                        isBlank={ErrorCreateAccBox}
+                        <TextBox title={'Enter your password'}
+                            isSecure={true}
+                            value={value => setNewPass(value)}
+                            isBlank={ErrorCreateAccBox}
                         />
 
                         <Text style={styles.text}>Confirm Password</Text>
-                        <TextBox title={'Enter your password'} 
-                        isSecure={true} 
-                        value={value => setConfirmPass(value)}
-                        isBlank={ErrorCreateAccBox}
+                        <TextBox title={'Enter your password'}
+                            isSecure={true}
+                            value={value => setConfirmPass(value)}
+                            isBlank={ErrorCreateAccBox}
                         />
 
                         <View style={styles.buttonContent}>

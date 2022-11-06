@@ -13,9 +13,9 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function UserInfoScreen({ navigation }) {
     const dispatch = useDispatch()
-    const { email, password } = useSelector(state => state.loginScreen)
+    const { fullname, email, password } = useSelector(state => state.loginScreen)
 
-    const [showPass, setShowPass] = useState(false)
+    const [showPass, setShowPass] = useState(true)
 
     return (
         <SafeAreaView style={styles.container}>
@@ -39,7 +39,7 @@ export default function UserInfoScreen({ navigation }) {
                 <View style={styles.userInfo}>
                     <Text style={styles.userInfoText}>Họ Tên: </Text>
                     <View style={styles.textBoxAndEdit}>
-                        <TextInput style={styles.textBoxStyle} editable={false} />
+                        <TextInput style={styles.textBoxStyle} value={fullname} editable={false} />
                         <TouchableOpacity>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>

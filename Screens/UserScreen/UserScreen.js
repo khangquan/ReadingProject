@@ -19,23 +19,6 @@ export default function UserScreen({ navigation }) {
   const dispatch = useDispatch()
   const { email } = useSelector((state) => state.loginScreen)
 
-  // const [email, setEmail] = useState('')
-  // useEffect(() => {
-  //   getEmailData()
-  // }, [])
-
-  // const getEmailData = async () => {
-  //   try {
-  //     await AsyncStorage.getItem('Email')
-  //       .then((value) => {
-  //         if (value != null)
-  //           setEmail(value)
-  //       })
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   const handleLogout = (item) => {
     if (item === 'Đăng xuất') {
       Alert.alert('Lưu ý!', 'Bạn có muốn đăng xuất?', [

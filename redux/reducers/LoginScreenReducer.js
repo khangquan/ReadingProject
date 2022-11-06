@@ -3,16 +3,23 @@ export const APP_LOGOUT = 'APP_LOGOUT'
 
 const initialState = {
     isLogin: false,
+    fullname: '',
     email: '',
     password: '',
 }
 
 const loginScreenReducer = (state = initialState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case APP_LOGIN:
-            return {...state, isLogin: true, email: action.email, password: action.pass}
+            return {
+                ...state,
+                isLogin: true,
+                fullname: action.fullname,
+                email: action.email,
+                password: action.pass
+            }
         case APP_LOGOUT:
-            return {...state, isLogin: false, email: ''}
+            return { ...state, isLogin: false, email: '' }
         default:
             return state
     }
