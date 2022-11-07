@@ -19,7 +19,13 @@ const loginScreenReducer = (state = initialState, action) => {
                 password: action.pass
             }
         case APP_LOGOUT:
-            return { ...state, isLogin: false, email: '' }
+            return { 
+                ...state,
+                isLogin: false,
+                fullname: '',
+                email: '',
+                password: '',
+            }
         default:
             return state
     }

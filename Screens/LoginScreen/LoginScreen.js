@@ -22,7 +22,7 @@ export default function LoginScreen({ navigation }) {
     const [errorBox, setErrorBox] = useState(false)
     const dispatch = useDispatch()
     const {userAccounts} = useSelector(state => state.register)
-
+    
     //Login Account
     const handleLogin = () => {
         if (email.length === 0 || pass.length === 0) {
@@ -31,7 +31,7 @@ export default function LoginScreen({ navigation }) {
         } else {
             let result = userAccounts.find(user => user.email === email && user.pass === pass)
             if (result) {
-                dispatch(appLogin(fullname, email, pass))
+                dispatch(appLogin(result.fullname, result.email, result.pass))
             } else {
                 alert('You have input wrong email or password!')
             }
@@ -53,11 +53,18 @@ export default function LoginScreen({ navigation }) {
     const handleCreateAccount = () => {
         if (fullname.length === 0 || newEmail.length === 0 || newPass.length === 0 || confirmPass.length === 0) {
             setErrorCreateAccBox(true)
-            alert('Please fullfill your infomation!')
+            alert('Vui lòng nhập hết các thông tin của bạn!')
+        } else if (newPass != confirmPass) {
+            alert('Mật khẩu xác nhận không đúng!')
         } else {
-            dispatch(register(fullname, newEmail, newPass))
-            alert('Success!!')
-            setShowScreen(LOGIN)
+            let checkDuplicate = userAccounts.find(user => user.email === newEmail)
+            if(checkDuplicate){
+                alert('Email này đã được sử dụng! vui lòng chọn email khác!')
+            } else {
+                dispatch(register(fullname, newEmail, newPass))
+                alert('Đăng ký tài khoản thành công!!')
+                setShowScreen(LOGIN)
+            }
         }
     }
 

@@ -4,7 +4,8 @@ import {
     View,
     SafeAreaView,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    Alert
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -16,6 +17,21 @@ export default function UserInfoScreen({ navigation }) {
     const { fullname, email, password } = useSelector(state => state.loginScreen)
 
     const [showPass, setShowPass] = useState(true)
+
+    const handleEditInfo = (value) => {
+        Alert.alert('Lưu ý!', `Bạn muốn thay đổi ${value}?`, [
+            {
+              text: 'Yes',
+              onPress: () => {
+                navigation.navigate('EditUserInfo', value)
+              },
+            },
+            {
+              text: 'No',
+              onPress: () => { },
+            },
+          ])
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -40,7 +56,7 @@ export default function UserInfoScreen({ navigation }) {
                     <Text style={styles.userInfoText}>Họ Tên: </Text>
                     <View style={styles.textBoxAndEdit}>
                         <TextInput style={styles.textBoxStyle} value={fullname} editable={false} />
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleEditInfo('Họ tên')}>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>
 
@@ -52,7 +68,7 @@ export default function UserInfoScreen({ navigation }) {
                     <Text style={styles.userInfoText}>Email: </Text>
                     <View style={styles.textBoxAndEdit}>
                         <TextInput style={styles.textBoxStyle} value={email} editable={false} />
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleEditInfo('Email')}>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>
                     </View>
@@ -75,7 +91,7 @@ export default function UserInfoScreen({ navigation }) {
                             }
                             
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleEditInfo('mật khẩu')}>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>
                     </View>

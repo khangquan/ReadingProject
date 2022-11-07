@@ -43,7 +43,9 @@ export default function BooksTypeScreen({navigation}) {
         <View style={styles.topContent}>
           <TouchableOpacity></TouchableOpacity>
           <Text style={styles.topTextStyle}>Thể Loại</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+              navigation.navigate('SearchScreen');
+            }}>
             <Icon name="search" size={30} color="white" />
           </TouchableOpacity>
         </View>

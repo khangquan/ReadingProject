@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function UserScreen({ navigation }) {
   const dispatch = useDispatch()
-  const { email } = useSelector((state) => state.loginScreen)
+  const { fullname } = useSelector((state) => state.loginScreen)
 
   const handleLogout = (item) => {
     if (item === 'Đăng xuất') {
@@ -52,7 +52,7 @@ export default function UserScreen({ navigation }) {
       <View style={styles.botContent}>
         <View style={styles.welcomeStyle}>
           <Text style={styles.welcomeText}>Chào mừng,</Text>
-          <Text style={styles.accountText}>{email}</Text>
+          <Text style={styles.accountText}>{fullname}</Text>
           <Icon name="person-circle-outline" size={60} />
         </View>
         <ScrollView>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 20,
     margin: 10,
-    width: '30%'
+    width: '30%',
   },
   accountText: {
     fontSize: 20,

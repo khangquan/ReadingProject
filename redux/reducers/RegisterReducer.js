@@ -1,8 +1,13 @@
 export const REGISTER = 'REGISTER'
 
 const initialState = {
-    userAccounts: [],
-    loggedInUser: null
+    userAccounts: [
+        {
+            fullname: 'Khang Quân',
+            email: 'khangquan',
+            pass: '123456',
+        },
+    ],
 }
 
 const registerReducer = (state = initialState, action) => {

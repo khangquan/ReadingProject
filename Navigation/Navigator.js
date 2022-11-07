@@ -15,6 +15,7 @@ import AllBooksScreen from '../Screens/AllBooksScreen/AllBooksScreen';
 import ReadingScreen from '../Screens/ReadingScreen/ReadingScreen';
 import SearchScreen from '../Screens/SearchScreen/SearchScreen';
 import UserInfoScreen from '../Screens/UserScreen/UserInfoScreen';
+import EditUserInfo from '../Screens/UserScreen/EditUserInfo';
 
 const Tabs = createBottomTabNavigator();
 const LoginStack = createNativeStackNavigator();
@@ -23,7 +24,6 @@ const HomeStack = createNativeStackNavigator();
 const LoginStackNavigator = () => (
   <LoginStack.Navigator screenOptions={{ headerShown: false }}>
     <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
-    <LoginStack.Screen name="HomeScreen" component={HomeScreen} />
   </LoginStack.Navigator>
 );
 
@@ -35,6 +35,7 @@ const HomeStackNavigator = () => (
     <HomeStack.Screen name="DetailScreen" component={DetailScreen} />
     <HomeStack.Screen name="ReadingScreen" component={ReadingScreen} />
     <HomeStack.Screen name="UserInfoScreen" component={UserInfoScreen} />
+    <HomeStack.Screen name="EditUserInfo" component={EditUserInfo} />
   </HomeStack.Navigator>
 );
 
@@ -64,7 +65,7 @@ const TabsNavigator = () => (
       },
       headerShown: false,
       tabBarActiveTintColor: 'white',
-      tabBarInactiveTintColor: 'gray',
+      tabBarInactiveTintColor: 'lightgray',
     })}
   >
     <Tabs.Screen name="Trang Chủ" component={HomeScreen} />
