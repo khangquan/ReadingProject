@@ -11,20 +11,22 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../redux/actions/RegisterAction';
+import { appLogin } from '../../redux/actions/LoginScreenAction';
 
 export default function EditUserInfo({navigation, route}) {
   const {params} = route;
   const dispatch = useDispatch()
+  const {userAccounts} = useSelector(state => state.register)
 
-//   const [fullname,setFullname] = useState('')
-//   const [email,setEmail] = useState('')
-//   const [pass,setPass] = useState('')
   const [value, setValue] = useState('')
   const [confirmValue, setConfirmValue] = useState('')
 
 
   const handleChangeInfo = () => {
-    
+      // debugger
+      // dispatch(register(value,userAccounts[0].email,userAccounts.pass))
+      // navigation.goBack()
+    console.log(userAccounts)
   }
 
   return (

@@ -3,6 +3,7 @@ export const REGISTER = 'REGISTER'
 const initialState = {
     userAccounts: [
         {
+            id: (new Date).getTime(),
             fullname: 'Khang Quân',
             email: 'khangquan',
             pass: '123456',
