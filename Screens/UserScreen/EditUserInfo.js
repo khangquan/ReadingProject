@@ -10,7 +10,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../../redux/actions/RegisterAction';
+import { register,editAccount } from '../../redux/actions/RegisterAction';
 import { appLogin } from '../../redux/actions/LoginScreenAction';
 
 export default function EditUserInfo({navigation, route}) {
@@ -23,10 +23,13 @@ export default function EditUserInfo({navigation, route}) {
 
 
   const handleChangeInfo = () => {
-      // debugger
-      // dispatch(register(value,userAccounts[0].email,userAccounts.pass))
-      // navigation.goBack()
-    console.log(userAccounts)
+      let accIndex = userAccounts.findIndex(item => item.fullname === params.name)
+      
+      dispatch(editAccount({
+        id: userAccounts[accIndex].id,
+        fullname: value,
+      }))
+      navigation.goBack()
   }
 
   return (
@@ -46,8 +49,18 @@ export default function EditUserInfo({navigation, route}) {
       </View>
 
       <View style={styles.botContent}>
+      <View style={styles.userInfo}>
+          <Text style={styles.userInfoText}>{params.title} cũ: </Text>
+          <View style={styles.textBoxAndEdit}>
+            <TextInput 
+            editable={false}
+            value={params.name}
+            style={styles.textBoxStyle}
+            />
+          </View>
+        </View>
         <View style={styles.userInfo}>
-          <Text style={styles.userInfoText}>{params} mới: </Text>
+          <Text style={styles.userInfoText}>{params.title} mới: </Text>
           <View style={styles.textBoxAndEdit}>
             <TextInput 
             onChangeText={(text) => setValue(text)}
@@ -58,7 +71,7 @@ export default function EditUserInfo({navigation, route}) {
         </View>
 
         <View style={styles.userInfo}>
-          <Text style={styles.userInfoText}>Xác nhận {params} mới: </Text>
+          <Text style={styles.userInfoText}>Xác nhận {params.title} mới: </Text>
           <View style={styles.textBoxAndEdit}>
             <TextInput 
             value={confirmValue}

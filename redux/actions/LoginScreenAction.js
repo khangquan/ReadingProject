@@ -1,12 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { APP_LOGIN, APP_LOGOUT } from '../reducers/LoginScreenReducer'
 
-export const appLogin = (fullname, email, pass) => (
+export const appLogin = (param) => (
     {
         type: APP_LOGIN,
-        fullname: fullname,
-        email: email,
-        pass: pass
+        payload: param
     }
 )
 

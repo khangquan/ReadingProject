@@ -13,17 +13,17 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function UserInfoScreen({ navigation }) {
-    const dispatch = useDispatch()
-    const { fullname, email, password } = useSelector(state => state.loginScreen)
+    const { userAccounts } = useSelector(state => state.register)
+    const { userAccount } = useSelector((state) => state.loginScreen)
 
     const [showPass, setShowPass] = useState(true)
 
     const handleEditInfo = (value) => {
-        Alert.alert('Lưu ý!', `Bạn muốn thay đổi ${value}?`, [
+        Alert.alert('Lưu ý!', `Bạn muốn thay đổi thông tin?`, [
             {
               text: 'Yes',
               onPress: () => {
-                navigation.navigate('EditUserInfo', value)
+                navigation.navigate('EditUserInfo', value )
               },
             },
             {
@@ -47,7 +47,7 @@ export default function UserInfoScreen({ navigation }) {
             <View style={styles.botContent}>
                 <View>
                     <Icon name="person-circle-outline" size={150} />
-                    <TouchableOpacity style={styles.editAvatar}>
+                    <TouchableOpacity style={styles.editAvatar} onPress={() => {console.log(userAccounts)}}>
                         <Icon name='create' size={25} color={'black'} />
                     </TouchableOpacity>
                 </View>
@@ -55,8 +55,8 @@ export default function UserInfoScreen({ navigation }) {
                 <View style={styles.userInfo}>
                     <Text style={styles.userInfoText}>Họ Tên: </Text>
                     <View style={styles.textBoxAndEdit}>
-                        <TextInput style={styles.textBoxStyle} value={fullname} editable={false} />
-                        <TouchableOpacity onPress={() => handleEditInfo('Họ tên')}>
+                        <TextInput style={styles.textBoxStyle} value={userAccount.fullname} editable={false} />
+                        <TouchableOpacity onPress={() => handleEditInfo({name:userAccount.fullname, title:'Họ Tên'})}>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>
 
@@ -67,8 +67,8 @@ export default function UserInfoScreen({ navigation }) {
                 <View style={styles.userInfo}>
                     <Text style={styles.userInfoText}>Email: </Text>
                     <View style={styles.textBoxAndEdit}>
-                        <TextInput style={styles.textBoxStyle} value={email} editable={false} />
-                        <TouchableOpacity onPress={() => handleEditInfo('Email')}>
+                        <TextInput style={styles.textBoxStyle} value={userAccount.email} editable={false} />
+                        <TouchableOpacity onPress={() => {}}>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>
                     </View>
@@ -78,7 +78,7 @@ export default function UserInfoScreen({ navigation }) {
                     <Text style={styles.userInfoText}>Password: </Text>
                     <View style={styles.textBoxAndEdit}>
                         <TextInput style={styles.textBoxStyle}
-                            value={password}
+                            value={userAccount.pass}
                             editable={false}
                             secureTextEntry={showPass?true:false}
                         />
@@ -91,7 +91,7 @@ export default function UserInfoScreen({ navigation }) {
                             }
                             
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => handleEditInfo('mật khẩu')}>
+                        <TouchableOpacity onPress={() => {}}>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>
                     </View>

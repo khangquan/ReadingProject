@@ -1,11 +1,15 @@
-import { REGISTER } from "../reducers/RegisterReducer";
+import { REGISTER, EDIT_ACCOUNT } from "../reducers/RegisterReducer";
 
-export const register = (fullname,email,pass) => (
+export const register = (param) => (
     {
         type: REGISTER,
-        payload: {
-            id: (new Date).getTime(),
-            fullname, email, pass
-        }
+        payload: param
+    }
+)
+
+export const editAccount = (param) => (
+    {
+        type: EDIT_ACCOUNT,
+        payload: param
     }
 )

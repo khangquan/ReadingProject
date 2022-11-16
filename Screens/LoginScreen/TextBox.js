@@ -9,7 +9,7 @@ export default function TextBox({
     onEvent,
     isPasswordBox,
     value,
-    isBlank 
+    isBlank,
 }) {
 
     return (

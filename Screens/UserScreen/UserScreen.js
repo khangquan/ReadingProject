@@ -17,9 +17,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function UserScreen({ navigation }) {
   const dispatch = useDispatch()
-  const { fullname } = useSelector((state) => state.loginScreen)
-
+  const { userAccount } = useSelector((state) => state.loginScreen)
+  const { userAccounts } = useSelector((state) => state.register)
+ 
   const handleLogout = (item) => {
+    
     if (item === 'Đăng xuất') {
       Alert.alert('Lưu ý!', 'Bạn có muốn đăng xuất?', [
         {
@@ -52,7 +54,7 @@ export default function UserScreen({ navigation }) {
       <View style={styles.botContent}>
         <View style={styles.welcomeStyle}>
           <Text style={styles.welcomeText}>Chào mừng,</Text>
-          <Text style={styles.accountText}>{fullname}</Text>
+          <Text style={styles.accountText}>{userAccount.fullname}</Text>
           <Icon name="person-circle-outline" size={60} />
         </View>
         <ScrollView>
