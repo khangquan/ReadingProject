@@ -6,29 +6,34 @@ const initialState = {
     {
       id: new Date().getTime(),
       fullname: 'Khang Quân',
-      email: 'khangquan',
+      email: 'quan',
       pass: '123456',
     },
   ],
 };
 
 const registerReducer = (state = initialState, action) => {
+  
   switch (action.type) {
-    
+      
         case REGISTER:
+          debugger
             return {
+              
                 ...state,
                 userAccounts: [...state.userAccounts, action.payload],
             };
+            
         case EDIT_ACCOUNT:
-            return state.map(account => {
-                
+            return state.userAccounts.map((account, i) => {
+              debugger
                 if (account.id === action.payload.id) {
-                    return {...state, fullname: action.payload.fullname};
+                    return {
+                      ...state.userAccounts[i],
+                      fullname: action.payload.fullname
+                    };
                 }
-                return state
             });
-            debugger;
         default:
         return state;
   }

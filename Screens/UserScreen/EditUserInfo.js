@@ -24,7 +24,6 @@ export default function EditUserInfo({navigation, route}) {
 
   const handleChangeInfo = () => {
       let accIndex = userAccounts.findIndex(item => item.fullname === params.name)
-      
       dispatch(editAccount({
         id: userAccounts[accIndex].id,
         fullname: value,
