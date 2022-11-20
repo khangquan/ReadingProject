@@ -14,9 +14,20 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export default function UserInfoScreen({ navigation }) {
     const { userAccounts } = useSelector(state => state.register)
-    const { userAccount } = useSelector((state) => state.loginScreen)
-
+    const { currentUser } = useSelector((state) => state.loginScreen)
+    const [userInfo, setUserInfo] = useState([])
     const [showPass, setShowPass] = useState(true)
+
+    useEffect(() => {
+        getCurrentUser()
+    },[])
+
+    const getCurrentUser = () => {
+        userAccounts.map(user => {
+            if(user.email === currentUser)
+                setUserInfo(user)
+        })
+    }
 
     const handleEditInfo = (value) => {
         Alert.alert('Lưu ý!', `Bạn muốn thay đổi thông tin?`, [
@@ -55,8 +66,8 @@ export default function UserInfoScreen({ navigation }) {
                 <View style={styles.userInfo}>
                     <Text style={styles.userInfoText}>Họ Tên: </Text>
                     <View style={styles.textBoxAndEdit}>
-                        <TextInput style={styles.textBoxStyle} value={userAccount.fullname} editable={false} />
-                        <TouchableOpacity onPress={() => handleEditInfo({name:userAccount.fullname, title:'Họ Tên'})}>
+                        <TextInput style={styles.textBoxStyle} value={userInfo.fullname} editable={false} />
+                        <TouchableOpacity onPress={() => handleEditInfo({name:userInfo.fullname, title:'Họ Tên'})}>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>
 
@@ -67,7 +78,7 @@ export default function UserInfoScreen({ navigation }) {
                 <View style={styles.userInfo}>
                     <Text style={styles.userInfoText}>Email: </Text>
                     <View style={styles.textBoxAndEdit}>
-                        <TextInput style={styles.textBoxStyle} value={userAccount.email} editable={false} />
+                        <TextInput style={styles.textBoxStyle} value={userInfo.email} editable={false} />
                         <TouchableOpacity onPress={() => {}}>
                             <Icon name='create' size={25} color={'black'} />
                         </TouchableOpacity>
@@ -78,7 +89,7 @@ export default function UserInfoScreen({ navigation }) {
                     <Text style={styles.userInfoText}>Password: </Text>
                     <View style={styles.textBoxAndEdit}>
                         <TextInput style={styles.textBoxStyle}
-                            value={userAccount.pass}
+                            value={userInfo.pass}
                             editable={false}
                             secureTextEntry={showPass?true:false}
                         />

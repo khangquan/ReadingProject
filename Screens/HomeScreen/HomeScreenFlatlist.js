@@ -26,7 +26,6 @@ export default function HomeScreenFlatlist({ data, renderView, title, onEvent })
         keyExtractor={(item, index) => index.toString()}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        
       />
     </View>
   )

@@ -17,11 +17,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function UserScreen({ navigation }) {
   const dispatch = useDispatch()
-  const { userAccount } = useSelector((state) => state.loginScreen)
+  const [userInfo, setUserInfo] = useState([])
+  const { currentUser } = useSelector((state) => state.loginScreen)
   const { userAccounts } = useSelector((state) => state.register)
- 
+
+  useEffect(() => {
+    getCurrentUser()
+  }, [])
+
+  const getCurrentUser = () => {
+    userAccounts.map(user => {
+      if (user.email === currentUser)
+        setUserInfo(user)
+    })
+  }
   const handleLogout = (item) => {
-    
+
     if (item === 'Đăng xuất') {
       Alert.alert('Lưu ý!', 'Bạn có muốn đăng xuất?', [
         {
@@ -39,9 +50,9 @@ export default function UserScreen({ navigation }) {
   }
 
   const handleUserInfo = () => {
-      navigation.navigate('UserInfoScreen')
+    navigation.navigate('UserInfoScreen')
   }
-  
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,7 +65,7 @@ export default function UserScreen({ navigation }) {
       <View style={styles.botContent}>
         <View style={styles.welcomeStyle}>
           <Text style={styles.welcomeText}>Chào mừng,</Text>
-          <Text style={styles.accountText}>{userAccount.fullname}</Text>
+          <Text style={styles.accountText}>{userInfo.fullname}</Text>
           <Icon name="person-circle-outline" size={60} />
         </View>
         <ScrollView>
@@ -77,7 +88,7 @@ export default function UserScreen({ navigation }) {
                 <UserMenu
                   iconName={item.iconName}
                   title={item.title}
-                  
+
                 />
               )
             })}

@@ -1,16 +1,9 @@
 export const APP_LOGIN = 'APP_LOGIN'
 export const APP_LOGOUT = 'APP_LOGOUT'
 
-
-
 const initialState = {
     isLogin: false,
-    userAccount: {
-        id: new Date().getTime(),
-        fullname: '',
-        email: '',
-        pass: '',
-    }
+    currentUser: ''
 }
 
 const loginScreenReducer = (state = initialState, action) => {
@@ -20,7 +13,7 @@ const loginScreenReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLogin: true,
-                userAccount: action.payload
+                currentUser: action.payload
             }
         case APP_LOGOUT:
             return { 

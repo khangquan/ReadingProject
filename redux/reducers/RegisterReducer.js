@@ -13,29 +13,24 @@ const initialState = {
 };
 
 const registerReducer = (state = initialState, action) => {
-  
   switch (action.type) {
-      
-        case REGISTER:
-          debugger
-            return {
-              
-                ...state,
-                userAccounts: [...state.userAccounts, action.payload],
-            };
-            
-        case EDIT_ACCOUNT:
-            return state.userAccounts.map((account, i) => {
-              debugger
-                if (account.id === action.payload.id) {
-                    return {
-                      ...state.userAccounts[i],
-                      fullname: action.payload.fullname
-                    };
-                }
-            });
-        default:
-        return state;
+    case REGISTER:
+      return {
+        ...state,
+        userAccounts: [...state.userAccounts, action.payload],
+      };
+
+    case EDIT_ACCOUNT:
+      state.userAccounts.map(account => {
+        if (account.id === action.payload.id) {
+          account.fullname = action.payload.fullname
+        }
+      });
+      return {
+        ...state
+      }
+    default:
+      return state;
   }
 };
 

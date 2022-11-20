@@ -35,11 +35,7 @@ export default function LoginScreen({navigation}) {
       let result = userAccounts.find(item => item.email === email && item.pass === pass)
       
       if (result) {
-        dispatch(appLogin({
-          fullname: result.fullname,
-          email: result.email,
-          pass: result.pass
-        }));
+        dispatch(appLogin(result.email));
       } else {
         alert('Bạn đã nhập sai email hoặc mật khẩu !');
       }

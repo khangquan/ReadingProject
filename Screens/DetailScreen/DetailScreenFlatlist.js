@@ -45,6 +45,7 @@ import {
       marginTop: 10,
     },
     title: {
+      fontWeight: 'bold',
       fontSize: 18,
       color: 'gray'
     },

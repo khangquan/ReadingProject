@@ -32,7 +32,7 @@ export default function DetailScreen({ navigation }) {
 
   const renderView = ({ item }) => (
     <TouchableOpacity
-      onPress={() =>{ 
+      onPress={() => {
         dispatch(getBookType(item))
         navigation.navigate('DetailScreen')
       }}
@@ -70,25 +70,21 @@ export default function DetailScreen({ navigation }) {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <StatusBar
-        hidden={true}
+    <View style={styles.container}>
+      <StatusBar hidden={true}/>
+      <Image
+        style={styles.imageBG}
+        blurRadius={10}
+        source={bookData.image}
       />
       <View style={styles.topContent}>
-        <Image
-          style={styles.imageBG}
-          blurRadius={10}
-          source={bookData.image}
-        />
+
         <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backStyle}>
           <Icon name="chevron-back-outline" size={35} color={'#FB7849'} />
         </TouchableOpacity>
 
         <View style={styles.bookContent}>
-          <Image
-            style={styles.bookImage}
-            source={bookData.image}
-          />
+          <Image style={styles.bookImage} source={bookData.image} />
           <View style={styles.titleButtonStyle}>
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
@@ -99,20 +95,26 @@ export default function DetailScreen({ navigation }) {
         </View>
       </View>
 
-      <View style={styles.botContent}>
+      <ScrollView style={styles.botContent} >
         <View style={styles.iconMenuBar}>
-          <MenuIconBar color={isLike ? 'red' : null} title={'heart'} textTitle={'Thích'} onEvent={handleLikeBook} />
+          <MenuIconBar />
+          <MenuIconBar
+            color={isLike ? 'red' : null}
+            title={'heart'} textTitle={'Thích'} onEvent={handleLikeBook}
+          />
           <MenuIconBar
             title={'chatbubble-ellipses-outline'}
             textTitle={'Bình luận'}
           />
-          <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'} />
-          <MenuIconBar title={'bookmark-outline'} textTitle={'Đánh dấu'} />
-          <MenuIconBar title={'alert-circle-outline'} textTitle={'Báo lỗi'} />
+          <MenuIconBar
+            title={'share-outline'}
+            textTitle={'Chia sẻ'}
+          />
+          <MenuIconBar />
         </View>
 
-        <View style={styles.introStyle}>
-          <Text style={styles.botTitleText}>Giới Thiệu</Text>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
           <ViewMoreText
             numberOfLines={2}
             renderViewMore={renderViewMore}
@@ -122,23 +124,23 @@ export default function DetailScreen({ navigation }) {
           </ViewMoreText>
         </View>
 
-        <View style={styles.detailStyle}>
-          <Text style={styles.botTitleText}>Thông Tin</Text>
-          <Text style={styles.infoText}>Thể loại: {bookData.type}</Text>
-          <Text style={styles.infoText}>Lượt Xem: 0</Text>
-          <Text style={styles.infoText}>Trạng Thái: {bookData.status}</Text>
+        <View style={{ margin: 20, }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
+          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
+          <Text style={{ fontSize: 18 }}>Lượt Xem: 0</Text>
+          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
         </View>
 
         <DetailScreenFlatlist
           title={'Có thể bạn quan tâm'}
-          data={allBooksData.filter((item, index) => 
+          data={allBooksData.filter((item, index) =>
             item.type === bookData.type
           )}
           renderView={renderView}
           onEvent={() => handleAllBook(bookData)}
         />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 }
 
@@ -152,21 +154,21 @@ const styles = StyleSheet.create({
     width: windowWidth,
   },
   imageBG: {
+    position: 'absolute',
     height: '100%',
     width: windowWidth,
-    resizeMode: 'cover',
   },
   backStyle: {
     position: 'absolute',
-    marginTop: 20,
+    marginTop: 15,
     marginLeft: 10,
   },
   bookContent: {
     position: 'absolute',
-    height: '60%',
+    height: '65%',
     width: '30%',
     bottom: 20,
-    left: 10,
+    left: 30,
     flexDirection: 'row',
   },
   bookImage: {
@@ -195,33 +197,42 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   titleText: {
+    color: '#FB7849',
     fontWeight: 'bold',
     fontSize: 20,
     borderColor: 'white',
+    textShadowColor: 'black',
+    textShadowRadius: 3,
+    textShadowOffset: {
+      width: 2,
+      height: 2,
+    }
   },
   authorText: {
+    color: '#FB7849',
     fontSize: 18,
+    textShadowColor: 'black',
+    textShadowRadius: 3,
+    textShadowOffset: {
+      width: 2,
+      height: 2,
+    }
   },
   iconMenuBar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    borderWidth: 0.5,
-    borderColor: 'gray',
+    borderBottomWidth: 0.6,
+    marginTop: 10,
+    borderColor: '#FB7849',
     height: '10%',
+    width: '90%',
+    alignSelf: 'center',
   },
   botContent: {
-    // height: '70%'
-  },
-  botTitleText: {
-    fontSize: 20,
-    fontWeight: '500',
-  },
-  introStyle: {
-    margin: 20,
-    borderColor: 'gray',
-  },
-  detailStyle: {
-    margin: 20,
+    borderTopLeftRadius: 60,
+    borderTopRightRadius: 60,
+    backgroundColor: 'white',
+    borderWidth: 0.6,
     borderColor: 'gray',
   },
   renderViewStyle: {
@@ -235,8 +246,5 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-  },
-  infoText: {
-    fontSize: 18
   },
 })
