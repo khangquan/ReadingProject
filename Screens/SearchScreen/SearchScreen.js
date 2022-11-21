@@ -12,16 +12,16 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getBookData, getBookType } from '../../redux/actions/GetBookAction';
+import {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {getBookData, getBookType} from '../../redux/actions/GetBookAction';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen({navigation}) {
   const dispatch = useDispatch();
-  const { allBooksData, bookData } = useSelector(state => state.bookGetData);
+  const {allBooksData, bookData} = useSelector(state => state.bookGetData);
 
   useEffect(() => {
     dispatch(getBookData());
@@ -32,23 +32,26 @@ export default function SearchScreen({ navigation }) {
 
   const handleSearch = searchValue => {
     let bookData = allBooksData.filter(item => {
-      let title = item.title.toLowerCase()
-      let author = item.author.toLowerCase()
-      let data = searchValue.toLowerCase()
-      if (title.includes(data) || author.includes(data)) {
+      let title = item.title.toLowerCase();
+      let author = item.author.toLowerCase();
+      let searchData = searchValue.toLowerCase();
+      if (title.includes(searchData) || author.includes(searchData)) {
         return item;
-      } else return 0
+      } else return 0;
     });
     setSearchResult(bookData);
   };
 
-  const handleDetail = (item) => {
-    dispatch(getBookType(item))
-    navigation.navigate('DetailScreen')
-  }
+  const handleDetail = item => {
+    dispatch(getBookType(item));
+    navigation.navigate('DetailScreen');
+  };
 
-  const renderView = ({ item }) => (
-    <TouchableOpacity onPress={() => handleDetail(item)} style={styles.renderViewStyle}>
+  const renderView = ({item}) => (
+    <TouchableOpacity
+      onPress={() => handleDetail(item)}
+      style={styles.renderViewStyle}
+    >
       <Image style={styles.flatListImg} source={item.image} />
       <Text style={styles.flatListTitle}>{item.title}</Text>
     </TouchableOpacity>
@@ -59,7 +62,7 @@ export default function SearchScreen({ navigation }) {
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
           <TouchableOpacity
-            style={{ marginLeft: 10 }}
+            style={{marginLeft: 10}}
             onPress={() => {
               navigation.goBack();
             }}
@@ -70,26 +73,20 @@ export default function SearchScreen({ navigation }) {
           <View style={styles.textInputWrapper}>
             <TextInput
               value={searchValue}
-
               onChangeText={text => setSearchValue(text)}
               style={styles.searchBoxStyle}
               placeholder="Tên sách, tác giả,... cần tìm"
             />
-
-            {
-              searchValue
-                ?
-                (
-                  <TouchableOpacity
-                    style={styles.clearInputStyle}
-                    onPress={() => {
-                      setSearchValue('');
-                    }}
-                  >
-                    <Icon name="close-outline" size={30} />
-                  </TouchableOpacity>
-                ) : null
-            }
+            {searchValue ? (
+              <TouchableOpacity
+                style={styles.clearInputStyle}
+                onPress={() => {
+                  setSearchValue('');
+                }}
+              >
+                <Icon name="close-outline" size={30} />
+              </TouchableOpacity>
+            ) : null}
 
             <TouchableOpacity
               style={styles.searchIconStyle}
@@ -102,22 +99,21 @@ export default function SearchScreen({ navigation }) {
       </View>
 
       <View style={styles.botContent}>
-        {
-          searchResult.length === 0 ?
-            <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-              <Text style={{ fontSize: 20 }}>Không tìm thấy sản phẩm phù hợp</Text>
-            </View>
-            :
-            <FlatList
-              data={searchResult}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={renderView}
-              numColumns={3}
-              showsVerticalScrollIndicator={false}
-            />
-        }
-
-
+        {searchResult.length === 0 ? (
+          <View
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}
+          >
+            <Text style={{fontSize: 20}}>Không tìm thấy sản phẩm phù hợp</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={searchResult}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderView}
+            numColumns={3}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

@@ -6,53 +6,49 @@ import {
   Alert,
   SafeAreaView,
   ScrollView,
-} from 'react-native'
-import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
-import UserMenu from './UserMenu'
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { appLogout } from '../../redux/actions/LoginScreenAction'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+} from 'react-native';
+import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
+import UserMenu from './UserMenu';
+import {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {appLogout} from '../../redux/actions/LoginScreenAction';
 
-export default function UserScreen({ navigation }) {
-  const dispatch = useDispatch()
-  const [userInfo, setUserInfo] = useState([])
-  const { currentUser } = useSelector((state) => state.loginScreen)
-  const { userAccounts } = useSelector((state) => state.register)
+export default function UserScreen({navigation}) {
+  const dispatch = useDispatch();
+  const [userInfo, setUserInfo] = useState([]);
+  const {currentUser} = useSelector(state => state.loginScreen);
+  const {userAccounts} = useSelector(state => state.register);
 
   useEffect(() => {
-    getCurrentUser()
-  }, [])
+    getCurrentUser();
+  }, []);
 
   const getCurrentUser = () => {
     userAccounts.map(user => {
-      if (user.email === currentUser)
-        setUserInfo(user)
-    })
-  }
-  const handleLogout = (item) => {
-
+      if (user.email === currentUser) setUserInfo(user);
+    });
+  };
+  const handleLogout = item => {
     if (item === 'Đăng xuất') {
       Alert.alert('Lưu ý!', 'Bạn có muốn đăng xuất?', [
         {
           text: 'Yes',
           onPress: () => {
-            dispatch(appLogout())
+            dispatch(appLogout());
           },
         },
         {
           text: 'No',
-          onPress: () => { },
+          onPress: () => {},
         },
-      ])
+      ]);
     }
-  }
+  };
 
   const handleUserInfo = () => {
-    navigation.navigate('UserInfoScreen')
-  }
-
+    ;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,24 +69,19 @@ export default function UserScreen({ navigation }) {
             <UserMenu
               title={'Thông tin tài khoản'}
               iconName={'person-outline'}
-              onEvent={handleUserInfo}
+              onEvent={() => {navigation.navigate('UserInfoScreen')}}
             />
             <UserMenu
               title={'Danh sách yêu thích'}
               iconName={'heart-outline'}
+              onEvent={() => {navigation.navigate('FavBooksScreen')}}
             />
           </View>
 
           <View>
             <Text style={styles.menuTitle}>GIỚI THIỆU/ HƯỚNG DẪN</Text>
             {INTRODUCE.map((item, index) => {
-              return (
-                <UserMenu
-                  iconName={item.iconName}
-                  title={item.title}
-
-                />
-              )
+              return <UserMenu iconName={item.iconName} title={item.title} />;
             })}
           </View>
           <View>
@@ -102,13 +93,13 @@ export default function UserScreen({ navigation }) {
                   title={item.title}
                   onEvent={() => handleLogout(item.title)}
                 />
-              )
+              );
             })}
           </View>
         </ScrollView>
       </View>
     </SafeAreaView>
-  )
+  );
 }
 
 const INTRODUCE = [
@@ -124,7 +115,7 @@ const INTRODUCE = [
     title: 'Góp ý',
     iconName: 'chatbubble-ellipses-outline',
   },
-]
+];
 
 const SETTING = [
   {
@@ -135,7 +126,7 @@ const SETTING = [
     title: 'Đăng xuất',
     iconName: 'log-out-outline',
   },
-]
+];
 
 const styles = StyleSheet.create({
   container: {
@@ -183,4 +174,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-})
+});

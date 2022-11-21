@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 import loginScreenReducer from './LoginScreenReducer'
 import getBookReducer from './GetBookReducer'
-import registerReducer from './RegisterReducer'
+import accountReducer from './AccountReducer'
 
 const rootReducer = combineReducers({
     loginScreen: loginScreenReducer,
-    register: registerReducer,
+    register: accountReducer,
     bookGetData: getBookReducer,
 })
 

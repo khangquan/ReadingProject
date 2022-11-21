@@ -6,80 +6,30 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
   Keyboard,
-  TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import TextBox from './TextBox';
 import {appLogin} from '../../redux/actions/LoginScreenAction';
-import {register} from '../../redux/actions/RegisterAction';
+import {register} from '../../redux/actions/AccountAction';
+import {Formik} from 'formik';
+import {styles} from './LoginScreenStyles';
+import {checkLogInValidate, checkRegValidate} from './CheckValidate';
 
 export default function LoginScreen({navigation}) {
   const LOGIN = 'LOGIN';
   const SIGNUP = 'SIGNUP';
   const [showScreen, setShowScreen] = useState(LOGIN);
   const [secure, setSecure] = useState(true);
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [errorBox, setErrorBox] = useState(false);
   const dispatch = useDispatch();
-  const { userAccounts } = useSelector(state => state.register);
-
-  //Login Account
-  const handleLogin = () => {
-    if (email.length === 0 || pass.length === 0) {
-      setErrorBox(true);
-      alert('Vui lòng nhập email và mật khẩu !');
-    } else {
-      let result = userAccounts.find(item => item.email === email && item.pass === pass)
-      
-      if (result) {
-        dispatch(appLogin(result.email));
-      } else {
-        alert('Bạn đã nhập sai email hoặc mật khẩu !');
-      }
-    }
-  };
+  const {userAccounts} = useSelector(state => state.register);
 
   //Show or Hide Password
   const handleShowPass = () => {
     setSecure(!secure);
   };
-
-  //Register
-  const [fullname, setFullname] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-  const [newPass, setNewPass] = useState('');
-  const [confirmPass, setConfirmPass] = useState('');
-  const [ErrorCreateAccBox, setErrorCreateAccBox] = useState(false);
-
-  const handleCreateAccount = () => {
-    if (
-      fullname.length === 0 ||
-      newEmail.length === 0 ||
-      newPass.length === 0 ||
-      confirmPass.length === 0
-    ) {
-      setErrorCreateAccBox(true);
-      alert('Vui lòng nhập hết các thông tin của bạn!');
-    } else if (newPass != confirmPass) {
-      alert('Mật khẩu xác nhận không đúng!');
-    } else {
-      let checkDuplicate = userAccounts.find(user => user.email === newEmail);
-      if (checkDuplicate) {
-        alert('Email này đã được sử dụng! vui lòng chọn email khác!');
-      } else {
-        dispatch(register({
-          id: new Date().getTime(),
-          fullname: fullname, 
-          email: newEmail, 
-          pass: newPass
-        }));
-        alert('Đăng ký tài khoản thành công!!');
-        setShowScreen(LOGIN);
-      }
-  }}
 
   return (
     <ImageBackground
@@ -88,6 +38,7 @@ export default function LoginScreen({navigation}) {
       style={styles.container}
     >
       <View style={styles.content}>
+        {/* Show Login Form */}
         <TouchableOpacity
           disabled={showScreen === LOGIN ? true : false}
           onPress={() => {
@@ -108,7 +59,7 @@ export default function LoginScreen({navigation}) {
             Đăng Nhập
           </Text>
         </TouchableOpacity>
-
+        {/* Show Sign Up Form */}
         <TouchableOpacity
           disabled={showScreen === SIGNUP ? true : false}
           onPress={() => {
@@ -132,35 +83,70 @@ export default function LoginScreen({navigation}) {
       </View>
       {showScreen == LOGIN ? (
         //Login Form
-        <KeyboardAvoidingView style={styles.inputContent}>
-          <Text style={styles.text}>Email</Text>
-          <TextBox
-            title={'Địa chỉ email'}
-            isBlank={errorBox}
-            value={value => setEmail(value)}
-          />
+        <KeyboardAvoidingView
+          style={styles.inputContent}
+          onPress={Keyboard.dismiss}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Formik
+            initialValues={{email: '', pass: ''}}
+            validationSchema={checkLogInValidate}
+            //Handle Login Account
+            onSubmit={({email, pass}) => {
+              let result = userAccounts.find(
+                item => item.email === email && item.pass === pass,
+              );
+              if (result) {
+                dispatch(appLogin(result.email));
+              } else {
+                Alert.alert('Lỗi', 'Bạn đã nhập sai email hoặc mật khẩu !');
+              }
+            }}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <View>
+                {LogInData.map(item => {
+                  let value = item.label;
+                  return (
+                    <View>
+                      <Text style={styles.text}>{item.title}</Text>
+                      <TextBox
+                        isSecure={item.pass ? secure : null}
+                        title={item.title}
+                        onEvent={handleShowPass}
+                        isPasswordBox={item.pass ? true : false}
+                        onBlur={handleBlur(value)}
+                        onChangeText={handleChange(value)}
+                        value={values.value}
+                      />
+                      {errors.value && touched.value ? (
+                        <Text style={styles.errorText}>{errors.value}</Text>
+                      ) : null}
+                    </View>
+                  );
+                })}
 
-          <Text style={styles.text}>Mật Khẩu</Text>
-          <TextBox
-            isSecure={secure}
-            title={'Mật khẩu'}
-            isBlank={errorBox}
-            onEvent={handleShowPass}
-            isPasswordBox={true}
-            value={value => setPass(value)}
-          />
-
-          <View style={styles.buttonContent}>
-            <TouchableOpacity
-              style={styles.buttonLoginWrapper}
-              onPress={handleLogin}
-            >
-              <Text style={styles.buttonLogin}>Đăng Nhập</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.forgotPass}>Quên mật khẩu?</Text>
-            </TouchableOpacity>
-          </View>
+                <View style={styles.buttonContent}>
+                  <TouchableOpacity
+                    style={styles.buttonLoginWrapper}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.buttonLogin}>Đăng Nhập</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text style={styles.forgotPass}>Quên mật khẩu?</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+          </Formik>
         </KeyboardAvoidingView>
       ) : (
         //Register Form
@@ -169,47 +155,86 @@ export default function LoginScreen({navigation}) {
             onPress={Keyboard.dismiss}
             keyboardShouldPersistTaps="handled"
           >
-            <Text style={styles.text}>Họ & Tên</Text>
-            <TextBox
-              title={'Nhập họ & tên của bạn'}
-              value={value => setFullname(value)}
-              isBlank={ErrorCreateAccBox}
-            />
-
-            <Text style={styles.text}>Địa chỉ Email</Text>
-            <TextBox
-              title={'Nhập địa chỉ email của bạn'}
-              value={value => setNewEmail(value)}
-              isBlank={ErrorCreateAccBox}
-            />
-
-            <Text style={styles.text}>Mật khẩu</Text>
-            <TextBox
-              title={'Nhập mật khẩu của bạn'}
-              isSecure={true}
-              value={value => setNewPass(value)}
-              isBlank={ErrorCreateAccBox}
-            />
-
-            <Text style={styles.text}>Xác nhận mật khẩu</Text>
-            <TextBox
-              title={'Nhập lại mật khẩu của bạn'}
-              isSecure={true}
-              value={value => setConfirmPass(value)}
-              isBlank={ErrorCreateAccBox}
-            />
-
-            <View style={styles.buttonContent}>
-              <TouchableOpacity
-                style={styles.buttonLoginWrapper}
-                onPress={handleCreateAccount}
-              >
-                <Text style={styles.buttonLogin}>Tạo tài khoản</Text>
-              </TouchableOpacity>
-              <Text style={styles.TermsOfServices}>
-              Bằng cách tạo một tài khoản, bạn đồng ý với Điều khoản Dịch vụ của chúng tôi
-              </Text>
-            </View>
+            <Formik
+              initialValues={{
+                fullname: '',
+                email: '',
+                pass: '',
+                confirmPass: '',
+              }}
+              validationSchema={checkRegValidate}
+              onSubmit={({fullname, email, pass, confirmPass}) => {
+                if (pass != confirmPass) {
+                  Alert.alert(
+                    'Lỗi',
+                    'Mật khẩu xác nhận không giống với mật khẩu!',
+                  );
+                } else {
+                  let checkDuplicate = userAccounts.find(
+                    user => user.email === email,
+                  );
+                  if (checkDuplicate) {
+                    Alert.alert(
+                      'Lỗi',
+                      'Email này đã được sử dụng! vui lòng chọn email khác!',
+                    );
+                  } else {
+                    dispatch(
+                      register({
+                        id: new Date().getTime(),
+                        fullname: fullname,
+                        email: email,
+                        pass: pass,
+                      }),
+                    );
+                    Alert.alert('Thông báo', 'Đăng ký tài khoản thành công!!');
+                    setShowScreen(LOGIN);
+                  }
+                }
+              }}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+              }) => (
+                <View>
+                  {RegisterData.map(item => {
+                    let value = item.label;
+                    return (
+                      <View>
+                        <Text style={styles.text}>{item.title}</Text>
+                        <TextBox
+                          title={item.desc}
+                          isSecure={item.pass ? true : false}
+                          onChangeText={handleChange(value)}
+                          onBlur={handleBlur(value)}
+                          value={values.value}
+                        />
+                        {errors.value && touched.value ? (
+                          <Text style={styles.errorText}>{errors.value}</Text>
+                        ) : null}
+                      </View>
+                    );
+                  })}
+                  <View style={styles.buttonContent}>
+                    <TouchableOpacity
+                      style={styles.buttonLoginWrapper}
+                      onPress={handleSubmit}
+                    >
+                      <Text style={styles.buttonLogin}>Tạo tài khoản</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.TermsOfServices}>
+                      Bằng cách tạo một tài khoản, bạn đồng ý với Điều khoản
+                      Dịch vụ của chúng tôi
+                    </Text>
+                  </View>
+                </View>
+              )}
+            </Formik>
           </KeyboardAwareScrollView>
         </View>
       )}
@@ -217,89 +242,44 @@ export default function LoginScreen({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFE6BE',
+const LogInData = [
+  {
+    title: 'Email',
+    desc: 'Nhập địa chỉ Email của bạn',
+    label: 'email',
+    pass: false,
   },
-  content: {
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 0.5,
+  {
+    title: 'Mật khẩu',
+    desc: 'Nhập mật khẩu của bạn',
+    label: 'pass',
+    pass: true,
   },
-  login: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginRight: 15,
-    color: 'white',
+];
+
+const RegisterData = [
+  {
+    title: 'Họ & tên của bạn',
+    desc: 'Nhập họ & tên của bạn',
+    label: 'fullname',
+    pass: false,
   },
-  signup: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginLeft: 15,
-    color: 'white',
+  {
+    title: 'Địa chỉ Email',
+    desc: 'Nhập địa chỉ Email của bạn',
+    label: 'Email',
+    pass: false,
   },
-  inputContent: {
-    flex: 2,
+  {
+    title: 'Mật khẩu',
+    desc: 'Nhập mật khẩu của bạn',
+    label: 'pass',
+    pass: true,
   },
-  text: {
-    marginLeft: 25,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
+  {
+    title: 'Xác nhận mật khẩu',
+    desc: 'Nhập lại mật khẩu của bạn',
+    label: 'confirmPass',
+    pass: true,
   },
-  inputPassword: {
-    marginHorizontal: 20,
-    marginTop: 15,
-    padding: 15,
-    borderRadius: 15,
-    backgroundColor: 'white',
-    elevation: 5,
-    shadowColor: 'gray',
-    shadowOpacity: 1,
-    shadowRadius: 5,
-    shadowOffset: {
-      height: 5,
-      width: 5,
-    },
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    right: 0,
-  },
-  buttonContent: {
-    flex: 1,
-    paddingTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonLoginWrapper: {
-    width: '90%',
-    backgroundColor: '#FB7849',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    borderRadius: 20,
-  },
-  buttonLogin: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  forgotPass: {
-    color: 'white',
-    borderBottomWidth: 1,
-    borderColor: 'white',
-    margin: 10,
-    fontSize: 15,
-  },
-  TermsOfServices: {
-    color: 'white',
-    marginTop: 10,
-    textAlign: 'center',
-    width: '80%',
-  },
-});
+];

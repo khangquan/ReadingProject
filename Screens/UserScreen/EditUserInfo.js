@@ -10,7 +10,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { register,editAccount } from '../../redux/actions/RegisterAction';
+import { register,editAccount } from '../../redux/actions/AccountAction';
 import { appLogin } from '../../redux/actions/LoginScreenAction';
 
 export default function EditUserInfo({navigation, route}) {

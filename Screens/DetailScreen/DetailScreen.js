@@ -22,8 +22,8 @@ const windowHeight = Dimensions.get('window').height
 
 export default function DetailScreen({ navigation }) {
   const { allBooksData, bookData } = useSelector(state => state.bookGetData)
+  const bookYouMayLike = allBooksData.filter((item, index) => item.type === bookData.type)
   const dispatch = useDispatch()
-
   const [isLike, setIsLike] = useState(false)
 
   useEffect(() => {
@@ -133,9 +133,7 @@ export default function DetailScreen({ navigation }) {
 
         <DetailScreenFlatlist
           title={'Có thể bạn quan tâm'}
-          data={allBooksData.filter((item, index) =>
-            item.type === bookData.type
-          )}
+          data={bookYouMayLike.filter((item, index) => index < 5)}
           renderView={renderView}
           onEvent={() => handleAllBook(bookData)}
         />

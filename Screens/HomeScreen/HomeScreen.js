@@ -7,17 +7,11 @@ import {
   Dimensions,
   ScrollView,
   SafeAreaView,
-  Modal,
-  TextInput,
 } from 'react-native';
 import {ImageSlider} from 'react-native-image-slider-banner';
 import Icon from 'react-native-vector-icons/Ionicons';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import HomeScreenFlatlist from './HomeScreenFlatlist';
-import SachKinhTe from '../BookData/SachKinhTe';
-import SachKyNang from '../BookData/SachKyNang';
-import SachTonGiao from '../BookData/SachTonGiao';
-import SachVanHoc from '../BookData/SachVanHoc';
 import {useSelector, useDispatch} from 'react-redux';
 import {getBookData, getBookType} from '../../redux/actions/GetBookAction';
 
@@ -55,26 +49,31 @@ export default function HomeScreen({navigation, route}) {
     </TouchableOpacity>
   );
 
+  const SachKinhTe = allBooksData.filter(item => item.type === 'Kinh Tế')
+  const SachKyNang = allBooksData.filter(item => item.type === 'Kỹ Năng')
+  const SachTonGiao = allBooksData.filter(item => item.type === 'Tôn Giáo')
+  const SachVanHoc = allBooksData.filter(item => item.type === 'Văn Học')
+
   const flatListData = [
     {
       title: 'Sách Kinh Tế',
       type: 'Kinh Tế',
-      data: allBooksData.filter((item, index) => item.type === 'Kinh Tế'),
+      data: SachKinhTe.filter((item, index) => index < 5),
     },
     {
       title: 'Sách Kỹ Năng',
       type: 'Kỹ Năng',
-      data: allBooksData.filter((item, index) => item.type === 'Kỹ Năng'),
+      data: SachKyNang.filter((item, index) => index < 5),
     },
     {
       title: 'Sách Tôn Giáo',
       type: 'Tôn Giáo',
-      data: allBooksData.filter((item, index) => item.type === 'Tôn Giáo'),
+      data: SachTonGiao.filter((item, index) => index < 5),
     },
     {
       title: 'Sách Văn Học',
       type: 'Văn Học',
-      data: allBooksData.filter((item, index) => item.type === 'Văn Học'),
+      data: SachVanHoc.filter((item, index) => index < 5),
     },
   ];
 

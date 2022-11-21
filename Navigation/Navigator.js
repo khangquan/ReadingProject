@@ -16,6 +16,7 @@ import ReadingScreen from '../Screens/ReadingScreen/ReadingScreen';
 import SearchScreen from '../Screens/SearchScreen/SearchScreen';
 import UserInfoScreen from '../Screens/UserScreen/UserInfoScreen';
 import EditUserInfo from '../Screens/UserScreen/EditUserInfo';
+import FavBooksScreen from '../Screens/FavoriteBooksScreen/FavBooksScreen';
 
 const Tabs = createBottomTabNavigator();
 const LoginStack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ const HomeStackNavigator = () => (
     <HomeStack.Screen name="ReadingScreen" component={ReadingScreen} />
     <HomeStack.Screen name="UserInfoScreen" component={UserInfoScreen} />
     <HomeStack.Screen name="EditUserInfo" component={EditUserInfo} />
+    <HomeStack.Screen name="FavBooksScreen" component={FavBooksScreen} />
   </HomeStack.Navigator>
 );
 

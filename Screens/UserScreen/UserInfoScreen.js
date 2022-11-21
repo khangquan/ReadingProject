@@ -48,7 +48,7 @@ export default function UserInfoScreen({ navigation }) {
         <SafeAreaView style={styles.container}>
             <View style={styles.topMenu}>
                 <View style={styles.topContent}>
-                    <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backStyle}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Icon name="chevron-back-outline" size={35} color={'white'} />
                     </TouchableOpacity>
                     <Text style={styles.topTextStyle}>Thông tin tài khoản</Text>
@@ -139,7 +139,6 @@ const styles = StyleSheet.create({
         flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
-
     },
     editAvatar: {
         position: 'absolute',

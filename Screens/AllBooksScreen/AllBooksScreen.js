@@ -44,7 +44,7 @@ export default function AllBooksScreen({ navigation, route }) {
         <SafeAreaView style={styles.container}>
             <View style={styles.topMenu}>
                 <View style={styles.topContent}>
-                    <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backStyle}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Icon name="chevron-back-outline" size={35} color={'white'} />
                     </TouchableOpacity>
                     <Text style={styles.topTextStyle}>{bookData.type}</Text>
