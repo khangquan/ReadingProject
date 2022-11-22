@@ -6,7 +6,8 @@ import {
   Image,
   Dimensions,
   ScrollView,
-  StatusBar
+  StatusBar,
+  Alert
 } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -16,6 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import MenuIconBar from './MenuIconBar'
 import ViewMoreText from 'react-native-view-more-text'
 import DetailScreenFlatlist from './DetailScreenFlatlist'
+import { addFavBook, editFavBook } from '../../redux/actions/AccountAction'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -26,9 +28,25 @@ export default function DetailScreen({ navigation }) {
   const dispatch = useDispatch()
   const [isLike, setIsLike] = useState(false)
 
+  const [userInfo, setUserInfo] = useState([]);
+  const { currentUser } = useSelector(state => state.loginScreen);
+  const { userAccounts } = useSelector(state => state.register);
+
   useEffect(() => {
-    dispatch(getBookData())
+    getData()
   }, [])
+
+  const getData = () => {
+    dispatch(getBookData())
+    userAccounts.map(user => {
+      if (user.email === currentUser) {
+        setUserInfo(user);
+        user.favBookData.map(book => {
+          if (book.title === bookData.title) setIsLike(true)
+        })
+      }
+    });
+  };
 
   const renderView = ({ item }) => (
     <TouchableOpacity
@@ -65,13 +83,30 @@ export default function DetailScreen({ navigation }) {
     navigation.navigate('ReadingScreen')
   }
 
-  const handleLikeBook = () => {
-    setIsLike(!isLike)
+  const handleLikeBook = (bookData) => {
+    if (isLike === true) {
+      Alert.alert('Không thể thêm', 'Tựa sách đã có trong danh sách yêu thích!')
+    } else {
+      setIsLike(true)
+      dispatch(addFavBook(
+        {
+          userId: userInfo.id,
+          favBook: {
+            title: bookData.title,
+            image: bookData.image,
+            author: bookData.author,
+            type: bookData.type,
+            desc: bookData.desc,
+            status: bookData.status,
+          }
+        }))
+      Alert.alert('Thành công', 'Đã thêm vào danh sách yêu thích!')
+    }
   }
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden={true}/>
+      <StatusBar hidden={true} />
       <Image
         style={styles.imageBG}
         blurRadius={10}
@@ -100,11 +135,13 @@ export default function DetailScreen({ navigation }) {
           <MenuIconBar />
           <MenuIconBar
             color={isLike ? 'red' : null}
-            title={'heart'} textTitle={'Thích'} onEvent={handleLikeBook}
+            title={'heart'} textTitle={'Thích'}
+            onEvent={() => handleLikeBook(bookData)}
           />
           <MenuIconBar
             title={'chatbubble-ellipses-outline'}
             textTitle={'Bình luận'}
+            onEvent={() => console.log(userInfo)}
           />
           <MenuIconBar
             title={'share-outline'}

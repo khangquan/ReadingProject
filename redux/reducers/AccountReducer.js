@@ -28,6 +28,7 @@ const initialState = {
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
+    
     case REGISTER:
       return {
         ...state,
@@ -43,13 +44,16 @@ const accountReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-
     case ADD_FAV_BOOK:
+      state.userAccounts.map(account => {
+        if (account.id === action.payload.userId) {
+          account.favBookData.push(action.payload.favBook);
+        }
+      });
       return {
-        ...state.userAccounts,
-        favBookData: [...userAccounts.favBookData, action.payload],
+        ...state,
       };
-
+      
     default:
       return state;
   }
