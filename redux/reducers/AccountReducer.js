@@ -28,7 +28,7 @@ const initialState = {
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
-    
+
     case REGISTER:
       return {
         ...state,
@@ -53,7 +53,18 @@ const accountReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-      
+    case EDIT_FAV_BOOK:
+      state.userAccounts.map(account => {
+        let checkBook = account.favBookData
+        for (let i = 0; i < checkBook.length; i++){
+          if(checkBook[i].title === action.payload.title){
+            checkBook.splice(i,1)
+          }
+        }
+      })
+      return {
+        ...state,
+      };
     default:
       return state;
   }

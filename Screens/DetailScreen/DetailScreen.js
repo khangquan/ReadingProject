@@ -52,7 +52,6 @@ export default function DetailScreen({ navigation }) {
     <TouchableOpacity
       onPress={() => {
         dispatch(getBookType(item))
-        navigation.navigate('DetailScreen')
       }}
       style={styles.renderViewStyle}
     >
@@ -85,7 +84,24 @@ export default function DetailScreen({ navigation }) {
 
   const handleLikeBook = (bookData) => {
     if (isLike === true) {
-      Alert.alert('Không thể thêm', 'Tựa sách đã có trong danh sách yêu thích!')
+      Alert.alert(
+        'Thông báo',
+        'Bạn có muốn xóa khỏi danh sách yêu thích?',[
+          {
+            text: 'Yes',
+            onPress: () => {
+              setIsLike(false)
+              dispatch(editFavBook({
+                userId: userInfo.id,
+                title: bookData.title
+              }));
+            },
+          },
+          {
+            text: 'No',
+            onPress: () => {},
+          },
+        ])
     } else {
       setIsLike(true)
       dispatch(addFavBook(

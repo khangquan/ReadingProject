@@ -13,7 +13,7 @@ export const checkRegValidate = Yup.object().shape({
     .max(50, 'Tối đa 50 ký tự!')
     .required('Vui lòng nhập họ tên của bạn!'),
   email: Yup.string()
-    .email('Email không hợp lệ')
+    //.email('Email không hợp lệ')
     .min(2, 'Tối thiểu 2 ký tự!')
     .max(50, 'Tối đa 50 ký tự!')
     .required('Vui lòng nhập email của bạn!'),

@@ -38,9 +38,7 @@ export default function HomeScreen({navigation, route}) {
 
   const renderView = ({item}) => (
     <TouchableOpacity
-      onPress={() => {
-        handleDetail(item);
-      }}
+      onPress={() => {handleDetail(item)}}
       style={styles.renderViewStyle}
     >
       <Image style={styles.flatListImg} source={item.image} />
