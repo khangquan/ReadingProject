@@ -9,7 +9,7 @@ const initialState = {
       id: new Date().getTime(),
       fullname: 'Khang Quân',
       email: 'quan',
-      pass: '123456',
+      pass: '123',
       favBookData: [
         {
           id: new Date().getTime(),

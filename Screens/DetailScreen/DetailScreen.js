@@ -7,51 +7,53 @@ import {
   Dimensions,
   ScrollView,
   StatusBar,
-  Alert
-} from 'react-native'
-import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getBookData, getBookType } from '../../redux/actions/GetBookAction'
-import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
-import MenuIconBar from './MenuIconBar'
-import ViewMoreText from 'react-native-view-more-text'
-import DetailScreenFlatlist from './DetailScreenFlatlist'
-import { addFavBook, editFavBook } from '../../redux/actions/AccountAction'
+  Alert,
+} from 'react-native';
+import {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {getBookData, getBookType} from '../../redux/actions/GetBookAction';
+import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
+import MenuIconBar from './MenuIconBar';
+import ViewMoreText from 'react-native-view-more-text';
+import DetailScreenFlatlist from './DetailScreenFlatlist';
+import {addFavBook, editFavBook} from '../../redux/actions/AccountAction';
 
-const windowWidth = Dimensions.get('window').width
-const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
-export default function DetailScreen({ navigation }) {
-  const { allBooksData, bookData } = useSelector(state => state.bookGetData)
-  const bookYouMayLike = allBooksData.filter((item, index) => item.type === bookData.type)
-  const dispatch = useDispatch()
-  const [isLike, setIsLike] = useState(false)
+export default function DetailScreen({navigation}) {
+  const {allBooksData, bookData} = useSelector(state => state.bookGetData);
+  const bookYouMayLike = allBooksData.filter(
+    (item, index) => item.type === bookData.type,
+  );
+  const dispatch = useDispatch();
+  const [isLike, setIsLike] = useState(false);
 
   const [userInfo, setUserInfo] = useState([]);
-  const { currentUser } = useSelector(state => state.loginScreen);
-  const { userAccounts } = useSelector(state => state.register);
+  const {currentUser} = useSelector(state => state.loginScreen);
+  const {userAccounts} = useSelector(state => state.register);
 
   useEffect(() => {
-    getData()
-  }, [])
-
-  const getData = () => {
-    dispatch(getBookData())
-    userAccounts.map(user => {
-      if (user.email === currentUser) {
-        setUserInfo(user);
-        user.favBookData.map(book => {
-          if (book.title === bookData.title) setIsLike(true)
-        })
-      }
+    dispatch(getBookData());
+    userAccounts.forEach(user => {
+      if (user.email === currentUser) setUserInfo(user);
+      let check = false;
+      user.favBookData.forEach(book => {
+        if (book.title === bookData.title) {
+          check = true;
+        } else {
+          setIsLike(false);
+        }
+      });
+      setIsLike(check);
     });
-  };
+  }, [bookData]);
 
-  const renderView = ({ item }) => (
+  const renderView = ({item}) => (
     <TouchableOpacity
       onPress={() => {
-        dispatch(getBookType(item))
+        dispatch(getBookType(item));
       }}
       style={styles.renderViewStyle}
     >
@@ -59,53 +61,56 @@ export default function DetailScreen({ navigation }) {
       <Text style={styles.flatListTitle}>{item.title}</Text>
       <Text style={styles.flatListAuthor}>{item.author}</Text>
     </TouchableOpacity>
-  )
+  );
 
-  const renderViewMore = (onPress) => {
+  const renderViewMore = onPress => {
     return (
-      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>Xem thêm</Text>
-    )
-  }
+      <Text style={{fontSize: 17, fontWeight: '500'}} onPress={onPress}>
+        Xem thêm
+      </Text>
+    );
+  };
 
-  const renderViewLess = (onPress) => {
+  const renderViewLess = onPress => {
     return (
-      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>Thu gọn</Text>
-    )
-  }
+      <Text style={{fontSize: 17, fontWeight: '500'}} onPress={onPress}>
+        Thu gọn
+      </Text>
+    );
+  };
 
-  const handleAllBook = (item) => {
-    dispatch(getBookType(item))
-    navigation.navigate('AllBooksScreen')
-  }
+  const handleAllBook = item => {
+    dispatch(getBookType(item));
+    navigation.navigate('AllBooksScreen');
+  };
 
   const handleReadingScreen = () => {
-    navigation.navigate('ReadingScreen')
-  }
+    navigation.navigate('ReadingScreen');
+  };
 
-  const handleLikeBook = (bookData) => {
+  const handleLikeBook = bookData => {
     if (isLike === true) {
-      Alert.alert(
-        'Thông báo',
-        'Bạn có muốn xóa khỏi danh sách yêu thích?',[
-          {
-            text: 'Yes',
-            onPress: () => {
-              setIsLike(false)
-              dispatch(editFavBook({
-                userId: userInfo.id,
-                title: bookData.title
-              }));
-            },
-          },
-          {
-            text: 'No',
-            onPress: () => {},
-          },
-        ])
-    } else {
-      setIsLike(true)
-      dispatch(addFavBook(
+      Alert.alert('Thông báo', 'Bạn có muốn xóa khỏi danh sách yêu thích?', [
         {
+          text: 'Yes',
+          onPress: () => {
+            setIsLike(false);
+            dispatch(
+              editFavBook({
+                title: bookData.title,
+              }),
+            );
+          },
+        },
+        {
+          text: 'No',
+          onPress: () => {},
+        },
+      ]);
+    } else {
+      setIsLike(true);
+      dispatch(
+        addFavBook({
           userId: userInfo.id,
           favBook: {
             title: bookData.title,
@@ -114,23 +119,24 @@ export default function DetailScreen({ navigation }) {
             type: bookData.type,
             desc: bookData.desc,
             status: bookData.status,
-          }
-        }))
-      Alert.alert('Thành công', 'Đã thêm vào danh sách yêu thích!')
+          },
+        }),
+      );
+      Alert.alert('Thành công', 'Đã thêm vào danh sách yêu thích!');
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-      <Image
-        style={styles.imageBG}
-        blurRadius={10}
-        source={bookData.image}
-      />
+      <Image style={styles.imageBG} blurRadius={10} source={bookData.image} />
       <View style={styles.topContent}>
-
-        <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backStyle}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
+          style={styles.backStyle}
+        >
           <Icon name="chevron-back-outline" size={35} color={'#FB7849'} />
         </TouchableOpacity>
 
@@ -139,19 +145,23 @@ export default function DetailScreen({ navigation }) {
           <View style={styles.titleButtonStyle}>
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
-            <TouchableOpacity onPress={handleReadingScreen} style={styles.readButton}>
+            <TouchableOpacity
+              onPress={handleReadingScreen}
+              style={styles.readButton}
+            >
               <Text style={styles.buttonText}>ĐỌC NGAY</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
 
-      <ScrollView style={styles.botContent} >
+      <ScrollView style={styles.botContent}>
         <View style={styles.iconMenuBar}>
           <MenuIconBar />
           <MenuIconBar
             color={isLike ? 'red' : null}
-            title={'heart'} textTitle={'Thích'}
+            title={'heart'}
+            textTitle={'Thích'}
             onEvent={() => handleLikeBook(bookData)}
           />
           <MenuIconBar
@@ -159,29 +169,26 @@ export default function DetailScreen({ navigation }) {
             textTitle={'Bình luận'}
             onEvent={() => console.log(userInfo)}
           />
-          <MenuIconBar
-            title={'share-outline'}
-            textTitle={'Chia sẻ'}
-          />
+          <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'} />
           <MenuIconBar />
         </View>
 
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
+        <View style={{margin: 20}}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Giới Thiệu</Text>
           <ViewMoreText
             numberOfLines={2}
             renderViewMore={renderViewMore}
             renderViewLess={renderViewLess}
           >
-            <Text style={{ fontSize: 18 }}>{bookData.desc}</Text>
+            <Text style={{fontSize: 18}}>{bookData.desc}</Text>
           </ViewMoreText>
         </View>
 
-        <View style={{ margin: 20, }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
-          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
-          <Text style={{ fontSize: 18 }}>Lượt Xem: 0</Text>
-          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
+        <View style={{margin: 20}}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Thông Tin</Text>
+          <Text style={{fontSize: 18}}>Thể loại: {bookData.type}</Text>
+          <Text style={{fontSize: 18}}>Lượt Xem: 0</Text>
+          <Text style={{fontSize: 18}}>Trạng Thái: {bookData.status}</Text>
         </View>
 
         <DetailScreenFlatlist
@@ -192,7 +199,7 @@ export default function DetailScreen({ navigation }) {
         />
       </ScrollView>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -226,7 +233,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     borderWidth: 1,
-    borderColor: '#FB7849'
+    borderColor: '#FB7849',
   },
   titleButtonStyle: {
     marginLeft: 10,
@@ -257,7 +264,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {
       width: 2,
       height: 2,
-    }
+    },
   },
   authorText: {
     color: '#FB7849',
@@ -267,7 +274,7 @@ const styles = StyleSheet.create({
     textShadowOffset: {
       width: 2,
       height: 2,
-    }
+    },
   },
   iconMenuBar: {
     flexDirection: 'row',
@@ -298,4 +305,4 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-})
+});

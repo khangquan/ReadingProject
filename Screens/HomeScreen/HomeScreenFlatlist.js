@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: 'gray'
+    color: 'gray',
   },
   showAll: {
     fontSize: 15,
