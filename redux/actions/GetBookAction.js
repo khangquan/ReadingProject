@@ -1,4 +1,4 @@
-import { GET_BOOK_DATA, GET_BOOK_TYPE } from "../reducers/GetBookReducer"
+import { GET_BOOK_DATA, GET_BOOK_TYPE, INCREASE_BOOK_VIEW } from "../reducers/GetBookReducer"
 import TongHopSach from "../../Screens/BookData/TongHopSach"
 
 export const getBookData = () => (
@@ -14,6 +14,15 @@ export const getBookType = (param) => (
         payload: param
     }
 )
+
+export const increaseBookView = (param) => (
+    {
+        type: INCREASE_BOOK_VIEW,
+        payload: param
+    }
+)
+
+
 
 // export const getBookDataAPI = () => (
 //     async (dispatch) => {

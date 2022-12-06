@@ -22,7 +22,7 @@ export default function BooksTypeScreen({navigation}) {
  
   const handleAllBook = (item) => {
     dispatch(getBookType(item))
-    navigation.navigate('AllBooksScreen');
+    navigation.navigate('AllBooksScreen' , item);
   };
 
   const renderView = ({item}) => (
@@ -41,13 +41,12 @@ export default function BooksTypeScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
-          <TouchableOpacity></TouchableOpacity>
           <Text style={styles.topTextStyle}>Thể Loại</Text>
-          <TouchableOpacity onPress={() => {
+          {/* <TouchableOpacity onPress={() => {
               navigation.navigate('SearchScreen');
             }}>
             <Icon name="search" size={30} color="white" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
       <FlatList
@@ -78,6 +77,10 @@ const DATA = [
     type: 'Kinh Tế',
     image: require('../../assets/BookTypeScreen/kinhte.jpg'),
   },
+  {
+    type: 'Tất Cả',
+    image: require('../../assets/BookTypeScreen/tatca.jpg')
+  }
 ];
 
 const styles = StyleSheet.create({
@@ -90,8 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FB7849',
   },
   topContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '90%',
     height: '100%',
     alignItems: 'center',

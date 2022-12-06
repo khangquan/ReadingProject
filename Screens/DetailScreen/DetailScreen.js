@@ -9,21 +9,21 @@ import {
   StatusBar,
   Alert,
 } from 'react-native';
-import {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {getBookData, getBookType} from '../../redux/actions/GetBookAction';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getBookData, getBookType, increaseBookView } from '../../redux/actions/GetBookAction';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MenuIconBar from './MenuIconBar';
 import ViewMoreText from 'react-native-view-more-text';
 import DetailScreenFlatlist from './DetailScreenFlatlist';
-import {addFavBook, editFavBook} from '../../redux/actions/AccountAction';
+import { addFavBook, editFavBook } from '../../redux/actions/AccountAction';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function DetailScreen({navigation}) {
-  const {allBooksData, bookData} = useSelector(state => state.bookGetData);
+export default function DetailScreen({ navigation }) {
+  const { allBooksData, bookData } = useSelector(state => state.bookGetData);
   const bookYouMayLike = allBooksData.filter(
     (item, index) => item.type === bookData.type,
   );
@@ -31,8 +31,8 @@ export default function DetailScreen({navigation}) {
   const [isLike, setIsLike] = useState(false);
 
   const [userInfo, setUserInfo] = useState([]);
-  const {currentUser} = useSelector(state => state.loginScreen);
-  const {userAccounts} = useSelector(state => state.register);
+  const { currentUser } = useSelector(state => state.loginScreen);
+  const { userAccounts } = useSelector(state => state.register);
 
   useEffect(() => {
     dispatch(getBookData());
@@ -50,7 +50,7 @@ export default function DetailScreen({navigation}) {
     });
   }, [bookData]);
 
-  const renderView = ({item}) => (
+  const renderView = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
         dispatch(getBookType(item));
@@ -65,7 +65,7 @@ export default function DetailScreen({navigation}) {
 
   const renderViewMore = onPress => {
     return (
-      <Text style={{fontSize: 17, fontWeight: '500'}} onPress={onPress}>
+      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>
         Xem thêm
       </Text>
     );
@@ -73,7 +73,7 @@ export default function DetailScreen({navigation}) {
 
   const renderViewLess = onPress => {
     return (
-      <Text style={{fontSize: 17, fontWeight: '500'}} onPress={onPress}>
+      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>
         Thu gọn
       </Text>
     );
@@ -84,8 +84,9 @@ export default function DetailScreen({navigation}) {
     navigation.navigate('AllBooksScreen');
   };
 
-  const handleReadingScreen = () => {
-    navigation.navigate('ReadingScreen');
+  const handleReadingScreen = (item) => {
+    dispatch(increaseBookView(item))
+    //navigation.navigate('ReadingScreen');
   };
 
   const handleLikeBook = bookData => {
@@ -104,7 +105,7 @@ export default function DetailScreen({navigation}) {
         },
         {
           text: 'No',
-          onPress: () => {},
+          onPress: () => { },
         },
       ]);
     } else {
@@ -146,7 +147,7 @@ export default function DetailScreen({navigation}) {
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
             <TouchableOpacity
-              onPress={handleReadingScreen}
+              onPress={() => { handleReadingScreen(bookData.title) }}
               style={styles.readButton}
             >
               <Text style={styles.buttonText}>ĐỌC NGAY</Text>
@@ -173,22 +174,22 @@ export default function DetailScreen({navigation}) {
           <MenuIconBar />
         </View>
 
-        <View style={{margin: 20}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Giới Thiệu</Text>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
           <ViewMoreText
             numberOfLines={2}
             renderViewMore={renderViewMore}
             renderViewLess={renderViewLess}
           >
-            <Text style={{fontSize: 18}}>{bookData.desc}</Text>
+            <Text style={{ fontSize: 18 }}>{bookData.desc}</Text>
           </ViewMoreText>
         </View>
 
-        <View style={{margin: 20}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Thông Tin</Text>
-          <Text style={{fontSize: 18}}>Thể loại: {bookData.type}</Text>
-          <Text style={{fontSize: 18}}>Lượt Xem: 0</Text>
-          <Text style={{fontSize: 18}}>Trạng Thái: {bookData.status}</Text>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
+          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
+          <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
+          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
         </View>
 
         <DetailScreenFlatlist

@@ -6,6 +6,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Nếu bạn đã từng cảm thấy thất vọng vì việc làm công lãnh lương hay làm tư không cho bạn sự an toàn tài chính mà bạn khao khát , còn có cách thay thế. Nếu những đầu tư của bạn thất bại, bạn mệt mỏi vì những lời khuyên tài chính cũ xì, bạn lo lắng về việc nghỉ hưu, hay bạn chỉ dành nhiều thời gian hơn cho gia đình, bạn có thể tìm thấy con đường đến sự tự do về tài chính trong quyển sách này. Quyển sách gồm các câu chuyện thành công của những người đã đón nhận lời khuyên của người bố giàu và sau đó tìm thấy con đường đi đến sự thành công về tài chính của riêng mình. Và bạn cũng có thể tạo ra những câu chuyện thành công từ tập sách này',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Hướng Dẫn Giao Dịch Theo Sóng Elliott",
@@ -14,6 +15,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Chào mừng các bạn! Hướng Dẫn Giao Dịch Theo Sóng Elliott là cuốn sách phải đọc dành cho những ai muốn biết cách thức giao dịch theo Nguyên Lý Sóng Elliott. Bạn sẽ biết làm thế nào để tìm ra các cơ hội giao dịch tốt, đánh giá chất lượng từng tín hiệu giao dịch, cách mở vị thế, quản trị giao dịch bằng cách nâng và hạ lệnh dừng lỗ, cũng như cách đóng lệnh hợp lý nhất',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Kiếm Tiền Thời Khủng Hoảng",
@@ -22,6 +24,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Hiện nay, “khủng hoảng” có lẽ là từ được nhắc đến nhiều nhất, nó xuất hiện trên tất cả các phương tiện thông tin đại chúng, len lỏi vào cả những câu chuyện trong bữa cơm gia đình. Khủng hoảng ảnh hưởng mạnh mẽ không chỉ đến nền kinh tế vĩ mô của một đất nước, quốc gia mà còn tác động đến cuộc sống của từng người. Người ta coi khủng hoảng như một cơn bão quét, đặt chân đến đâu sẽ cuốn theo tài sản, sự yên ổn đến đó. Trong cơn bão “khủng hoảng” đó, dù ít hay nhiều, ai cũng sẽ phải gánh chịu tổn thất',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Nghỉ Lớn Để Thành Công",
@@ -30,6 +33,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Sự sáng tạo là một trong những yếu tố rất quan trọng để thành công, bất kể công việc của bạn là gì đi chăng nữa. Bill Zanker là một người có óc sáng tạo và anh ấy biết cách tận dụng nó để đạt được hiệu quả cao nhất trong công việc. Đó là một nhà tổ chức tài ba. Quan điểm tích cực của Bill...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Cẩm Nang Đầu Tư Và Quản Lý Tài Chính Cá Nhân",
@@ -38,6 +42,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Kỹ năng tối ưu hóa hiệu quả đầu tư với quy tắc “Tam giác vàng quản lý tài chính',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Hướng Dẫn Thiết Lập Farmstay",
@@ -46,6 +51,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Đây là cuốn sách đầu tiên tại Việt Nam viết về Farmstay và cũng là cuốn sách hệ thống kiến thức chuẩn xác nhất cho những ai khao khát khởi nghiệp. Hướng Dẫn Thiết Lập Farmstay là cuốn sách được dịch từ cuốn sách “Farmstay Manual” của Học viện Nông nghiệp bền vững Minnesota Mỹ.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "25 Năm Theo Dòng Kinh Tế Việt Nam",
@@ -54,6 +60,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Hai mươi lăm năm theo dòng kinh tế Việt Nam - đó cũng là thời gian mà tác giả Huỳnh Bửu Sơn - chuyên gia kinh tế - với tư cách người cầm bút đã ghi lại những trải nghiệm sống động và biết bao trăn trở của một trí thức từ ngày đất nước đổi mới.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Nền Kinh Tế Xanh Lam",
@@ -62,6 +69,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Quyển The Blue Economy cho thấy việc bảo đảm nguyên vật liệu và điều chỉnh các kế hoạch sản xuất theo kiểu mẫu của tự nhiên sẽ giải quyết được nhiều vấn đề suy thoái và ô nhiễm môi trường. Tuy nhiên, chính sách kinh tế hiện nay và các mô hình kinh doanh cốt lõi đã phớt lờ đi những giải pháp...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Người Giải Mã Thị Trường Tài Chính",
@@ -70,6 +78,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Người Giải Mã Thị Trường Tài Chính. Simons và nhóm của ông ấy là một trong những nhà giao dịch bí ẩn nhất mà Phố Wall đã từng có. Họ không để lại bất cứ một dấu vết nào về cách họ chinh phục thị trường tài chính, để các đối thủ không nắm được bất kỳ manh mối nào. Viết về Simons và...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Gã Nghiện Giày - Tự Truyện Của Nhà Sáng Lập Nike",
@@ -78,6 +87,7 @@ const TongHopSach = [
         type: 'Kinh Tế',
         desc: 'Gã Nghiện Giày - Tự Truyện Của Nhà Sáng Lập Nike Một câu chuyện cuốn hút, và truyền cảm hứng.... 24 tuổi, lấy bằng MBA ở Đại học Stanford, trăn trở với những câu hỏi lớn của cuộc đời, băn khoăn không biết tiếp tục làm việc cho một tập đoàn lớn hay tạo dựng sư nghiệp riêng cho...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "100 Cách Sống Hạnh Phúc",
@@ -86,6 +96,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Trong quyển sách bổ ích và đầy cảm hứng này, Dr. Timothy J. Sharp chia sẽ 100 động cơ nâng đỡ tinh thần, có thể thực hành một cách nhẹ nhàng mỗi ngày và mang lại cho bạn những kết quả tốt đẹp, làm thay đổi cuộc đời về sau.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Biên Niên Ký Thất Nghiệp",
@@ -94,6 +105,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Biên Niên Ký Thất Nghiệp – cuốn sách có đầy đủ những ác mộng tệ nhất của bạn. Nhưng với ngòi bút của tác giả Chiba Chiba, thất nghiệp hiện ra tuy vất vả nhưng không hề não nề, bi lụy. Giọng văn giễu đời, tưởng chừng buông thả với cuộc sống nhưng luôn lạc quan một cách bình thản để sống....',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Giữ Tâm Cho Sáng, Giữ Lòng Cho Yên",
@@ -102,6 +114,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Đời người luôn biến đổi thăng trầm với mọi cung bậc cảm xúc hỉ, nộ, ái, ố. Ai cũng đôi lần hành xử nông nổi, nói những lời vô tâm làm tổn thương người khác hay rơi vào tuyệt vọng khi gặp khó khăn. Nhưng điều quan trọng là ta phải tự nhìn nhận lại mình, sửa chữa, tôi rèn bản thân và vững tâm tiếp tục tiến về phía trước để xây dựng mối quan hệ tốt đẹp hơn với bản thân và cả với người khác.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Hướng Nghiệp 4.0",
@@ -110,6 +123,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Kỉ nguyên 4.0 đã tạo ra những thay đổi sâu rộng trong sản xuất và đời sống, đặc biệt có những tác động không nhỏ đến sự chuyển dịch của các ngành nghề trong xã hội.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Làm Ít Được Nhiều",
@@ -118,6 +132,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Trong thời đại thay đổi nhanh chóng và cạnh tranh gay gắt của chúng ta hiện nay, chúng ta thường tự vướng vào một quan điểm quá mệt mỏi là tin rằng thành công chỉ đến khi phải đánh đổi bằng sự cân bằng của cuộc sống.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Atomic Habits - Thay Đổi Tí Hon, Hiệu Quả Bất Ngờ",
@@ -126,6 +141,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Atomic Habits - Thay Đổi Tí Hon, Hiệu Quả Bất Ngờ •  Wall Street Journal Bestseller, USA Today Bestseller, Publisher\'s Weekly Bestseller •  Nằm trong Top 20 tựa sách thể loại non-fiction bán chạy và được tìm đọc nhiều nhất của Amazon suốt 40 tuần tính đến tháng 9/2019 Một...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Trở Về Không - Trải Nghiệm Ho'oponopono",
@@ -134,6 +150,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Nếu Không giới hạn (Zero Limit) là sự bắt đầu của phương pháp Ho\'oponopono thì Trở về không (At Zero) chính là sự nối tiếp thông điệp với những phương thức nâng cao bí truyền, mở đường cho phép mầu xảy đến trong thực tại.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Hiểu Về Trái Tim",
@@ -142,6 +159,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Hiểu Về Trái Tim Hiểu Về Trái Tim là một cuốn sách đặc biệt được viết bởi thiền sư Minh Niệm. Với phong thái và lối hành văn gần gũi với những sinh hoạt của người Việt, thầy Minh Niệm đã thật sự thổi hồn Việt vào cuốn sách nhỏ này.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Sức Mạnh Của Sự Tử Tế",
@@ -150,6 +168,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Trong kinh doanh, tử tế không có nghĩa là thiếu quyết đoán hay cả nể… chẳng dễ mà thành được người tử tế, nhưng một khi đã được rồi thì bạn sẽ: - Nổi trội hơn - Kiếm được nhiều tiền hơn - Vui hơn - Khỏe mạnh hơn - Sống lâu hơn để tận hưởng bốn điều kể trên...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Đắc Nhân Tâm",
@@ -158,6 +177,7 @@ const TongHopSach = [
         type: 'Kỹ Năng',
         desc: 'Đắc Nhân Tâm Đắc Nhân Tâm của Dale Carnegie là tác phẩm nổi tiếng nhất, bán chạy nhất và có tầm ảnh hưởng nhất của mọi thời đại. Cuốn sách đã được chuyển ngữ sang hầu hết các thứ tiếng trên thế giới và có mặt ở hàng trăm quốc gia. Đây là cuốn sách liên tục đứng đầu danh mục sách...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Giận",
@@ -166,6 +186,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Giận là một cuốn sách hay của Thiền sư Thích Nhất Hạnh, nó mở ra cho ta những khả năng kỳ diệu, nhưng lại rất dễ thực hành để ta tự mình từng bước... thoát khỏi cơn giận và sống đẹp với xã hội quanh mình.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Giọt Nước Cành Dương",
@@ -174,6 +195,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Vẫn với văn phong giản dị, Giọt Nước Cành Dương mang đến cho người đọc 15 mẩu chuyện đời thường nhưng mang đậm triết lý Phật giáo. Từ những câu chuyện xoay quanh đời sống tu hành của nhân vật Tôi cho đến những câu chuyện cổ tích và đời thường giản dị dễ hiểu nhưng hàm chứa triết lý sâu sắc, uyên thâm.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Nhật Tụng Thiền Môn",
@@ -182,6 +204,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Đã từ năm mươi năm nay, Phật tử Việt Nam, nhất là giới xuất gia, chờ đợi một cuốn Nhật Tụng Thiền Môn bằng Quốc Ngữ. Trong quá trình thực tập và hoằng pháp, tôi cũng đã từng nhiều lần cảm thấy nhu yếu cấp thiết này. Nay sách Nhật Tụng Thiền Môn của Đạo Tràng Mai Thôn được ấn hành, tôi hết sức vui mừng và xin trân trọng giới thiệu với các giới hành giả khắp nơi trong toàn quốc.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Tình Thầy",
@@ -190,6 +213,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Cuốn sách ghi lại những khoảnh khắc gần gũi, niềm vui và hạnh phúc mà tác giả có được với thầy mình: Thiền sư Thích Nhất Hạnh',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Tri Kỷ Của Bụt",
@@ -198,6 +222,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Chúng ta có phải là tri kỷ của Bụt không? Chúng ta có hiểu được Bụt không? Thật ra người ta đã hiểu lầm Bụt rất nhiều. Không phải chỉ những người ngoài đạo Bụt mà ngay trong chính hàng đệ tử của Bụt cũng hiểu lầm Bụt. Bụt không dạy như vậy nhưng người ta nói Bụt dạy như vậy, rất oan cho Bụt. Ta hiểu lầm Bụt, rồi truyền đạt giáo lý của Bụt một cách sai lạc và kéo theo sự hiểu lầm của cả thế hệ tương lai. ',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Thương Yêu Theo Phương Pháp Bụt Dạy",
@@ -206,6 +231,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Thương Yêu Theo Phương Pháp Bụt Dạy Khi nói đến thương yêu, ta hay nghĩ rằng đối tượng thương yêu là một người khác. Từ nhỏ chúng ta cũng được dạy rằng phải yêu thương người khác, thậm chí đến quên mình, đó được ca ngợi là đức hy sinh. Nhưng Bụt dạy rằng đối tượng thương yêu đầu tiên...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Người Vô Sự",
@@ -214,6 +240,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Người Vô Sự "Tuệ giác không phải là kiến thức khái niệm. Tuệ giác có khả năng mang tới sống động và tư do trong giấy phút hiện tại. Kiến thức không làm được việc ấy." Cuốn sách gồm hai phần chính: Phần "Lâm Tế Lục" và phần bình giảng của Thiền sư...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "An Nhiên Giữa Những Thăng Trầm",
@@ -222,6 +249,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Ai trong đời chẳng từng một lần rơi vào tận cùng nỗi cô đơn, chợt thấy mình yếu đuối, mong manh quá đỗi; chẳng từng một lần chực gục ngã, buông xuôi trong bão giông cuộc đời; chẳng từng một lần chán nản trước thế sự đổi thay, lòng người nguội lạnh; chẳng từng một lần cảm thấy tìm chút bình an trong cuộc đời vô thường sao khó quá…',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Đường Mây Trên Đất Hoa",
@@ -230,6 +258,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Phần lớn các thiền sư đều ra đi không để lại dấu vết, nếu có thì chỉ lưu lại một vài giai thoại sơ lược nên rất ít ai biết rõ công phu tu tập của các ngài. Có lẽ biết rõ chúng sanh thời Mạt pháp nghiệp dày, trí mỏng, tín tâm yếu kém nên một vài thiền sư đã để lại tài liệu tu tập như một chứng...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Trí Tuệ Của Sự Từ Bi",
@@ -238,6 +267,7 @@ const TongHopSach = [
         type: 'Tôn Giáo',
         desc: 'Nghiên cứu mới nhất trong khoa học thần kinh cho thấy rằng khi lòng từ bi có ở trong tâm trí chúng ta, nhiệt thành quan tâm về hạnh phúc, sự đau khổ, nỗi buồn của người khác, tinh thần cũng tăng một cách đáng kể. Đây được coi là dấu hiệu cho thấy những xúc cảm tích cực biểu hiện qua cảm xúc, sự nhiệt tình, lòng từ bi đang chảy trong người.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Nếu Biết Trăm Năm Là Hữu Hạn",
@@ -246,6 +276,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Nếu biết trăm năm là hữu hạn, cớ gì ta không sống thật sâu...Có đôi khi những bộn bề của cuộc sống cuốn ta đi như dòng nước hững hờ cuốn trôi chiếc lá. Cứ thế, ta vội vã làm, vội vã ăn, vội vã ngủ, vội vã yêu và vội vã… để sống! Chắc hẳn đã không ít lần mỗi chúng ta đều thốt lên “giá như…',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Người Trồng Rừng",
@@ -254,6 +285,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Sự sống có mặt là nhờ sự kết hợp chặt chẽ của biết bao yếu tố đến từ muôn nơi, từ cả vũ trụ và muôn người, muôn loài. Có ý thức sáng tỏ ấy, ta mới đem hết tâm ý đóng góp phần tốt nhất và đẹp nhất của mình để bảo vệ sự sống, bảo vệ thiên nhiên và muôn người, muôn loài.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Papillon Người Tù Khổ Sai",
@@ -262,6 +294,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Papillon Người Tù Khổ Sai là một thiên hồi kí của Henri Charrière kể lại chính cuộc đời mình, về hành trình từ khi bị bắt giam và xử án đầy khổ sai chung thân vì tội giết người theo lời khai của một nhân chứng đã được “dàn xếp” trước',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Spy Room: Lớp Học Điệp Viên",
@@ -270,6 +303,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Spy room – Lớp học điệp viên (tên gốc: Spy kyoushitsu) là series light novel độc đáo về thể loại điệp viên, tình báo vốn rất hiếm hoi trong dòng manga/light novel, là cái tên xuất sắc đã giành giải nhất giải thưởng thường niên của Fantasia Bunko lần thứ 32',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Trong Đáy Mắt Trời Xanh Là Vĩnh Viễn",
@@ -278,6 +312,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Nhân dịp kỷ niệm 80 năm ngày sinh của Xuân Quỳnh, Trong Đáy Mắt Trời Xanh Là Vĩnh Viễn ra mắt độc giả để tưởng nhớ và tri ân nữ thi sĩ tài hoa đã có những đóng góp lớn cho nền văn học Việt Nam hiện đại.',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Truyện Kiều Văn Xuôi (Dành Cho Người Trẻ)",
@@ -286,6 +321,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Truyện Kiều Văn Xuôi Truyện Kiều là tác phẩm thơ nổi tiếng nhất của nền Thi ca Việt Nam. Người trẻ nào trong thời gian học Trung học cũng có dịp được nghe về Truyện Kiều và học một ít về Truyện Kiều. Nhưng vì Truyện Kiều là một tác phẩm cổ điển và lại có nhiều điển tích cho nên đối...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Cây Cam Ngọt Của Tôi",
@@ -294,6 +330,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Hãy làm quen với Zezé, cậu bé tinh nghịch siêu hạng đồng thời cũng đáng yêu bậc nhất, với ước mơ lớn lên trở thành nhà thơ cổ thắt nơ bướm. Chẳng phải ai cũng công nhận khoản “đáng yêu” kia đâu nhé. Bởi vì, ở cái xóm ngoại ô nghèo ấy, nỗi khắc khổ bủa vây đã che mờ mắt người ta trước trái tim...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Nữ Sinh",
@@ -302,6 +339,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Hầu hết các truyện trong tuyển tập đều có nhân vật chính là nữ với những miêu tả tâm lý hết sức tinh tế và cao sang. Không những thành công với thể loại tự truyện tư tiểu thuyết, Dazai còn chứng tỏ bản lĩnh bậc thầy của mình trong việc am hiểu tâm lý phụ nữ xứ Phù Tang. Qua tác phẩm của Dazai,...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Tâm Thành Và Lộc Đời",
@@ -310,6 +348,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Tâm Thành Và Lộc Đời Đã có rải rác vài lời đề nghị tôi viết hồi ký hoặc ngồi kể cho người ta ghi lại từ nhiều năm trước nhưng tôi đã từ chối bai bải... vì thấy mình chưa đủ độ dầy và độ... sạch sẽ để cho người ta đọc về mình, phần cũng lười lắm nên thôi...',
         status: 'Hoàn Thành',
+        views: 0,
     },
     {
         title: "Công Ty Cung Cấp Yêu Tinh",
@@ -318,6 +357,7 @@ const TongHopSach = [
         type: 'Văn Học',
         desc: 'Công Ty Cung Cấp Yêu Tinh Tác phẩm của Hoshi Shinichi tuy ngắn gọn và mang nhiều tính chất giả tưởng nhưng chủ yếu là mượn xưa để nói nay, mượn huyễn để độ chân, cho chúng ta nhiều bài học thâm thúy về cuộc sống và bản chất con người. Sự thông minh và từng trải của tác giả khiến cho...',
         status: 'Hoàn Thành',
+        views: 0,
     },
 ]
 

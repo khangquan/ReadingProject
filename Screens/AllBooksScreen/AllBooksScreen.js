@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     Dimensions,
     Image,
-    SafeAreaView
+    SafeAreaView,
+    Modal
 } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react'
@@ -18,12 +19,22 @@ const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
 export default function AllBooksScreen({ navigation, route }) {
+    const { params } = route
+    const [modalVisible, setModalVisible] = useState(false);
+    const [isAllBook, setIsAllBook] = useState(false)
     const dispatch = useDispatch()
     const { allBooksData, bookData } = useSelector(state => state.bookGetData)
 
     useEffect(() => {
         dispatch(getBookData())
+        checkIfAllBook()
     }, [])
+
+    const checkIfAllBook = () => {
+        if (params.type === 'Tất Cả') {
+            setIsAllBook(true)
+        } else setIsAllBook(false)
+    }
 
     const handleDetail = (item) => {
         dispatch(getBookType(item))
@@ -40,22 +51,35 @@ export default function AllBooksScreen({ navigation, route }) {
         </TouchableOpacity>
     )
 
+    const handleFilterItem = () => {
+
+    }
+
     return (
         <SafeAreaView style={styles.container}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                }}
+            ></Modal>
             <View style={styles.topMenu}>
                 <View style={styles.topContent}>
                     <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Icon name="chevron-back-outline" size={35} color={'white'} />
                     </TouchableOpacity>
                     <Text style={styles.topTextStyle}>{bookData.type}</Text>
-                    <TouchableOpacity>
-                        <Icon name="search" size={30} color="white" />
+                    <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+                        <Icon name="filter-outline" size={30} color="white" />
                     </TouchableOpacity>
                 </View>
             </View>
 
             <FlatList
-                data={allBooksData.filter(item => item.type === bookData.type)}
+                data={isAllBook ? allBooksData : allBooksData.filter(item => item.type === bookData.type)}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderView}
                 numColumns={3}
