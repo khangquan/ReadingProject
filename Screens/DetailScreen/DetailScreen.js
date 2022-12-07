@@ -96,10 +96,7 @@ export default function DetailScreen({ navigation }) {
           text: 'Yes',
           onPress: () => {
             setIsLike(false);
-            dispatch(
-              editFavBook({
-                title: bookData.title,
-              }),
+            dispatch(editFavBook({title: bookData.title})
             );
           },
         },

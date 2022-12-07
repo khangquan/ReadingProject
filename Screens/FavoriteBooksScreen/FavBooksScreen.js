@@ -11,20 +11,20 @@ import {
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useSelector, useDispatch} from 'react-redux';
-import {useState, useEffect} from 'react';
-import {getBookType} from '../../redux/actions/GetBookAction';
-import {editFavBook} from '../../redux/actions/AccountAction';
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { getBookType } from '../../redux/actions/GetBookAction';
+import { editFavBook } from '../../redux/actions/AccountAction';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default function FavBooksScreen({navigation}) {
+export default function FavBooksScreen({ navigation }) {
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState([]);
   const [edit, setEdit] = useState(false);
-  const {currentUser} = useSelector(state => state.loginScreen);
-  const {userAccounts} = useSelector(state => state.register);
+  const { currentUser } = useSelector(state => state.loginScreen);
+  const { userAccounts } = useSelector(state => state.register);
 
   useEffect(() => {
     getCurrentUser();
@@ -46,21 +46,17 @@ export default function FavBooksScreen({navigation}) {
       {
         text: 'Yes',
         onPress: () => {
-          dispatch(
-            editFavBook({
-              title: item.title,
-            }),
-          );
+          dispatch(editFavBook({ title: item.title }))
         },
       },
       {
         text: 'No',
-        onPress: () => {},
+        onPress: () => { },
       },
     ]);
   };
 
-  const renderView = ({item}) => (
+  const renderView = ({ item }) => (
     <>
       <TouchableOpacity
         disabled={edit ? true : false}
@@ -90,7 +86,10 @@ export default function FavBooksScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
-          {edit ? null : (
+          {edit ?
+            <TouchableOpacity onPress={() => setEdit(!edit)}>
+              <Icon name="checkmark-outline" size={35} color={'white'} />
+            </TouchableOpacity> :
             <>
               <TouchableOpacity
                 onPress={() => {
@@ -100,18 +99,12 @@ export default function FavBooksScreen({navigation}) {
                 <Icon name="chevron-back-outline" size={35} color={'white'} />
               </TouchableOpacity>
               <Text style={styles.topTextStyle}>Danh sách yêu thích</Text>
-            </>
-          )}
 
-          {edit ? (
-            <TouchableOpacity onPress={() => setEdit(!edit)}>
-              <Icon name="checkmark-outline" size={35} color={'white'} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => setEdit(!edit)}>
-              <Icon name="create-outline" size={35} color={'white'} />
-            </TouchableOpacity>
-          )}
+              <TouchableOpacity onPress={() => setEdit(!edit)}>
+                <Icon name="create-outline" size={35} color={'white'} />
+              </TouchableOpacity>
+            </>
+          }
         </View>
       </View>
       <FlatList

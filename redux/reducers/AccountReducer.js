@@ -1,5 +1,7 @@
 export const REGISTER = 'REGISTER';
-export const EDIT_ACCOUNT = 'EDIT_ACCOUNT';
+export const EDIT_ACCOUNT_FULLNAME = 'EDIT_ACCOUNT_FULLNAME';
+export const EDIT_ACCOUNT_EMAIL = 'EDIT_ACCOUNT_EMAIL';
+export const EDIT_ACCOUNT_PASS = 'EDIT_ACCOUNT_PASS'
 export const ADD_FAV_BOOK = 'ADD_FAV_BOOK';
 export const EDIT_FAV_BOOK = 'EDIT_FAV_BOOK';
 
@@ -35,10 +37,30 @@ const accountReducer = (state = initialState, action) => {
         userAccounts: [...state.userAccounts, action.payload],
       };
 
-    case EDIT_ACCOUNT:
+    case EDIT_ACCOUNT_FULLNAME:
       state.userAccounts.map(account => {
         if (account.id === action.payload.id) {
           account.fullname = action.payload.fullname;
+        }
+      });
+      return {
+        ...state,
+      };
+
+    case EDIT_ACCOUNT_EMAIL:
+      state.userAccounts.map(account => {
+        if (account.id === action.payload.id) {
+          account.email = action.payload.email;
+        }
+      });
+      return {
+        ...state,
+      };
+
+    case EDIT_ACCOUNT_PASS:
+      state.userAccounts.map(account => {
+        if (account.id === action.payload.id) {
+          account.pass = action.payload.pass;
         }
       });
       return {
@@ -56,9 +78,9 @@ const accountReducer = (state = initialState, action) => {
     case EDIT_FAV_BOOK:
       state.userAccounts.map(account => {
         let checkBook = account.favBookData
-        for (let i = 0; i < checkBook.length; i++){
-          if(checkBook[i].title === action.payload.title){
-            checkBook.splice(i,1)
+        for (let i = 0; i < checkBook.length; i++) {
+          if (checkBook[i].title === action.payload.title) {
+            checkBook.splice(i, 1)
           }
         }
       })

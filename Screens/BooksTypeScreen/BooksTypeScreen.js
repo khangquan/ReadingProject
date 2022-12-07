@@ -9,10 +9,8 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {useSelector, useDispatch} from 'react-redux';
-import { useEffect } from 'react';
-import { getBookType, getBookData } from '../../redux/actions/GetBookAction';
+import { useDispatch} from 'react-redux';
+import { getBookType } from '../../redux/actions/GetBookAction';
 
 const windowHeight = Dimensions.get('window').height;
 const windownWidth = Dimensions.get('window').width;
@@ -42,11 +40,6 @@ export default function BooksTypeScreen({navigation}) {
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
           <Text style={styles.topTextStyle}>Thể Loại</Text>
-          {/* <TouchableOpacity onPress={() => {
-              navigation.navigate('SearchScreen');
-            }}>
-            <Icon name="search" size={30} color="white" />
-          </TouchableOpacity> */}
         </View>
       </View>
       <FlatList

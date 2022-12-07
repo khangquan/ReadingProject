@@ -1,4 +1,11 @@
-import { REGISTER, EDIT_ACCOUNT, ADD_FAV_BOOK, EDIT_FAV_BOOK } from "../reducers/AccountReducer";
+import { 
+    REGISTER,
+    EDIT_ACCOUNT_FULLNAME, 
+    EDIT_ACCOUNT_EMAIL,
+    EDIT_ACCOUNT_PASS,
+    ADD_FAV_BOOK, 
+    EDIT_FAV_BOOK 
+} from "../reducers/AccountReducer";
 
 export const register = (param) => (
     {
@@ -7,9 +14,23 @@ export const register = (param) => (
     }
 )
 
-export const editAccount = (param) => (
+export const editFullname = (param) => (
     {
-        type: EDIT_ACCOUNT,
+        type: EDIT_ACCOUNT_FULLNAME,
+        payload: param
+    }
+)
+
+export const editEmail = (param) => (
+    {
+        type: EDIT_ACCOUNT_EMAIL,
+        payload: param
+    }
+)
+
+export const editPassword = (param) => (
+    {
+        type: EDIT_ACCOUNT_PASS,
         payload: param
     }
 )

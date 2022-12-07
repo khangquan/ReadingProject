@@ -10,8 +10,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { register,editAccount } from '../../redux/actions/AccountAction';
-import { appLogin } from '../../redux/actions/LoginScreenAction';
+import { editFullname, editEmail, editPassword } from '../../redux/actions/AccountAction';
 
 export default function EditUserInfo({navigation, route}) {
   const {params} = route;
@@ -23,11 +22,27 @@ export default function EditUserInfo({navigation, route}) {
 
 
   const handleChangeInfo = () => {
+    
+    if(params.title === 'Họ Tên'){
       let accIndex = userAccounts.findIndex(item => item.fullname === params.name)
-      dispatch(editAccount({
+      dispatch(editFullname({
         id: userAccounts[accIndex].id,
         fullname: value,
       }))
+    } else if (params.title === 'Email') {
+      let accIndex = userAccounts.findIndex(item => item.email === params.email)
+      dispatch(editEmail({
+        id: userAccounts[accIndex].id,
+        email: value,
+      }))
+    } else {
+      let accIndex = userAccounts.findIndex(item => item.pass === params.pass)
+      dispatch(editPassword({
+        id: userAccounts[accIndex].id,
+        pass: value,
+      }))
+    }
+      
       navigation.goBack()
   }
 
@@ -53,7 +68,7 @@ export default function EditUserInfo({navigation, route}) {
           <View style={styles.textBoxAndEdit}>
             <TextInput 
             editable={false}
-            value={params.name}
+            value={params.name||params.email||params.pass}
             style={styles.textBoxStyle}
             />
           </View>

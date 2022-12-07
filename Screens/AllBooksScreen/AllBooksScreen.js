@@ -7,7 +7,7 @@ import {
     Dimensions,
     Image,
     SafeAreaView,
-    Modal
+    Modal,
 } from 'react-native'
 import React from 'react'
 import { useEffect, useState } from 'react'
@@ -51,21 +51,49 @@ export default function AllBooksScreen({ navigation, route }) {
         </TouchableOpacity>
     )
 
-    const handleFilterItem = () => {
+    const handleFilterItem = (item) => {
+        if (item === 'viewDecrease') {
+            allBooksData.sort((a, b) => a.views < b.views ? 1 : -1)
+        } else if (item === 'viewIncrease') {
+            allBooksData.sort((a, b) => a.views > b.views ? 1 : -1)
+        } else if (item === 'a-z') {
+            allBooksData.sort((a, b) => a.title > b.title ? 1 : -1)
+        } else {
+            allBooksData.sort((a, b) => a.title < b.title ? 1 : -1)
+        }
 
+        setModalVisible(false)
     }
 
     return (
         <SafeAreaView style={styles.container}>
+
             <Modal
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
                 visible={modalVisible}
-                onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
-                    setModalVisible(!modalVisible);
-                }}
-            ></Modal>
+            >
+                <View style={styles.filterModal}>
+                    <View style={styles.modalStyle}>
+
+                        {filterData.map(item => (
+                            <TouchableOpacity style={styles.filterButton}
+                                onPress={() => handleFilterItem(item.value)}
+                            >
+                                <Text style={styles.filterText}>{item.title}</Text>
+                            </TouchableOpacity>
+                        ))}
+
+                        <TouchableOpacity style={styles.closeModal}
+                            onPress={() => setModalVisible(false)}
+                        >
+                            <Text style={styles.closeModalText}>X</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+            </Modal>
+
             <View style={styles.topMenu}>
                 <View style={styles.topContent}>
                     <TouchableOpacity onPress={() => { navigation.goBack() }}>
@@ -88,6 +116,25 @@ export default function AllBooksScreen({ navigation, route }) {
         </SafeAreaView>
     )
 }
+
+const filterData = [
+    {
+        title: 'Lượt xem giảm dần',
+        value: 'viewDecrease'
+    },
+    {
+        title: 'Lượt xem tăng dần',
+        value: 'viewIncrease'
+    },
+    {
+        title: 'Tên sách A - Z',
+        value: 'a-z'
+    },
+    {
+        title: 'Tên sách Z - A',
+        value: 'z-a'
+    },
+]
 
 const styles = StyleSheet.create({
     container: {
@@ -128,4 +175,53 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontWeight: '500'
     },
+    filterModal: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modalStyle: {
+        margin: 20,
+        backgroundColor: '#FB7849',
+        borderRadius: 20,
+        padding: 20,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    filterButton: {
+        backgroundColor: 'white',
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10,
+        padding: 10,
+    },
+    filterText: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    closeModal: {
+        position: 'absolute',
+        right: -10,
+        top: -10,
+        backgroundColor: 'white',
+        height: 30,
+        width: 30,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    closeModalText: { 
+        color: '#FB7849', 
+        fontSize: 20, 
+        fontWeight: 'bold' 
+    },
+
 })

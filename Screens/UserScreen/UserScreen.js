@@ -46,10 +46,6 @@ export default function UserScreen({navigation}) {
     }
   };
 
-  const handleUserInfo = () => {
-    ;
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topMenu}>
