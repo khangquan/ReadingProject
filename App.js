@@ -1,8 +1,6 @@
 import { LogBox, Platform, StatusBar } from 'react-native'
-
 import { Provider } from 'react-redux'
 import store from './redux/store/Store'
-
 import IntroScreen from './Screens/IntroScreen/IntroScreen'
 import Navigator from './Navigation/Navigator'
 

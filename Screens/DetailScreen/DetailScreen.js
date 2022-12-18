@@ -86,7 +86,7 @@ export default function DetailScreen({ navigation }) {
 
   const handleReadingScreen = (item) => {
     dispatch(increaseBookView(item))
-    //navigation.navigate('ReadingScreen');
+    navigation.navigate('ReadingScreen');
   };
 
   const handleLikeBook = bookData => {
