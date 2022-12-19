@@ -13,6 +13,7 @@ import UserMenu from './UserMenu';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {appLogout} from '../../redux/actions/LoginScreenAction';
+import { Avatar } from "@react-native-material/core"
 
 export default function UserScreen({navigation}) {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ export default function UserScreen({navigation}) {
         <View style={styles.welcomeStyle}>
           <Text style={styles.welcomeText}>Chào mừng,</Text>
           <Text style={styles.accountText}>{userInfo.fullname}</Text>
-          <Icon name="person-circle-outline" size={60} />
+          <Avatar color='#FB7849' tintColor='white' style={{marginRight: 10, marginVertical: 5}} label={userInfo.fullname} size={60}/>
         </View>
         <ScrollView>
           <View>
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
   },
   welcomeStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: 'lightgray',

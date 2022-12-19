@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { Avatar } from "@react-native-material/core"
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -57,7 +58,7 @@ export default function UserInfoScreen({ navigation }) {
 
             <View style={styles.botContent}>
                 <View>
-                    <Icon name="person-circle-outline" size={150} />
+                <Avatar style={{margin: 10}} label={userInfo.fullname} color='#FB7849' tintColor='white' size={150}/>
                     <TouchableOpacity style={styles.editAvatar}>
                         <Icon name='create' size={25} color={'black'} />
                     </TouchableOpacity>
