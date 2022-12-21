@@ -190,6 +190,7 @@ export default function LoginScreen({ navigation }) {
                         fullname: fullname,
                         email: email,
                         pass: pass,
+                        avatar: null,
                         favBookData: [],
                       }),
                     );

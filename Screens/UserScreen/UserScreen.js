@@ -13,7 +13,7 @@ import UserMenu from './UserMenu';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {appLogout} from '../../redux/actions/LoginScreenAction';
-import { Avatar } from "@react-native-material/core"
+import {Avatar} from '@react-native-material/core';
 
 export default function UserScreen({navigation}) {
   const dispatch = useDispatch();
@@ -59,19 +59,28 @@ export default function UserScreen({navigation}) {
         <View style={styles.welcomeStyle}>
           <Text style={styles.welcomeText}>Chào mừng,</Text>
           <Text style={styles.accountText}>{userInfo.fullname}</Text>
-          <Avatar color='#FB7849' tintColor='white' style={{marginRight: 10, marginVertical: 5}} label={userInfo.fullname} size={60}/>
+          {
+          userInfo.avatar === null ? 
+            <Avatar autoColor={true} style={styles.labelAvatar} label={userInfo.fullname} size={60}/>
+           : 
+           <Avatar style={styles.labelAvatar} image={{ uri: userInfo.avatar }} size={60}/>
+          }
         </View>
         <ScrollView>
           <View>
             <UserMenu
               title={'Thông tin tài khoản'}
               iconName={'person-outline'}
-              onEvent={() => {navigation.navigate('UserInfoScreen')}}
+              onEvent={() => {
+                navigation.navigate('UserInfoScreen');
+              }}
             />
             <UserMenu
               title={'Danh sách yêu thích'}
               iconName={'heart-outline'}
-              onEvent={() => {navigation.navigate('FavBooksScreen')}}
+              onEvent={() => {
+                navigation.navigate('FavBooksScreen');
+              }}
             />
           </View>
 
@@ -170,5 +179,9 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  labelAvatar: {
+    marginRight: 10,
+    marginVertical: 5,
   },
 });

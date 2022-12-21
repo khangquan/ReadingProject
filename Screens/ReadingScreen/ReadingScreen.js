@@ -36,6 +36,7 @@ export default function ReadingScreen({navigation}) {
         {backgroundColor: darkScreen ? 'black' : 'white'},
       ]}
     >
+      
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
           <TouchableOpacity
@@ -60,11 +61,7 @@ export default function ReadingScreen({navigation}) {
         </View>
       </View>
 
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-      >
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <TouchableWithoutFeedback
           onPressOut={() => {
             setModalVisible(!modalVisible);

@@ -1,7 +1,9 @@
 export const REGISTER = 'REGISTER';
 export const EDIT_ACCOUNT_FULLNAME = 'EDIT_ACCOUNT_FULLNAME';
 export const EDIT_ACCOUNT_EMAIL = 'EDIT_ACCOUNT_EMAIL';
-export const EDIT_ACCOUNT_PASS = 'EDIT_ACCOUNT_PASS'
+export const EDIT_ACCOUNT_PASS = 'EDIT_ACCOUNT_PASS';
+export const ADD_ACCOUNT_AVATAR = 'ADD_ACCOUNT_AVATAR';
+export const DEL_ACCOUNT_AVATAR = 'DEL_ACCOUNT_AVATAR';
 export const ADD_FAV_BOOK = 'ADD_FAV_BOOK';
 export const EDIT_FAV_BOOK = 'EDIT_FAV_BOOK';
 
@@ -12,6 +14,8 @@ const initialState = {
       fullname: 'Khang Quân',
       email: 'quan',
       pass: '123',
+      avatar:
+        'https://haycafe.vn/wp-content/uploads/2022/02/Anh-Avatar-Doremon-dep-ngau-cute.jpg',
       favBookData: [
         {
           id: new Date().getTime(),
@@ -30,7 +34,6 @@ const initialState = {
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
-
     case REGISTER:
       return {
         ...state,
@@ -66,6 +69,27 @@ const accountReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+
+    case ADD_ACCOUNT_AVATAR:
+      state.userAccounts.map(account => {
+        if (account.id === action.payload.id) {
+          account.avatar = action.payload.avatar;
+        }
+      });
+      return {
+        ...state,
+      };
+
+    case DEL_ACCOUNT_AVATAR:
+      state.userAccounts.map(account => {
+        if (account.id === action.payload.id) {
+          account.avatar = null;
+        }
+      });
+      return {
+        ...state,
+      };
+
     case ADD_FAV_BOOK:
       state.userAccounts.map(account => {
         if (account.id === action.payload.userId) {
@@ -77,13 +101,13 @@ const accountReducer = (state = initialState, action) => {
       };
     case EDIT_FAV_BOOK:
       state.userAccounts.map(account => {
-        let checkBook = account.favBookData
+        let checkBook = account.favBookData;
         for (let i = 0; i < checkBook.length; i++) {
           if (checkBook[i].title === action.payload.title) {
-            checkBook.splice(i, 1)
+            checkBook.splice(i, 1);
           }
         }
-      })
+      });
       return {
         ...state,
       };

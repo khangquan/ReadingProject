@@ -3,6 +3,8 @@ import {
     EDIT_ACCOUNT_FULLNAME, 
     EDIT_ACCOUNT_EMAIL,
     EDIT_ACCOUNT_PASS,
+    ADD_ACCOUNT_AVATAR,
+    DEL_ACCOUNT_AVATAR,
     ADD_FAV_BOOK, 
     EDIT_FAV_BOOK 
 } from "../reducers/AccountReducer";
@@ -31,6 +33,20 @@ export const editEmail = (param) => (
 export const editPassword = (param) => (
     {
         type: EDIT_ACCOUNT_PASS,
+        payload: param
+    }
+)
+
+export const editAvatar = (param) => (
+    {
+        type: ADD_ACCOUNT_AVATAR,
+        payload: param
+    }
+)
+
+export const delAvatar = (param) => (
+    {
+        type: DEL_ACCOUNT_AVATAR,
         payload: param
     }
 )
