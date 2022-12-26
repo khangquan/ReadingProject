@@ -5,45 +5,42 @@ import {
   TouchableOpacity,
   Modal,
   TouchableWithoutFeedback,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import React from 'react';
-import Slider from '@react-native-community/slider';
-import DeviceBrightness from '@adrianso/react-native-device-brightness';
-import Pdf from 'react-native-pdf';
-import {useState, useEffect} from 'react';
+} from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+import React from 'react'
+import Slider from '@react-native-community/slider'
+import DeviceBrightness from '@adrianso/react-native-device-brightness'
+import Pdf from 'react-native-pdf'
+import {useState, useEffect} from 'react'
 
 export default function ReadingScreen({navigation}) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [textSize, setTextSize] = useState(23);
-  const [darkScreen, setDarkScreen] = useState(false);
-  const [brightness, setBrightness] = useState(0.2);
-  const [textLineHeight, setTextLineHeight] = useState(40);
+  const [modalVisible, setModalVisible] = useState(false)
+  const [textSize, setTextSize] = useState(23)
+  const [darkScreen, setDarkScreen] = useState(false)
+  const [brightness, setBrightness] = useState(0.2)
+  const [textLineHeight, setTextLineHeight] = useState(40)
 
   useEffect(() => {
-    DeviceBrightness.setBrightnessLevel(brightness);
-  }, []);
+    DeviceBrightness.setBrightnessLevel(brightness)
+  }, [])
 
   const getBrightness = async () => {
-    const brightness = await DeviceBrightness.getBrightnessLevel();
-    alert('brightness ' + brightness);
-  };
+    const brightness = await DeviceBrightness.getBrightnessLevel()
+    alert('brightness ' + brightness)
+  }
 
   return (
     <View
       style={[
         styles.container,
         {backgroundColor: darkScreen ? 'black' : 'white'},
-      ]}
-    >
-      
+      ]}>
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
           <TouchableOpacity
             onPress={() => {
-              navigation.goBack();
-            }}
-          >
+              navigation.goBack()
+            }}>
             <Icon
               name="chevron-back-outline"
               size={35}
@@ -64,9 +61,8 @@ export default function ReadingScreen({navigation}) {
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <TouchableWithoutFeedback
           onPressOut={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
+            setModalVisible(!modalVisible)
+          }}>
           <View style={styles.rightView}>
             <View style={styles.modalView}>
               {/* Chỉnh tăng giảm font chữ */}
@@ -75,20 +71,18 @@ export default function ReadingScreen({navigation}) {
                 <TouchableOpacity
                   onPress={() => {
                     if (textSize >= 15) {
-                      setTextSize(textSize - 3);
+                      setTextSize(textSize - 3)
                     }
-                  }}
-                >
+                  }}>
                   <Text style={{fontWeight: 'bold', fontSize: 20}}>A</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => {
                     if (textSize <= 30) {
-                      setTextSize(textSize + 3);
+                      setTextSize(textSize + 3)
                     }
-                  }}
-                >
+                  }}>
                   <Text style={{fontWeight: 'bold', fontSize: 30}}>A</Text>
                 </TouchableOpacity>
               </View>
@@ -98,8 +92,7 @@ export default function ReadingScreen({navigation}) {
               <View style={styles.modalItemStyle}>
                 <TouchableOpacity
                   style={[styles.bgclButton, {backgroundColor: 'white'}]}
-                  onPress={() => setDarkScreen(false)}
-                >
+                  onPress={() => setDarkScreen(false)}>
                   {darkScreen ? null : (
                     <Icon name="checkmark-outline" size={25} color="black" />
                   )}
@@ -107,8 +100,7 @@ export default function ReadingScreen({navigation}) {
 
                 <TouchableOpacity
                   style={[styles.bgclButton, {backgroundColor: 'black'}]}
-                  onPress={() => setDarkScreen(true)}
-                >
+                  onPress={() => setDarkScreen(true)}>
                   {darkScreen ? (
                     <Icon name="checkmark-outline" size={25} color="white" />
                   ) : null}
@@ -126,8 +118,7 @@ export default function ReadingScreen({navigation}) {
                         textLineHeight === 30 ? 'lightgreen' : null,
                     },
                   ]}
-                  onPress={() => setTextLineHeight(30)}
-                >
+                  onPress={() => setTextLineHeight(30)}>
                   <Text style={{fontSize: 20}}>Nhỏ</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -138,8 +129,7 @@ export default function ReadingScreen({navigation}) {
                         textLineHeight === 40 ? 'lightgreen' : null,
                     },
                   ]}
-                  onPress={() => setTextLineHeight(40)}
-                >
+                  onPress={() => setTextLineHeight(40)}>
                   <Text style={{fontSize: 20}}>Trung Bình</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -150,8 +140,7 @@ export default function ReadingScreen({navigation}) {
                         textLineHeight === 50 ? 'lightgreen' : null,
                     },
                   ]}
-                  onPress={() => setTextLineHeight(50)}
-                >
+                  onPress={() => setTextLineHeight(50)}>
                   <Text style={{fontSize: 20}}>Lớn</Text>
                 </TouchableOpacity>
               </View>
@@ -168,8 +157,8 @@ export default function ReadingScreen({navigation}) {
                   maximumTrackTintColor="#000000"
                   value={brightness}
                   onValueChange={brightness => {
-                    setBrightness(brightness);
-                    DeviceBrightness.setBrightnessLevel(brightness);
+                    setBrightness(brightness)
+                    DeviceBrightness.setBrightnessLevel(brightness)
                   }}
                 />
                 <Icon name={'sunny-outline'} size={30} />
@@ -189,8 +178,7 @@ export default function ReadingScreen({navigation}) {
             fontSize: textSize,
             color: darkScreen ? 'white' : 'black',
             lineHeight: textLineHeight,
-          }}
-        >
+          }}>
           Thực tập hạnh phúc Theo tôi, hạnh phúc có nghĩa là ít đau khổ.Nếu
           không chuyển hóa được đau khổ thì không thể nào có hạnh phúc. Rất
           nhiều người đã đi tìm hạnh phúc từ bên ngoài, nhưng hạnh phúc thật sự
@@ -217,7 +205,7 @@ export default function ReadingScreen({navigation}) {
                 console.log(`Link pressed: ${uri}`);
             }}
             style={styles.pdf} />  */
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -299,4 +287,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

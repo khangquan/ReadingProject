@@ -6,46 +6,46 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
-} from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {Avatar} from '@react-native-material/core';
-import {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {delAvatar, editAvatar} from '../../redux/actions/AccountAction';
+} from 'react-native'
+import React from 'react'
+import Icon from 'react-native-vector-icons/Ionicons'
+import {Avatar} from '@react-native-material/core'
+import {useState, useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
+import {delAvatar, editAvatar} from '../../redux/actions/AccountAction'
 
 export default function UserInfoScreen({navigation}) {
-  const dispatch = useDispatch();
-  const {userAccounts} = useSelector(state => state.register);
-  const {currentUser} = useSelector(state => state.loginScreen);
-  const [userInfo, setUserInfo] = useState([]);
-  const [showPass, setShowPass] = useState(true);
+  const dispatch = useDispatch()
+  const {userAccounts} = useSelector(state => state.register)
+  const {currentUser} = useSelector(state => state.loginScreen)
+  const [userInfo, setUserInfo] = useState([])
+  const [showPass, setShowPass] = useState(true)
 
   useEffect(() => {
-    getCurrentUser();
-  }, []);
+    getCurrentUser()
+  }, [])
 
   const getCurrentUser = () => {
     userAccounts.map(user => {
-      if (user.email === currentUser) setUserInfo(user);
-    });
-  };
+      if (user.email === currentUser) setUserInfo(user)
+    })
+  }
 
   const handleEditInfo = value => {
     Alert.alert('Lưu ý!', `Bạn muốn thay đổi ${value.title.toLowerCase()}?`, [
       {
         text: 'Yes',
         onPress: () => {
-          navigation.navigate('EditUserInfo', value);
+          navigation.navigate('EditUserInfo', value)
         },
       },
       {
         text: 'No',
         onPress: () => {},
       },
-    ]);
-  };
+    ])
+  }
 
   const handleEditAvatar = () => {
     Alert.alert('Thông báo', 'Bạn muốn thay đổi avatar?', [
@@ -57,26 +57,26 @@ export default function UserInfoScreen({navigation}) {
             maxWidth: 300,
             maxHeight: 550,
             quality: 1,
-          };
+          }
           launchImageLibrary(options, response => {
-            console.log('Response = ', response);
+            console.log('Response = ', response)
 
             if (response.didCancel) {
-              return;
+              return
             } else if (response.errorCode == 'permission') {
-              alert('Permission not satisfied');
-              return;
+              alert('Permission not satisfied')
+              return
             } else if (response.errorCode == 'others') {
-              alert(response.errorMessage);
-              return;
+              alert(response.errorMessage)
+              return
             }
             dispatch(
               editAvatar({
                 id: userInfo.id,
                 avatar: response.assets[0].uri,
               }),
-            );
-          });
+            )
+          })
         },
       },
       {
@@ -86,11 +86,11 @@ export default function UserInfoScreen({navigation}) {
       {
         text: 'Xóa avatar',
         onPress: () => {
-          dispatch(delAvatar({id: userInfo.id}));
+          dispatch(delAvatar({id: userInfo.id}))
         },
       },
-    ]);
-  };
+    ])
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -98,9 +98,8 @@ export default function UserInfoScreen({navigation}) {
         <View style={styles.topContent}>
           <TouchableOpacity
             onPress={() => {
-              navigation.goBack();
-            }}
-          >
+              navigation.goBack()
+            }}>
             <Icon name="chevron-back-outline" size={35} color={'white'} />
           </TouchableOpacity>
           <Text style={styles.topTextStyle}>Thông tin tài khoản</Text>
@@ -126,8 +125,7 @@ export default function UserInfoScreen({navigation}) {
 
           <TouchableOpacity
             onPress={handleEditAvatar}
-            style={styles.editAvatar}
-          >
+            style={styles.editAvatar}>
             <Icon name="create" size={25} color={'black'} />
           </TouchableOpacity>
         </View>
@@ -142,8 +140,7 @@ export default function UserInfoScreen({navigation}) {
             <TouchableOpacity
               onPress={() =>
                 handleEditInfo({name: userInfo.fullname, title: 'Họ Tên'})
-              }
-            >
+              }>
               <Icon name="create" size={25} color={'black'} />
             </TouchableOpacity>
           </View>
@@ -160,8 +157,7 @@ export default function UserInfoScreen({navigation}) {
             <TouchableOpacity
               onPress={() =>
                 handleEditInfo({email: userInfo.email, title: 'Email'})
-              }
-            >
+              }>
               <Icon name="create" size={25} color={'black'} />
             </TouchableOpacity>
           </View>
@@ -186,15 +182,14 @@ export default function UserInfoScreen({navigation}) {
             <TouchableOpacity
               onPress={() =>
                 handleEditInfo({pass: userInfo.pass, title: 'Password'})
-              }
-            >
+              }>
               <Icon name="create" size={25} color={'black'} />
             </TouchableOpacity>
           </View>
         </View>
       </View>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -256,4 +251,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
   },
-});
+})

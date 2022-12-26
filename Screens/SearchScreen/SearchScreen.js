@@ -8,53 +8,52 @@ import {
   Dimensions,
   FlatList,
   Image,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import React from 'react';
-import {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {getBookData, getBookType} from '../../redux/actions/GetBookAction';
+} from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
+import React from 'react'
+import {useState, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {getBookData, getBookType} from '../../redux/actions/GetBookAction'
 
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
 
 export default function SearchScreen({navigation}) {
-  const dispatch = useDispatch();
-  const {allBooksData, bookData} = useSelector(state => state.bookGetData);
+  const dispatch = useDispatch()
+  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
 
   useEffect(() => {
-    dispatch(getBookData());
-  }, []);
+    dispatch(getBookData())
+  }, [])
 
-  const [searchValue, setSearchValue] = useState('');
-  const [searchResult, setSearchResult] = useState([0]);
+  const [searchValue, setSearchValue] = useState('')
+  const [searchResult, setSearchResult] = useState([0])
 
   const handleSearch = searchValue => {
     let bookData = allBooksData.filter(item => {
-      let title = item.title.toLowerCase();
-      let author = item.author.toLowerCase();
-      let searchData = searchValue.toLowerCase();
+      let title = item.title.toLowerCase()
+      let author = item.author.toLowerCase()
+      let searchData = searchValue.toLowerCase()
       if (title.includes(searchData) || author.includes(searchData)) {
-        return item;
-      } else return 0;
-    });
-    setSearchResult(bookData);
-  };
+        return item
+      } else return 0
+    })
+    setSearchResult(bookData)
+  }
 
   const handleDetail = item => {
-    dispatch(getBookType(item));
-    navigation.navigate('DetailScreen');
-  };
+    dispatch(getBookType(item))
+    navigation.navigate('DetailScreen')
+  }
 
   const renderView = ({item}) => (
     <TouchableOpacity
       onPress={() => handleDetail(item)}
-      style={styles.renderViewStyle}
-    >
+      style={styles.renderViewStyle}>
       <Image style={styles.flatListImg} source={item.image} />
       <Text style={styles.flatListTitle}>{item.title}</Text>
     </TouchableOpacity>
-  );
+  )
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,9 +62,8 @@ export default function SearchScreen({navigation}) {
           <TouchableOpacity
             style={{marginLeft: 10}}
             onPress={() => {
-              navigation.goBack();
-            }}
-          >
+              navigation.goBack()
+            }}>
             <Icon name="chevron-back-outline" size={30} color="white" />
           </TouchableOpacity>
 
@@ -80,17 +78,15 @@ export default function SearchScreen({navigation}) {
               <TouchableOpacity
                 style={styles.clearInputStyle}
                 onPress={() => {
-                  setSearchValue('');
-                }}
-              >
+                  setSearchValue('')
+                }}>
                 <Icon name="close-outline" size={30} />
               </TouchableOpacity>
             ) : null}
 
             <TouchableOpacity
               style={styles.searchIconStyle}
-              onPress={() => handleSearch(searchValue)}
-            >
+              onPress={() => handleSearch(searchValue)}>
               <Icon name="search" size={30} />
             </TouchableOpacity>
           </View>
@@ -100,8 +96,7 @@ export default function SearchScreen({navigation}) {
       <View style={styles.botContent}>
         {searchResult.length === 0 ? (
           <View
-            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}
-          >
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
             <Text style={{fontSize: 20}}>Không tìm thấy sản phẩm phù hợp</Text>
           </View>
         ) : (
@@ -115,7 +110,7 @@ export default function SearchScreen({navigation}) {
         )}
       </View>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -190,4 +185,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontWeight: '500',
   },
-});
+})

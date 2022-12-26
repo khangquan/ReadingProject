@@ -1,5 +1,5 @@
-import { LogBox, Platform, StatusBar } from 'react-native'
-import { Provider } from 'react-redux'
+import {LogBox, Platform, StatusBar} from 'react-native'
+import {Provider} from 'react-redux'
 import store from './redux/store/Store'
 import IntroScreen from './Screens/IntroScreen/IntroScreen'
 import Navigator from './Navigation/Navigator'
@@ -12,10 +12,10 @@ export default function App() {
   return (
     <Provider store={configureStore}>
       <StatusBar
-        barStyle={Platform.OS === 'ios'?'dark-content':'light-content'}
+        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
       />
       {/* <IntroScreen /> */}
-      <Navigator/>
+      <Navigator />
     </Provider>
   )
 }

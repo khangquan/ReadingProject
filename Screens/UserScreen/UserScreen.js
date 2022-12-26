@@ -6,46 +6,46 @@ import {
   Alert,
   SafeAreaView,
   ScrollView,
-} from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import UserMenu from './UserMenu';
-import {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {appLogout} from '../../redux/actions/LoginScreenAction';
-import {Avatar} from '@react-native-material/core';
+} from 'react-native'
+import React from 'react'
+import Icon from 'react-native-vector-icons/Ionicons'
+import UserMenu from './UserMenu'
+import {useState, useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {appLogout} from '../../redux/actions/LoginScreenAction'
+import {Avatar} from '@react-native-material/core'
 
 export default function UserScreen({navigation}) {
-  const dispatch = useDispatch();
-  const [userInfo, setUserInfo] = useState([]);
-  const {currentUser} = useSelector(state => state.loginScreen);
-  const {userAccounts} = useSelector(state => state.register);
+  const dispatch = useDispatch()
+  const [userInfo, setUserInfo] = useState([])
+  const {currentUser} = useSelector(state => state.loginScreen)
+  const {userAccounts} = useSelector(state => state.register)
 
   useEffect(() => {
-    getCurrentUser();
-  }, []);
+    getCurrentUser()
+  }, [])
 
   const getCurrentUser = () => {
     userAccounts.map(user => {
-      if (user.email === currentUser) setUserInfo(user);
-    });
-  };
+      if (user.email === currentUser) setUserInfo(user)
+    })
+  }
   const handleLogout = item => {
     if (item === 'Đăng xuất') {
       Alert.alert('Lưu ý!', 'Bạn có muốn đăng xuất?', [
         {
           text: 'Yes',
           onPress: () => {
-            dispatch(appLogout());
+            dispatch(appLogout())
           },
         },
         {
           text: 'No',
           onPress: () => {},
         },
-      ]);
+      ])
     }
-  };
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -59,12 +59,20 @@ export default function UserScreen({navigation}) {
         <View style={styles.welcomeStyle}>
           <Text style={styles.welcomeText}>Chào mừng,</Text>
           <Text style={styles.accountText}>{userInfo.fullname}</Text>
-          {
-          userInfo.avatar === null ? 
-            <Avatar autoColor={true} style={styles.labelAvatar} label={userInfo.fullname} size={60}/>
-           : 
-           <Avatar style={styles.labelAvatar} image={{ uri: userInfo.avatar }} size={60}/>
-          }
+          {userInfo.avatar === null ? (
+            <Avatar
+              autoColor={true}
+              style={styles.labelAvatar}
+              label={userInfo.fullname}
+              size={60}
+            />
+          ) : (
+            <Avatar
+              style={styles.labelAvatar}
+              image={{uri: userInfo.avatar}}
+              size={60}
+            />
+          )}
         </View>
         <ScrollView>
           <View>
@@ -72,14 +80,14 @@ export default function UserScreen({navigation}) {
               title={'Thông tin tài khoản'}
               iconName={'person-outline'}
               onEvent={() => {
-                navigation.navigate('UserInfoScreen');
+                navigation.navigate('UserInfoScreen')
               }}
             />
             <UserMenu
               title={'Danh sách yêu thích'}
               iconName={'heart-outline'}
               onEvent={() => {
-                navigation.navigate('FavBooksScreen');
+                navigation.navigate('FavBooksScreen')
               }}
             />
           </View>
@@ -87,7 +95,7 @@ export default function UserScreen({navigation}) {
           <View>
             <Text style={styles.menuTitle}>GIỚI THIỆU/ HƯỚNG DẪN</Text>
             {INTRODUCE.map((item, index) => {
-              return <UserMenu iconName={item.iconName} title={item.title} />;
+              return <UserMenu iconName={item.iconName} title={item.title} />
             })}
           </View>
           <View>
@@ -99,13 +107,13 @@ export default function UserScreen({navigation}) {
                   title={item.title}
                   onEvent={() => handleLogout(item.title)}
                 />
-              );
+              )
             })}
           </View>
         </ScrollView>
       </View>
     </SafeAreaView>
-  );
+  )
 }
 
 const INTRODUCE = [
@@ -121,7 +129,7 @@ const INTRODUCE = [
     title: 'Góp ý',
     iconName: 'chatbubble-ellipses-outline',
   },
-];
+]
 
 const SETTING = [
   {
@@ -132,7 +140,7 @@ const SETTING = [
     title: 'Đăng xuất',
     iconName: 'log-out-outline',
   },
-];
+]
 
 const styles = StyleSheet.create({
   container: {
@@ -184,4 +192,4 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginVertical: 5,
   },
-});
+})

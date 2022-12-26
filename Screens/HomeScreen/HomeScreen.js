@@ -7,45 +7,46 @@ import {
   Dimensions,
   ScrollView,
   SafeAreaView,
-} from 'react-native';
-import {ImageSlider} from 'react-native-image-slider-banner';
-import Icon from 'react-native-vector-icons/Ionicons';
-import React, {useEffect} from 'react';
-import HomeScreenFlatlist from './HomeScreenFlatlist';
-import {useSelector, useDispatch} from 'react-redux';
-import {getBookData, getBookType} from '../../redux/actions/GetBookAction';
+} from 'react-native'
+import { ImageSlider } from 'react-native-image-slider-banner'
+import Icon from 'react-native-vector-icons/Ionicons'
+import React, { useEffect } from 'react'
+import HomeScreenFlatlist from './HomeScreenFlatlist'
+import { useSelector, useDispatch } from 'react-redux'
+import { getBookData, getBookType } from '../../redux/actions/GetBookAction'
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
-export default function HomeScreen({navigation, route}) {
-  const dispatch = useDispatch();
-  const {allBooksData} = useSelector(state => state.bookGetData);
+export default function HomeScreen({ navigation, route }) {
+  const dispatch = useDispatch()
+  const { allBooksData } = useSelector(state => state.bookGetData)
 
   useEffect(() => {
-    dispatch(getBookData());
-  }, []);
+    dispatch(getBookData())
+  }, [])
 
   const handleDetail = item => {
-    dispatch(getBookType(item));
-    navigation.navigate('DetailScreen');
-  };
+    dispatch(getBookType(item))
+    navigation.navigate('DetailScreen')
+  }
 
   const handleAllBook = item => {
-    dispatch(getBookType(item));
-    navigation.navigate('AllBooksScreen');
-  };
+    dispatch(getBookType(item))
+    navigation.navigate('AllBooksScreen')
+  }
 
-  const renderView = ({item}) => (
+  const renderView = ({ item }) => (
     <TouchableOpacity
-      onPress={() => {handleDetail(item)}}
-      style={styles.renderViewStyle}
-    >
+      onPress={() => {
+        handleDetail(item)
+      }}
+      style={styles.renderViewStyle}>
       <Image style={styles.flatListImg} source={item.image} />
       <Text style={styles.flatListTitle}>{item.title}</Text>
       <Text style={styles.flatListAuthor}>{item.author}</Text>
     </TouchableOpacity>
-  );
+  )
 
   const SachKinhTe = allBooksData.filter(item => item.type === 'Kinh Tế')
   const SachKyNang = allBooksData.filter(item => item.type === 'Kỹ Năng')
@@ -73,7 +74,7 @@ export default function HomeScreen({navigation, route}) {
       type: 'Văn Học',
       data: SachVanHoc.filter((item, index) => index < 5),
     },
-  ];
+  ]
 
   return (
     <SafeAreaView style={styles.container}>
@@ -85,9 +86,8 @@ export default function HomeScreen({navigation, route}) {
           <Text style={styles.topTextStyle}>Trang Chủ</Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('SearchScreen');
-            }}
-          >
+              navigation.navigate('SearchScreen')
+            }}>
             <Icon name="search" size={30} color="white" />
           </TouchableOpacity>
         </View>
@@ -98,24 +98,19 @@ export default function HomeScreen({navigation, route}) {
         <ImageSlider
           data={[
             {
-              img:
-                'https://theme.hstatic.net/200000020612/1000524269/14/hmodule_banner_img2_1.jpg?v=768',
+              img: 'https://theme.hstatic.net/200000020612/1000524269/14/hmodule_banner_img2_1.jpg?v=768',
             },
             {
-              img:
-                'https://bizweb.dktcdn.net/100/370/339/themes/744741/assets/slider_3_image.jpg?1632297125018',
+              img: 'https://bizweb.dktcdn.net/100/370/339/themes/744741/assets/slider_3_image.jpg?1632297125018',
             },
             {
-              img:
-                'https://theme.hstatic.net/200000017360/1000763157/14/ms_banner_img5.jpg?v=112',
+              img: 'https://theme.hstatic.net/200000017360/1000763157/14/ms_banner_img5.jpg?v=112',
             },
             {
-              img:
-                'https://theme.hstatic.net/200000510041/1000879666/14/hmodule_banner_img1_1.jpg?v=128',
+              img: 'https://theme.hstatic.net/200000510041/1000879666/14/hmodule_banner_img1_1.jpg?v=128',
             },
             {
-              img:
-                'https://sunibooks.com/wp-content/uploads/2022/01/Banner-sach-giao-duc-2.png',
+              img: 'https://sunibooks.com/wp-content/uploads/2022/01/Banner-sach-giao-duc-2.png',
             },
           ]}
           autoPlay={true}
@@ -130,7 +125,7 @@ export default function HomeScreen({navigation, route}) {
             height: '100%',
             resizeMode: 'cover',
           }}
-          indicatorContainerStyle={{bottom: 0}}
+          indicatorContainerStyle={{ bottom: 0 }}
           closeIconColor="#fff"
         />
 
@@ -143,11 +138,11 @@ export default function HomeScreen({navigation, route}) {
               renderView={renderView}
               onEvent={() => handleAllBook(item)}
             />
-          );
+          )
         })}
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -197,4 +192,4 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
   },
-});
+})

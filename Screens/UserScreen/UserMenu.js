@@ -8,21 +8,17 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
 
-
-export default function UserMenu({ title, iconName, onEvent }) {
+export default function UserMenu({title, iconName, onEvent}) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity 
-      onPress={onEvent}
-      style={styles.content}
-      >
+      <TouchableOpacity onPress={onEvent} style={styles.content}>
         <View style={styles.circle}>
           <Icon name={iconName} size={20} color="white" />
         </View>
 
         <Text style={styles.contentText}>{title}</Text>
 
-        <Icon name="chevron-forward-outline" size={20} color='#FB7849'/>
+        <Icon name="chevron-forward-outline" size={20} color="#FB7849" />
       </TouchableOpacity>
     </View>
   )
@@ -30,7 +26,7 @@ export default function UserMenu({ title, iconName, onEvent }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   content: {
     flex: 1,

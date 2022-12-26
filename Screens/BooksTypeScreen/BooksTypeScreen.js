@@ -7,33 +7,32 @@ import {
   Image,
   FlatList,
   SafeAreaView,
-} from 'react-native';
-import React from 'react';
-import { useDispatch} from 'react-redux';
-import { getBookType } from '../../redux/actions/GetBookAction';
+} from 'react-native'
+import React from 'react'
+import {useDispatch} from 'react-redux'
+import {getBookType} from '../../redux/actions/GetBookAction'
 
-const windowHeight = Dimensions.get('window').height;
-const windownWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height
+const windownWidth = Dimensions.get('window').width
 
 export default function BooksTypeScreen({navigation}) {
-  const dispatch = useDispatch();
- 
-  const handleAllBook = (item) => {
+  const dispatch = useDispatch()
+
+  const handleAllBook = item => {
     dispatch(getBookType(item))
-    navigation.navigate('AllBooksScreen' , item);
-  };
+    navigation.navigate('AllBooksScreen', item)
+  }
 
   const renderView = ({item}) => (
     <TouchableOpacity
       onPress={() => handleAllBook(item)}
-      style={styles.renderViewStyle}
-    >
+      style={styles.renderViewStyle}>
       <Image style={styles.flatListImg} source={item.image} />
       <View style={styles.flatListTextWrapper}>
         <Text style={styles.flatListTitle}>{item.type}</Text>
       </View>
     </TouchableOpacity>
-  );
+  )
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,7 +49,7 @@ export default function BooksTypeScreen({navigation}) {
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
-  );
+  )
 }
 
 const DATA = [
@@ -72,9 +71,9 @@ const DATA = [
   },
   {
     type: 'Tất Cả',
-    image: require('../../assets/BookTypeScreen/tatca.jpg')
-  }
-];
+    image: require('../../assets/BookTypeScreen/tatca.jpg'),
+  },
+]
 
 const styles = StyleSheet.create({
   container: {
@@ -129,4 +128,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
   },
-});
+})

@@ -1,28 +1,24 @@
-import { GET_BOOK_DATA, GET_BOOK_TYPE, INCREASE_BOOK_VIEW } from "../reducers/GetBookReducer"
-import TongHopSach from "../../Screens/BookData/TongHopSach"
+import {
+  GET_BOOK_DATA,
+  GET_BOOK_TYPE,
+  INCREASE_BOOK_VIEW,
+} from '../reducers/GetBookReducer'
+import TongHopSach from '../../Screens/BookData/TongHopSach'
 
-export const getBookData = () => (
-    {
-        type: GET_BOOK_DATA,
-        payload: TongHopSach
-    }
-)
+export const getBookData = () => ({
+  type: GET_BOOK_DATA,
+  payload: TongHopSach,
+})
 
-export const getBookType = (param) => (
-    {
-        type: GET_BOOK_TYPE,
-        payload: param
-    }
-)
+export const getBookType = param => ({
+  type: GET_BOOK_TYPE,
+  payload: param,
+})
 
-export const increaseBookView = (param) => (
-    {
-        type: INCREASE_BOOK_VIEW,
-        payload: param
-    }
-)
-
-
+export const increaseBookView = param => ({
+  type: INCREASE_BOOK_VIEW,
+  payload: param,
+})
 
 // export const getBookDataAPI = () => (
 //     async (dispatch) => {

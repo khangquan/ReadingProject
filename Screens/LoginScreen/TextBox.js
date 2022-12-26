@@ -4,11 +4,11 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-} from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
+} from 'react-native'
+import React from 'react'
+import Icon from 'react-native-vector-icons/Ionicons'
 
-const windowWidth = Dimensions.get('window').width;
+const windowWidth = Dimensions.get('window').width
 export default function TextBox({
   title,
   isSecure,
@@ -16,12 +16,10 @@ export default function TextBox({
   isPasswordBox,
   onChangeText,
   value,
-  onBlur
+  onBlur,
 }) {
   return (
-    <View
-      style={styles.inputText}
-    >
+    <View style={styles.inputText}>
       <TextInput
         style={{fontSize: 15, width: '90%'}}
         placeholder={title}
@@ -41,7 +39,7 @@ export default function TextBox({
         </TouchableOpacity>
       ) : null}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -68,4 +66,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-});
+})

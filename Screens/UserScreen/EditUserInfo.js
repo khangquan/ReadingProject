@@ -5,45 +5,55 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
-} from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { editFullname, editEmail, editPassword } from '../../redux/actions/AccountAction';
+} from 'react-native'
+import React from 'react'
+import Icon from 'react-native-vector-icons/Ionicons'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  editFullname,
+  editEmail,
+  editPassword,
+} from '../../redux/actions/AccountAction'
 
-export default function EditUserInfo({navigation, route}) {
-  const {params} = route;
+export default function EditUserInfo({ navigation, route }) {
+  const { params } = route
   const dispatch = useDispatch()
-  const {userAccounts} = useSelector(state => state.register)
+  const { userAccounts } = useSelector(state => state.register)
 
   const [value, setValue] = useState('')
   const [confirmValue, setConfirmValue] = useState('')
 
-
   const handleChangeInfo = () => {
-    
-    if(params.title === 'Họ Tên'){
-      let accIndex = userAccounts.findIndex(item => item.fullname === params.name)
-      dispatch(editFullname({
-        id: userAccounts[accIndex].id,
-        fullname: value,
-      }))
+    if (params.title === 'Họ Tên') {
+      let accIndex = userAccounts.findIndex(
+        item => item.fullname === params.name,
+      )
+      dispatch(
+        editFullname({
+          id: userAccounts[accIndex].id,
+          fullname: value,
+        }),
+      )
     } else if (params.title === 'Email') {
       let accIndex = userAccounts.findIndex(item => item.email === params.email)
-      dispatch(editEmail({
-        id: userAccounts[accIndex].id,
-        email: value,
-      }))
+      dispatch(
+        editEmail({
+          id: userAccounts[accIndex].id,
+          email: value,
+        }),
+      )
     } else {
       let accIndex = userAccounts.findIndex(item => item.pass === params.pass)
-      dispatch(editPassword({
-        id: userAccounts[accIndex].id,
-        pass: value,
-      }))
+      dispatch(
+        editPassword({
+          id: userAccounts[accIndex].id,
+          pass: value,
+        }),
+      )
     }
-      
-      navigation.goBack()
+
+    navigation.goBack()
   }
 
   return (
@@ -52,10 +62,9 @@ export default function EditUserInfo({navigation, route}) {
         <View style={styles.topContent}>
           <TouchableOpacity
             onPress={() => {
-              navigation.goBack();
+              navigation.goBack()
             }}
-            style={styles.backStyle}
-          >
+            style={styles.backStyle}>
             <Icon name="chevron-back-outline" size={35} color={'white'} />
           </TouchableOpacity>
           <Text style={styles.topTextStyle}>Thay đổi thông tin</Text>
@@ -63,23 +72,23 @@ export default function EditUserInfo({navigation, route}) {
       </View>
 
       <View style={styles.botContent}>
-      <View style={styles.userInfo}>
+        <View style={styles.userInfo}>
           <Text style={styles.userInfoText}>{params.title} cũ: </Text>
           <View style={styles.textBoxAndEdit}>
-            <TextInput 
-            editable={false}
-            value={params.name||params.email||params.pass}
-            style={styles.textBoxStyle}
+            <TextInput
+              editable={false}
+              value={params.name || params.email || params.pass}
+              style={styles.textBoxStyle}
             />
           </View>
         </View>
         <View style={styles.userInfo}>
           <Text style={styles.userInfoText}>{params.title} mới: </Text>
           <View style={styles.textBoxAndEdit}>
-            <TextInput 
-            onChangeText={(text) => setValue(text)}
-            value={value}
-            style={styles.textBoxStyle}
+            <TextInput
+              onChangeText={text => setValue(text)}
+              value={value}
+              style={styles.textBoxStyle}
             />
           </View>
         </View>
@@ -87,20 +96,22 @@ export default function EditUserInfo({navigation, route}) {
         <View style={styles.userInfo}>
           <Text style={styles.userInfoText}>Xác nhận {params.title} mới: </Text>
           <View style={styles.textBoxAndEdit}>
-            <TextInput 
-            value={confirmValue}
-            onChangeText={(text) => setConfirmValue(text)}
-            style={styles.textBoxStyle} 
+            <TextInput
+              value={confirmValue}
+              onChangeText={text => setConfirmValue(text)}
+              style={styles.textBoxStyle}
             />
           </View>
         </View>
 
-        <TouchableOpacity style={styles.confirmButton} onPress={handleChangeInfo}>
-            <Text style={{fontSize: 20, color: 'white'}}>Xác nhận</Text>
+        <TouchableOpacity
+          style={styles.confirmButton}
+          onPress={handleChangeInfo}>
+          <Text style={{ fontSize: 20, color: 'white' }}>Xác nhận</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
   },
-  confirmButton:{
+  confirmButton: {
     width: '40%',
     height: '8%',
     backgroundColor: '#FB7849',
@@ -166,5 +177,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
-  }
-});
+  },
+})

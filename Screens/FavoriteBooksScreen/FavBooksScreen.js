@@ -8,61 +8,60 @@ import {
   FlatList,
   Image,
   Alert,
-} from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { getBookType } from '../../redux/actions/GetBookAction';
-import { editFavBook } from '../../redux/actions/AccountAction';
+} from 'react-native'
+import React from 'react'
+import Icon from 'react-native-vector-icons/Ionicons'
+import {useSelector, useDispatch} from 'react-redux'
+import {useState, useEffect} from 'react'
+import {getBookType} from '../../redux/actions/GetBookAction'
+import {editFavBook} from '../../redux/actions/AccountAction'
 
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
 
-export default function FavBooksScreen({ navigation }) {
-  const dispatch = useDispatch();
-  const [userInfo, setUserInfo] = useState([]);
-  const [edit, setEdit] = useState(false);
-  const { currentUser } = useSelector(state => state.loginScreen);
-  const { userAccounts } = useSelector(state => state.register);
+export default function FavBooksScreen({navigation}) {
+  const dispatch = useDispatch()
+  const [userInfo, setUserInfo] = useState([])
+  const [edit, setEdit] = useState(false)
+  const {currentUser} = useSelector(state => state.loginScreen)
+  const {userAccounts} = useSelector(state => state.register)
 
   useEffect(() => {
-    getCurrentUser();
-  }, []);
+    getCurrentUser()
+  }, [])
 
   const getCurrentUser = () => {
     userAccounts.map(user => {
-      if (user.email === currentUser) setUserInfo(user);
-    });
-  };
+      if (user.email === currentUser) setUserInfo(user)
+    })
+  }
 
   const handleDetail = item => {
-    dispatch(getBookType(item));
-    navigation.navigate('DetailScreen');
-  };
+    dispatch(getBookType(item))
+    navigation.navigate('DetailScreen')
+  }
 
   const handleDeleteFavBook = item => {
     Alert.alert('Thông báo!', 'Bạn có muốn xóa khỏi danh sách yêu thích?', [
       {
         text: 'Yes',
         onPress: () => {
-          dispatch(editFavBook({ title: item.title }))
+          dispatch(editFavBook({title: item.title}))
         },
       },
       {
         text: 'No',
-        onPress: () => { },
+        onPress: () => {},
       },
-    ]);
-  };
+    ])
+  }
 
-  const renderView = ({ item }) => (
+  const renderView = ({item}) => (
     <>
       <TouchableOpacity
         disabled={edit ? true : false}
         onPress={() => handleDetail(item)}
-        style={styles.renderViewStyle}
-      >
+        style={styles.renderViewStyle}>
         <Image
           blurRadius={edit ? 30 : 0}
           style={styles.flatListImg}
@@ -73,29 +72,28 @@ export default function FavBooksScreen({ navigation }) {
         {edit ? (
           <TouchableOpacity
             style={styles.iconDeleteStyle}
-            onPress={() => handleDeleteFavBook(item)}
-          >
+            onPress={() => handleDeleteFavBook(item)}>
             <Icon name="trash-outline" size={50} color="white" />
           </TouchableOpacity>
         ) : null}
       </TouchableOpacity>
     </>
-  );
+  )
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
-          {edit ?
+          {edit ? (
             <TouchableOpacity onPress={() => setEdit(!edit)}>
               <Icon name="checkmark-outline" size={35} color={'white'} />
-            </TouchableOpacity> :
+            </TouchableOpacity>
+          ) : (
             <>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.goBack();
-                }}
-              >
+                  navigation.goBack()
+                }}>
                 <Icon name="chevron-back-outline" size={35} color={'white'} />
               </TouchableOpacity>
               <Text style={styles.topTextStyle}>Danh sách yêu thích</Text>
@@ -104,7 +102,7 @@ export default function FavBooksScreen({ navigation }) {
                 <Icon name="create-outline" size={35} color={'white'} />
               </TouchableOpacity>
             </>
-          }
+          )}
         </View>
       </View>
       <FlatList
@@ -115,7 +113,7 @@ export default function FavBooksScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
       />
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -161,4 +159,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     top: '40%',
   },
-});
+})

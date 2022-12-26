@@ -8,93 +8,92 @@ import {
   ScrollView,
   StatusBar,
   Alert,
-} from 'react-native';
-import {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+} from 'react-native'
+import {useEffect, useState} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import {
   getBookData,
   getBookType,
   increaseBookView,
-} from '../../redux/actions/GetBookAction';
-import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MenuIconBar from './MenuIconBar';
-import ViewMoreText from 'react-native-view-more-text';
-import DetailScreenFlatlist from './DetailScreenFlatlist';
-import {addFavBook, editFavBook} from '../../redux/actions/AccountAction';
-import {Button} from '@react-native-material/core';
+} from '../../redux/actions/GetBookAction'
+import React from 'react'
+import Icon from 'react-native-vector-icons/Ionicons'
+import MenuIconBar from './MenuIconBar'
+import ViewMoreText from 'react-native-view-more-text'
+import DetailScreenFlatlist from './DetailScreenFlatlist'
+import {addFavBook, editFavBook} from '../../redux/actions/AccountAction'
+import {Button} from '@react-native-material/core'
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 export default function DetailScreen({navigation}) {
-  const {allBooksData, bookData} = useSelector(state => state.bookGetData);
+  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
   const bookYouMayLike = allBooksData.filter(
     (item, index) => item.type === bookData.type,
-  );
-  const dispatch = useDispatch();
-  const [isLike, setIsLike] = useState(false);
+  )
+  const dispatch = useDispatch()
+  const [isLike, setIsLike] = useState(false)
 
-  const [userInfo, setUserInfo] = useState([]);
-  const {currentUser} = useSelector(state => state.loginScreen);
-  const {userAccounts} = useSelector(state => state.register);
+  const [userInfo, setUserInfo] = useState([])
+  const {currentUser} = useSelector(state => state.loginScreen)
+  const {userAccounts} = useSelector(state => state.register)
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    dispatch(getBookData());
+    dispatch(getBookData())
     userAccounts.forEach(user => {
-      if (user.email === currentUser) setUserInfo(user);
-      let check = false;
+      if (user.email === currentUser) setUserInfo(user)
+      let check = false
       user.favBookData.forEach(book => {
         if (book.title === bookData.title) {
-          check = true;
+          check = true
         } else {
-          setIsLike(false);
+          setIsLike(false)
         }
-      });
-      setIsLike(check);
-    });
-  }, [bookData]);
+      })
+      setIsLike(check)
+    })
+  }, [bookData])
 
   const renderView = ({item}) => (
     <TouchableOpacity
       onPress={() => {
-        dispatch(getBookType(item));
+        dispatch(getBookType(item))
       }}
-      style={styles.renderViewStyle}
-    >
+      style={styles.renderViewStyle}>
       <Image style={styles.flatListImg} source={item.image} />
       <Text style={styles.flatListTitle}>{item.title}</Text>
       <Text style={styles.flatListAuthor}>{item.author}</Text>
     </TouchableOpacity>
-  );
+  )
 
   const renderViewMore = onPress => {
     return (
       <Text style={{fontSize: 17, fontWeight: '500'}} onPress={onPress}>
         Xem thêm
       </Text>
-    );
-  };
+    )
+  }
 
   const renderViewLess = onPress => {
     return (
       <Text style={{fontSize: 17, fontWeight: '500'}} onPress={onPress}>
         Thu gọn
       </Text>
-    );
-  };
+    )
+  }
 
   const handleAllBook = item => {
-    dispatch(getBookType(item));
-    navigation.navigate('AllBooksScreen');
-  };
+    dispatch(getBookType(item))
+    navigation.navigate('AllBooksScreen')
+  }
 
   const handleReadingScreen = item => {
-    dispatch(increaseBookView(item));
-    navigation.navigate('ReadingScreen');
-  };
+    dispatch(increaseBookView(item))
+    navigation.navigate('ReadingScreen')
+  }
 
   const handleLikeBook = bookData => {
     if (isLike === true) {
@@ -102,17 +101,17 @@ export default function DetailScreen({navigation}) {
         {
           text: 'Yes',
           onPress: () => {
-            setIsLike(false);
-            dispatch(editFavBook({title: bookData.title}));
+            setIsLike(false)
+            dispatch(editFavBook({title: bookData.title}))
           },
         },
         {
           text: 'No',
           onPress: () => {},
         },
-      ]);
+      ])
     } else {
-      setIsLike(true);
+      setIsLike(true)
       dispatch(
         addFavBook({
           userId: userInfo.id,
@@ -125,10 +124,10 @@ export default function DetailScreen({navigation}) {
             status: bookData.status,
           },
         }),
-      );
-      Alert.alert('Thành công', 'Đã thêm vào danh sách yêu thích!');
+      )
+      Alert.alert('Thành công', 'Đã thêm vào danh sách yêu thích!')
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -137,10 +136,9 @@ export default function DetailScreen({navigation}) {
       <View style={styles.topContent}>
         <TouchableOpacity
           onPress={() => {
-            navigation.goBack();
+            navigation.goBack()
           }}
-          style={styles.backStyle}
-        >
+          style={styles.backStyle}>
           <Icon name="chevron-back-outline" size={35} color={'#FB7849'} />
         </TouchableOpacity>
 
@@ -150,12 +148,12 @@ export default function DetailScreen({navigation}) {
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
             <TouchableOpacity
-              onPress={() => { handleReadingScreen(bookData.title) }}
-              style={styles.readButton}
-            >
+              onPress={() => {
+                handleReadingScreen(bookData.title)
+              }}
+              style={styles.readButton}>
               <Text style={styles.buttonText}>ĐỌC NGAY</Text>
             </TouchableOpacity>
-            
           </View>
         </View>
       </View>
@@ -183,8 +181,7 @@ export default function DetailScreen({navigation}) {
           <ViewMoreText
             numberOfLines={2}
             renderViewMore={renderViewMore}
-            renderViewLess={renderViewLess}
-          >
+            renderViewLess={renderViewLess}>
             <Text style={{fontSize: 18}}>{bookData.desc}</Text>
           </ViewMoreText>
         </View>
@@ -204,7 +201,7 @@ export default function DetailScreen({navigation}) {
         />
       </ScrollView>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -310,4 +307,4 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-});
+})

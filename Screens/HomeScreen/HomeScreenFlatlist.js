@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
   },
   showAll: {
     fontSize: 15,
-    color: 'gray'
+    color: 'gray',
   },
 })

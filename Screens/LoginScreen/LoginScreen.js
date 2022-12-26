@@ -7,55 +7,52 @@ import {
   ImageBackground,
   Keyboard,
   Alert,
-} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import TextBox from './TextBox';
-import { appLogin } from '../../redux/actions/LoginScreenAction';
-import { register } from '../../redux/actions/AccountAction';
-import { Formik } from 'formik';
-import { styles } from './LoginScreenStyles';
-import { checkLogInValidate, checkRegValidate } from './CheckValidate';
+} from 'react-native'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import React, {useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import TextBox from './TextBox'
+import {appLogin} from '../../redux/actions/LoginScreenAction'
+import {register} from '../../redux/actions/AccountAction'
+import {Formik} from 'formik'
+import {styles} from './LoginScreenStyles'
+import {checkLogInValidate, checkRegValidate} from './CheckValidate'
 
-export default function LoginScreen({ navigation }) {
-  const LOGIN = 'LOGIN';
-  const SIGNUP = 'SIGNUP';
-  const [showScreen, setShowScreen] = useState(LOGIN);
-  const [secure, setSecure] = useState(true);
-  const dispatch = useDispatch();
-  const { userAccounts } = useSelector(state => state.register);
+export default function LoginScreen({navigation}) {
+  const LOGIN = 'LOGIN'
+  const SIGNUP = 'SIGNUP'
+  const [showScreen, setShowScreen] = useState(LOGIN)
+  const [secure, setSecure] = useState(true)
+  const dispatch = useDispatch()
+  const {userAccounts} = useSelector(state => state.register)
 
   //Show or Hide Password
   const handleShowPass = () => {
-    setSecure(!secure);
-  };
+    setSecure(!secure)
+  }
 
   return (
     <ImageBackground
       blurRadius={6}
       source={require('../../assets/LoginScreen/background.jpg')}
-      style={styles.container}
-    >
+      style={styles.container}>
       <View style={styles.content}>
         {/* Show Login Form */}
         <TouchableOpacity
           disabled={showScreen === LOGIN ? true : false}
           onPress={() => {
-            setShowScreen(LOGIN);
-          }}
-        >
+            setShowScreen(LOGIN)
+          }}>
           <Text
             style={[
               styles.login,
               showScreen == LOGIN
                 ? {
-                  borderBottomWidth: 4,
-                  borderColor: '#FB7849',
-                }
+                    borderBottomWidth: 4,
+                    borderColor: '#FB7849',
+                  }
                 : null,
-            ]}
-          >
+            ]}>
             Đăng Nhập
           </Text>
         </TouchableOpacity>
@@ -63,20 +60,18 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity
           disabled={showScreen === SIGNUP ? true : false}
           onPress={() => {
-            setShowScreen(SIGNUP);
-          }}
-        >
+            setShowScreen(SIGNUP)
+          }}>
           <Text
             style={[
               styles.signup,
               showScreen == SIGNUP
                 ? {
-                  borderBottomWidth: 4,
-                  borderColor: '#FB7849',
-                }
+                    borderBottomWidth: 4,
+                    borderColor: '#FB7849',
+                  }
                 : null,
-            ]}
-          >
+            ]}>
             Đăng Ký
           </Text>
         </TouchableOpacity>
@@ -86,23 +81,21 @@ export default function LoginScreen({ navigation }) {
         <KeyboardAvoidingView
           style={styles.inputContent}
           onPress={Keyboard.dismiss}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           <Formik
-            initialValues={{ email: '', pass: '' }}
+            initialValues={{email: '', pass: ''}}
             validationSchema={checkLogInValidate}
             //Handle Login Account
-            onSubmit={({ email, pass }) => {
+            onSubmit={({email, pass}) => {
               let result = userAccounts.find(
                 item => item.email === email && item.pass === pass,
-              );
+              )
               if (result) {
-                dispatch(appLogin(result.email));
+                dispatch(appLogin(result.email))
               } else {
-                Alert.alert('Lỗi', 'Bạn đã nhập sai email hoặc mật khẩu !');
+                Alert.alert('Lỗi', 'Bạn đã nhập sai email hoặc mật khẩu !')
               }
-            }}
-          >
+            }}>
             {({
               handleChange,
               handleBlur,
@@ -114,7 +107,7 @@ export default function LoginScreen({ navigation }) {
               <View>
                 <Text style={styles.text}>Email</Text>
                 <TextBox
-                  title='Nhập email của bạn'
+                  title="Nhập email của bạn"
                   onEvent={handleShowPass}
                   onBlur={handleBlur('email')}
                   onChangeText={handleChange('email')}
@@ -127,7 +120,7 @@ export default function LoginScreen({ navigation }) {
                 <Text style={styles.text}>Mật khẩu</Text>
                 <TextBox
                   isSecure={secure}
-                  title='Nhập mật khẩu'
+                  title="Nhập mật khẩu"
                   onEvent={handleShowPass}
                   isPasswordBox={true}
                   onBlur={handleBlur('pass')}
@@ -141,8 +134,7 @@ export default function LoginScreen({ navigation }) {
                 <View style={styles.buttonContent}>
                   <TouchableOpacity
                     style={styles.buttonLoginWrapper}
-                    onPress={handleSubmit}
-                  >
+                    onPress={handleSubmit}>
                     <Text style={styles.buttonLogin}>Đăng Nhập</Text>
                   </TouchableOpacity>
                   <TouchableOpacity>
@@ -158,8 +150,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.inputContent}>
           <KeyboardAwareScrollView
             onPress={Keyboard.dismiss}
-            keyboardShouldPersistTaps="handled"
-          >
+            keyboardShouldPersistTaps="handled">
             <Formik
               initialValues={{
                 fullname: '',
@@ -168,21 +159,21 @@ export default function LoginScreen({ navigation }) {
                 confirmPass: '',
               }}
               validationSchema={checkRegValidate}
-              onSubmit={({ fullname, email, pass, confirmPass }) => {
+              onSubmit={({fullname, email, pass, confirmPass}) => {
                 if (pass != confirmPass) {
                   Alert.alert(
                     'Lỗi',
                     'Mật khẩu xác nhận không giống với mật khẩu!',
-                  );
+                  )
                 } else {
                   let checkDuplicate = userAccounts.find(
                     user => user.email === email,
-                  );
+                  )
                   if (checkDuplicate) {
                     Alert.alert(
                       'Lỗi',
                       'Email này đã được sử dụng! vui lòng chọn email khác!',
-                    );
+                    )
                   } else {
                     dispatch(
                       register({
@@ -193,13 +184,12 @@ export default function LoginScreen({ navigation }) {
                         avatar: null,
                         favBookData: [],
                       }),
-                    );
-                    Alert.alert('Thông báo', 'Đăng ký tài khoản thành công!!');
-                    setShowScreen(LOGIN);
+                    )
+                    Alert.alert('Thông báo', 'Đăng ký tài khoản thành công!!')
+                    setShowScreen(LOGIN)
                   }
                 }
-              }}
-            >
+              }}>
               {({
                 handleChange,
                 handleBlur,
@@ -260,8 +250,7 @@ export default function LoginScreen({ navigation }) {
                   <View style={styles.buttonContent}>
                     <TouchableOpacity
                       style={styles.buttonLoginWrapper}
-                      onPress={handleSubmit}
-                    >
+                      onPress={handleSubmit}>
                       <Text style={styles.buttonLogin}>Tạo tài khoản</Text>
                     </TouchableOpacity>
                     <Text style={styles.TermsOfServices}>
@@ -276,5 +265,5 @@ export default function LoginScreen({ navigation }) {
         </View>
       )}
     </ImageBackground>
-  );
+  )
 }
