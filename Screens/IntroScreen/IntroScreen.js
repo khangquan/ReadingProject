@@ -4,7 +4,7 @@ import React from 'react'
 
 import AppIntroSlider from 'react-native-app-intro-slider'
 import Icon from 'react-native-vector-icons/Ionicons'
-
+import { colors } from '../../src/defines/Colors'
 import App from '../../App'
 import Navigator from '../../Navigation/Navigator'
 
@@ -19,13 +19,13 @@ export default function IntroScreen({onEvent}) {
 
   const renderNextButton = () => (
     <View style={styles.buttonCircle}>
-      <Icon name="arrow-forward-circle-outline" color="#FB7849" size={50} />
+      <Icon name="arrow-forward-circle-outline" color={colors.primaryOrange} size={50} />
     </View>
   )
 
   const renderDoneButton = () => (
     <View style={styles.buttonCircle}>
-      <Icon name="checkmark-circle-outline" color="#FB7849" size={50} />
+      <Icon name="checkmark-circle-outline" color={colors.primaryOrange} size={50} />
     </View>
   )
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     resizeMode: 'cover',
-    backgroundColor: '#FFE6BE',
+    backgroundColor: colors.introColor,
   },
   images: {
     alignItems: 'center',
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '80%',
     fontWeight: 'bold',
-    color: '#FB7849',
+    color: colors.primaryOrange,
   },
   buttonCircle: {
     width: 50,

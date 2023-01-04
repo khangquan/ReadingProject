@@ -9,6 +9,7 @@ import {
   SafeAreaView,
 } from 'react-native'
 import React from 'react'
+import { colors } from '../../src/defines/Colors'
 import {useDispatch} from 'react-redux'
 import {getBookType} from '../../redux/actions/GetBookAction'
 
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   topMenu: {
     height: '10%',
     width: '100%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
   },
   topContent: {
     justifyContent: 'center',

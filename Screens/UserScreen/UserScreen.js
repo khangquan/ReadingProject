@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { colors } from '../../src/defines/Colors'
 import UserMenu from './UserMenu'
 import {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
@@ -122,20 +123,12 @@ const INTRODUCE = [
     iconName: 'book-outline',
   },
   {
-    title: 'Điều khoản quy định',
-    iconName: 'bar-chart-outline',
-  },
-  {
     title: 'Góp ý',
     iconName: 'chatbubble-ellipses-outline',
   },
 ]
 
 const SETTING = [
-  {
-    title: 'Cài đặt',
-    iconName: 'settings-outline',
-  },
   {
     title: 'Đăng xuất',
     iconName: 'log-out-outline',
@@ -149,7 +142,7 @@ const styles = StyleSheet.create({
   topMenu: {
     height: '10%',
     width: '100%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
   },
   topContent: {
     justifyContent: 'center',
@@ -162,7 +155,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFF',
+    color: colors.white,
   },
   botContent: {
     flex: 2,

@@ -8,27 +8,33 @@ import {
   Keyboard,
   Alert,
 } from 'react-native'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import React, {useState} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import TextBox from './TextBox'
-import {appLogin} from '../../redux/actions/LoginScreenAction'
-import {register} from '../../redux/actions/AccountAction'
-import {Formik} from 'formik'
-import {styles} from './LoginScreenStyles'
-import {checkLogInValidate, checkRegValidate} from './CheckValidate'
+import { colors } from '../../src/defines/Colors'
+import { appLogin } from '../../redux/actions/LoginScreenAction'
+import { register } from '../../redux/actions/AccountAction'
+import { Formik } from 'formik'
+import { styles } from './LoginScreenStyles'
+import { checkLogInValidate, checkRegValidate } from './CheckValidate'
 
-export default function LoginScreen({navigation}) {
+export default function LoginScreen({ navigation }) {
   const LOGIN = 'LOGIN'
   const SIGNUP = 'SIGNUP'
   const [showScreen, setShowScreen] = useState(LOGIN)
   const [secure, setSecure] = useState(true)
   const dispatch = useDispatch()
-  const {userAccounts} = useSelector(state => state.register)
+  const { userAccounts } = useSelector(state => state.register)
 
-  //Show or Hide Password
+  //Ẩn hoặc hiện mật khẩu
   const handleShowPass = () => {
     setSecure(!secure)
+  }
+
+  //Quên Mật Khẩu
+  const handleForgetPass = () => {
+    navigation.navigate('ForgotPassScreen')
   }
 
   return (
@@ -48,9 +54,9 @@ export default function LoginScreen({navigation}) {
               styles.login,
               showScreen == LOGIN
                 ? {
-                    borderBottomWidth: 4,
-                    borderColor: '#FB7849',
-                  }
+                  borderBottomWidth: 4,
+                  borderColor: colors.primaryOrange,
+                }
                 : null,
             ]}>
             Đăng Nhập
@@ -67,9 +73,9 @@ export default function LoginScreen({navigation}) {
               styles.signup,
               showScreen == SIGNUP
                 ? {
-                    borderBottomWidth: 4,
-                    borderColor: '#FB7849',
-                  }
+                  borderBottomWidth: 4,
+                  borderColor: colors.primaryOrange,
+                }
                 : null,
             ]}>
             Đăng Ký
@@ -83,10 +89,10 @@ export default function LoginScreen({navigation}) {
           onPress={Keyboard.dismiss}
           keyboardShouldPersistTaps="handled">
           <Formik
-            initialValues={{email: '', pass: ''}}
+            initialValues={{ email: '', pass: '' }}
             validationSchema={checkLogInValidate}
             //Handle Login Account
-            onSubmit={({email, pass}) => {
+            onSubmit={({ email, pass }) => {
               let result = userAccounts.find(
                 item => item.email === email && item.pass === pass,
               )
@@ -137,7 +143,7 @@ export default function LoginScreen({navigation}) {
                     onPress={handleSubmit}>
                     <Text style={styles.buttonLogin}>Đăng Nhập</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={handleForgetPass}>
                     <Text style={styles.forgotPass}>Quên mật khẩu?</Text>
                   </TouchableOpacity>
                 </View>
@@ -159,7 +165,7 @@ export default function LoginScreen({navigation}) {
                 confirmPass: '',
               }}
               validationSchema={checkRegValidate}
-              onSubmit={({fullname, email, pass, confirmPass}) => {
+              onSubmit={({ fullname, email, pass, confirmPass }) => {
                 if (pass != confirmPass) {
                   Alert.alert(
                     'Lỗi',

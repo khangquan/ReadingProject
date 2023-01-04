@@ -10,6 +10,7 @@ import {
   Modal,
 } from 'react-native'
 import React from 'react'
+import { colors } from '../../src/defines/Colors'
 import {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {getBookData, getBookType} from '../../redux/actions/GetBookAction'
@@ -66,6 +67,8 @@ export default function AllBooksScreen({navigation, route}) {
 
   return (
     <SafeAreaView style={styles.container}>
+
+      {/* Hiển thị cửa sổ lọc danh mục sách */}
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <View style={styles.filterModal}>
           <View style={styles.modalStyle}>
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
   topMenu: {
     height: '10%',
     width: '100%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
   },
   topContent: {
     flexDirection: 'row',
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
   },
   modalStyle: {
     margin: 20,
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   closeModalText: {
-    color: '#FB7849',
+    color: colors.primaryOrange,
     fontSize: 20,
     fontWeight: 'bold',
   },

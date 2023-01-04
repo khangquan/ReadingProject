@@ -11,6 +11,7 @@ import {
 import { ImageSlider } from 'react-native-image-slider-banner'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useEffect } from 'react'
+import { colors } from '../../src/defines/Colors'
 import HomeScreenFlatlist from './HomeScreenFlatlist'
 import { useSelector, useDispatch } from 'react-redux'
 import { getBookData, getBookType } from '../../redux/actions/GetBookAction'
@@ -33,7 +34,7 @@ export default function HomeScreen({ navigation, route }) {
 
   const handleAllBook = item => {
     dispatch(getBookType(item))
-    navigation.navigate('AllBooksScreen')
+    navigation.navigate('AllBooksScreen', item)
   }
 
   const renderView = ({ item }) => (
@@ -126,7 +127,6 @@ export default function HomeScreen({ navigation, route }) {
             resizeMode: 'cover',
           }}
           indicatorContainerStyle={{ bottom: 0 }}
-          closeIconColor="#fff"
         />
 
         {/* HomeScreen Flatlist */}
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   topMenu: {
     height: '10%',
     width: '100%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
   },
   topContent: {
     flexDirection: 'row',

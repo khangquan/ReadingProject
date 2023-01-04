@@ -17,6 +17,9 @@ import SearchScreen from '../Screens/SearchScreen/SearchScreen'
 import UserInfoScreen from '../Screens/UserScreen/UserInfoScreen'
 import EditUserInfo from '../Screens/UserScreen/EditUserInfo'
 import FavBooksScreen from '../Screens/FavoriteBooksScreen/FavBooksScreen'
+import ForgotPassScreen from '../Screens/ForgotPassScreen/ForgotPassScreen'
+import ConfirmScreen from '../Screens/ForgotPassScreen/ConfirmScreen'
+import CreateNewPassScreen from '../Screens/ForgotPassScreen/CreateNewPassScreen'
 
 const Tabs = createBottomTabNavigator()
 const LoginStack = createNativeStackNavigator()
@@ -25,6 +28,9 @@ const HomeStack = createNativeStackNavigator()
 const LoginStackNavigator = () => (
   <LoginStack.Navigator screenOptions={{headerShown: false}}>
     <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
+    <LoginStack.Screen name="ForgotPassScreen" component={ForgotPassScreen} />
+    <LoginStack.Screen name="ConfirmScreen" component={ConfirmScreen} />
+    <LoginStack.Screen name="CreateNewPassScreen" component={CreateNewPassScreen} />
   </LoginStack.Navigator>
 )
 

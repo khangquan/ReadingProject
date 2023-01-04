@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
+import { colors } from '../../src/defines/Colors'
 
 export default function UserMenu({title, iconName, onEvent}) {
   return (
@@ -18,7 +19,7 @@ export default function UserMenu({title, iconName, onEvent}) {
 
         <Text style={styles.contentText}>{title}</Text>
 
-        <Icon name="chevron-forward-outline" size={20} color="#FB7849" />
+        <Icon name="chevron-forward-outline" size={20} color={colors.primaryOrange} />
       </TouchableOpacity>
     </View>
   )
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   circle: {
     height: 35,
     width: 35,
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',

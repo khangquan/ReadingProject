@@ -9,8 +9,9 @@ import {
   StatusBar,
   Alert,
 } from 'react-native'
-import {useEffect, useState} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
+import { useEffect, useState } from 'react'
+import { colors } from '../../src/defines/Colors'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   getBookData,
   getBookType,
@@ -21,14 +22,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import MenuIconBar from './MenuIconBar'
 import ViewMoreText from 'react-native-view-more-text'
 import DetailScreenFlatlist from './DetailScreenFlatlist'
-import {addFavBook, editFavBook} from '../../redux/actions/AccountAction'
-import {Button} from '@react-native-material/core'
+import { addFavBook, editFavBook } from '../../redux/actions/AccountAction'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
-export default function DetailScreen({navigation}) {
-  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
+export default function DetailScreen({ navigation }) {
+  const { allBooksData, bookData } = useSelector(state => state.bookGetData)
   const bookYouMayLike = allBooksData.filter(
     (item, index) => item.type === bookData.type,
   )
@@ -36,8 +36,8 @@ export default function DetailScreen({navigation}) {
   const [isLike, setIsLike] = useState(false)
 
   const [userInfo, setUserInfo] = useState([])
-  const {currentUser} = useSelector(state => state.loginScreen)
-  const {userAccounts} = useSelector(state => state.register)
+  const { currentUser } = useSelector(state => state.loginScreen)
+  const { userAccounts } = useSelector(state => state.register)
 
   const [loading, setLoading] = useState(false)
 
@@ -57,7 +57,7 @@ export default function DetailScreen({navigation}) {
     })
   }, [bookData])
 
-  const renderView = ({item}) => (
+  const renderView = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
         dispatch(getBookType(item))
@@ -71,7 +71,7 @@ export default function DetailScreen({navigation}) {
 
   const renderViewMore = onPress => {
     return (
-      <Text style={{fontSize: 17, fontWeight: '500'}} onPress={onPress}>
+      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>
         Xem thêm
       </Text>
     )
@@ -79,7 +79,7 @@ export default function DetailScreen({navigation}) {
 
   const renderViewLess = onPress => {
     return (
-      <Text style={{fontSize: 17, fontWeight: '500'}} onPress={onPress}>
+      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>
         Thu gọn
       </Text>
     )
@@ -87,7 +87,7 @@ export default function DetailScreen({navigation}) {
 
   const handleAllBook = item => {
     dispatch(getBookType(item))
-    navigation.navigate('AllBooksScreen')
+    navigation.navigate('AllBooksScreen', item)
   }
 
   const handleReadingScreen = item => {
@@ -102,12 +102,12 @@ export default function DetailScreen({navigation}) {
           text: 'Yes',
           onPress: () => {
             setIsLike(false)
-            dispatch(editFavBook({title: bookData.title}))
+            dispatch(editFavBook({ title: bookData.title }))
           },
         },
         {
           text: 'No',
-          onPress: () => {},
+          onPress: () => { },
         },
       ])
     } else {
@@ -139,7 +139,7 @@ export default function DetailScreen({navigation}) {
             navigation.goBack()
           }}
           style={styles.backStyle}>
-          <Icon name="chevron-back-outline" size={35} color={'#FB7849'} />
+          <Icon name="chevron-back-outline" size={35} color={colors.primaryOrange} />
         </TouchableOpacity>
 
         <View style={styles.bookContent}>
@@ -176,21 +176,21 @@ export default function DetailScreen({navigation}) {
           <MenuIconBar />
         </View>
 
-        <View style={{margin: 20}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Giới Thiệu</Text>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
           <ViewMoreText
             numberOfLines={2}
             renderViewMore={renderViewMore}
             renderViewLess={renderViewLess}>
-            <Text style={{fontSize: 18}}>{bookData.desc}</Text>
+            <Text style={{ fontSize: 18 }}>{bookData.desc}</Text>
           </ViewMoreText>
         </View>
 
-        <View style={{margin: 20}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Thông Tin</Text>
-          <Text style={{fontSize: 18}}>Thể loại: {bookData.type}</Text>
-          <Text style={{fontSize: 18}}>Lượt Xem: {bookData.views}</Text>
-          <Text style={{fontSize: 18}}>Trạng Thái: {bookData.status}</Text>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
+          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
+          <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
+          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
         </View>
 
         <DetailScreenFlatlist
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     borderWidth: 1,
-    borderColor: '#FB7849',
+    borderColor: colors.primaryOrange,
   },
   titleButtonStyle: {
     marginLeft: 10,
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   readButton: {
     width: '50%',
     height: '25%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   titleText: {
-    color: '#FB7849',
+    color: colors.primaryOrange,
     fontWeight: 'bold',
     fontSize: 20,
     borderColor: 'white',
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     },
   },
   authorText: {
-    color: '#FB7849',
+    color: colors.primaryOrange,
     fontSize: 18,
     textShadowColor: 'black',
     textShadowRadius: 3,
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     borderBottomWidth: 0.6,
     marginTop: 10,
-    borderColor: '#FB7849',
+    borderColor: colors.primaryOrange,
     height: '10%',
     width: '90%',
     alignSelf: 'center',

@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { colors } from '../../src/defines/Colors'
 import {useSelector, useDispatch} from 'react-redux'
 import {useState, useEffect} from 'react'
 import {getBookType} from '../../redux/actions/GetBookAction'
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
   topMenu: {
     height: '10%',
     width: '100%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
   },
   topContent: {
     flexDirection: 'row',

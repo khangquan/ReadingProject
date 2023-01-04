@@ -9,11 +9,12 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
 import Slider from '@react-native-community/slider'
+import { colors } from '../../src/defines/Colors'
 import DeviceBrightness from '@adrianso/react-native-device-brightness'
 import Pdf from 'react-native-pdf'
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
-export default function ReadingScreen({navigation}) {
+export default function ReadingScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [textSize, setTextSize] = useState(23)
   const [darkScreen, setDarkScreen] = useState(false)
@@ -33,7 +34,7 @@ export default function ReadingScreen({navigation}) {
     <View
       style={[
         styles.container,
-        {backgroundColor: darkScreen ? 'black' : 'white'},
+        { backgroundColor: darkScreen ? 'black' : 'white' },
       ]}>
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
@@ -44,7 +45,7 @@ export default function ReadingScreen({navigation}) {
             <Icon
               name="chevron-back-outline"
               size={35}
-              color={darkScreen ? 'white' : '#FB7849'}
+              color={darkScreen ? 'white' : colors.primaryOrange}
             />
           </TouchableOpacity>
 
@@ -52,7 +53,7 @@ export default function ReadingScreen({navigation}) {
             <Icon
               name="menu-outline"
               size={35}
-              color={darkScreen ? 'white' : '#FB7849'}
+              color={darkScreen ? 'white' : colors.primaryOrange}
             />
           </TouchableOpacity>
         </View>
@@ -74,7 +75,7 @@ export default function ReadingScreen({navigation}) {
                       setTextSize(textSize - 3)
                     }
                   }}>
-                  <Text style={{fontWeight: 'bold', fontSize: 20}}>A</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>A</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -83,7 +84,7 @@ export default function ReadingScreen({navigation}) {
                       setTextSize(textSize + 3)
                     }
                   }}>
-                  <Text style={{fontWeight: 'bold', fontSize: 30}}>A</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 30 }}>A</Text>
                 </TouchableOpacity>
               </View>
 
@@ -91,7 +92,7 @@ export default function ReadingScreen({navigation}) {
               <Text style={styles.modalItemTitle}>Màu nền:</Text>
               <View style={styles.modalItemStyle}>
                 <TouchableOpacity
-                  style={[styles.bgclButton, {backgroundColor: 'white'}]}
+                  style={[styles.bgclButton, { backgroundColor: 'white' }]}
                   onPress={() => setDarkScreen(false)}>
                   {darkScreen ? null : (
                     <Icon name="checkmark-outline" size={25} color="black" />
@@ -99,7 +100,7 @@ export default function ReadingScreen({navigation}) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={[styles.bgclButton, {backgroundColor: 'black'}]}
+                  style={[styles.bgclButton, { backgroundColor: 'black' }]}
                   onPress={() => setDarkScreen(true)}>
                   {darkScreen ? (
                     <Icon name="checkmark-outline" size={25} color="white" />
@@ -119,7 +120,7 @@ export default function ReadingScreen({navigation}) {
                     },
                   ]}
                   onPress={() => setTextLineHeight(30)}>
-                  <Text style={{fontSize: 20}}>Nhỏ</Text>
+                  <Text style={{ fontSize: 20 }}>Nhỏ</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
@@ -130,7 +131,7 @@ export default function ReadingScreen({navigation}) {
                     },
                   ]}
                   onPress={() => setTextLineHeight(40)}>
-                  <Text style={{fontSize: 20}}>Trung Bình</Text>
+                  <Text style={{ fontSize: 20 }}>Trung Bình</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
@@ -141,7 +142,7 @@ export default function ReadingScreen({navigation}) {
                     },
                   ]}
                   onPress={() => setTextLineHeight(50)}>
-                  <Text style={{fontSize: 20}}>Lớn</Text>
+                  <Text style={{ fontSize: 20 }}>Lớn</Text>
                 </TouchableOpacity>
               </View>
 
@@ -150,10 +151,10 @@ export default function ReadingScreen({navigation}) {
               <View style={styles.modalItemStyle}>
                 <Icon name={'moon'} size={20} />
                 <Slider
-                  style={{width: 180, height: 40, marginHorizontal: 10}}
+                  style={{ width: 180, height: 40, marginHorizontal: 10 }}
                   minimumValue={0}
                   maximumValue={1}
-                  minimumTrackTintColor="#FB7849"
+                  minimumTrackTintColor={colors.primaryOrange}
                   maximumTrackTintColor="#000000"
                   value={brightness}
                   onValueChange={brightness => {
@@ -191,20 +192,22 @@ export default function ReadingScreen({navigation}) {
           đạt được một điều vô cùng quý báu, đó là tự do.
         </Text>
       </View>
+
+      {/* <Pdf
+        enablePaging={true}
+        trustAllCerts={false}
+        source={require('../../src/books/TonGiao/gian.pdf')}
+        horizontal={true}
+        onError={(error) => {
+          console.log(error);
+        }}
+        onPressLink={(uri) => {
+          console.log(`Link pressed: ${uri}`);
+        }}
+        style={styles.pdf} /> */}
     </View>
 
-    /* <Pdf
-            enablePaging={true}
-            trustAllCerts={false}
-            source={require('../../srcBooks/TonGiao/gian.pdf')}
-            horizontal={true}
-            onError={(error) => {
-                console.log(error);
-            }}
-            onPressLink={(uri) => {
-                console.log(`Link pressed: ${uri}`);
-            }}
-            style={styles.pdf} />  */
+
   )
 }
 

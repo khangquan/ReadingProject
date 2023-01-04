@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { colors } from '../../src/defines/Colors'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   topMenu: {
     height: '10%',
     width: '100%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
   },
   topContent: {
     flexDirection: 'row',
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFF',
+    color: colors.white,
   },
   botContent: {
     flex: 2,
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     width: '30%',
   },
   textBoxAndEdit: {
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     width: '70%',
     borderWidth: 1,
     borderRadius: 15,
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
   confirmButton: {
     width: '40%',
     height: '8%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',

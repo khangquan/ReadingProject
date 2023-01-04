@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native'
+import { colors } from '../../src/defines/Colors'
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFE6BE',
+    backgroundColor: colors.white,
   },
   content: {
     flexDirection: 'row',
@@ -66,7 +67,7 @@ export const styles = StyleSheet.create({
   },
   buttonLoginWrapper: {
     width: '90%',
-    backgroundColor: '#FB7849',
+    backgroundColor: colors.primaryOrange,
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
