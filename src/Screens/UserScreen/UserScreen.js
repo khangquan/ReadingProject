@@ -10,11 +10,12 @@ import {
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { colors } from '../../defines/Colors'
-import UserMenu from './UserMenu'
+import UserMenu from '../../components/UserMenu'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { appLogout } from '../../redux/actions/LoginScreenAction'
 import { Avatar } from '@react-native-material/core'
+import HeaderBar from '../../components/HeaderBar'
 
 export default function UserScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -50,11 +51,7 @@ export default function UserScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topMenu}>
-        <View style={styles.topContent}>
-          <Text style={styles.topTextStyle}>Tài Khoản</Text>
-        </View>
-      </View>
+      <HeaderBar title={'Tài Khoản'}/>
 
       <View style={styles.botContent}>
         <View style={styles.welcomeStyle}>
@@ -138,24 +135,6 @@ const SETTING = [
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  topMenu: {
-    height: '10%',
-    width: '100%',
-    backgroundColor: colors.primaryOrange,
-  },
-  topContent: {
-    justifyContent: 'center',
-    width: '90%',
-    height: '100%',
-    alignItems: 'center',
-    marginHorizontal: 20,
-  },
-  topTextStyle: {
-    alignSelf: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.white,
   },
   botContent: {
     flex: 2,

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 import { colors } from '../../defines/Colors'
 
 export const styles = StyleSheet.create({
@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.white,
   },
-  content: {
+  titleContent: {
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',
@@ -26,6 +26,10 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 15,
     color: 'white',
+  },
+  underlineTitle: {
+    borderBottomWidth: 4,
+    borderColor: colors.primaryOrange,
   },
   inputContent: {
     flex: 2,

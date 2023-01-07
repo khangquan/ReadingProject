@@ -7,10 +7,10 @@ import rootReducer from '../reducers'
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['loginScreen']
+  whitelist: ['loginScreen','register']
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer, applyMiddleware(thunk))
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 // const Store = initialState => {
 //   const store = createStore( initialState, applyMiddleware(thunk), persistedReducer)
@@ -19,5 +19,5 @@ const persistedReducer = persistReducer(persistConfig, rootReducer, applyMiddlew
 
 // export default Store
 
-export const store = createStore(persistedReducer);
+export const store = createStore(persistedReducer, applyMiddleware(thunk));
 export const persistor = persistStore(store);

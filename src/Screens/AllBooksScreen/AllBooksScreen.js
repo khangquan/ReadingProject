@@ -14,7 +14,7 @@ import { colors } from '../../defines/Colors'
 import {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {getBookData, getBookType} from '../../redux/actions/GetBookAction'
-import Icon from 'react-native-vector-icons/Ionicons'
+import HeaderBar from '../../components/HeaderBar'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
@@ -46,7 +46,7 @@ export default function AllBooksScreen({navigation, route}) {
     <TouchableOpacity
       onPress={() => handleDetail(item)}
       style={styles.renderViewStyle}>
-      <Image style={styles.flatListImg} source={item.image} />
+      <Image style={styles.flatListImg} source={{uri:item.image}} />
       <Text style={styles.flatListTitle}>{item.title}</Text>
     </TouchableOpacity>
   )
@@ -89,20 +89,13 @@ export default function AllBooksScreen({navigation, route}) {
         </View>
       </Modal>
 
-      <View style={styles.topMenu}>
-        <View style={styles.topContent}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack()
-            }}>
-            <Icon name="chevron-back-outline" size={35} color={'white'} />
-          </TouchableOpacity>
-          <Text style={styles.topTextStyle}>{bookData.type}</Text>
-          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-            <Icon name="filter-outline" size={30} color="white" />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <HeaderBar 
+        title={bookData.type}
+        leftItem={'chevron-back-outline'}
+        onLeftEvent={() => navigation.goBack()}
+        rightItem={'filter-outline'}
+        onRightEvent={() => setModalVisible(!modalVisible)}
+      />
 
       <FlatList
         data={
@@ -141,25 +134,6 @@ const filterData = [
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  topMenu: {
-    height: '10%',
-    width: '100%',
-    backgroundColor: colors.primaryOrange,
-  },
-  topContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '90%',
-    height: '100%',
-    alignItems: 'center',
-    marginHorizontal: 20,
-  },
-  topTextStyle: {
-    //alignSelf: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
   },
   renderViewStyle: {
     width: windowWidth / 3,

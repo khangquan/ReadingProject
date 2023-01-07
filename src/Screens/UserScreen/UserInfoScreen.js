@@ -15,6 +15,7 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { launchImageLibrary } from 'react-native-image-picker'
 import { delAvatar, editAvatar } from '../../redux/actions/AccountAction'
+import HeaderBar from '../../components/HeaderBar'
 
 export default function UserInfoScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -95,17 +96,11 @@ export default function UserInfoScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topMenu}>
-        <View style={styles.topContent}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack()
-            }}>
-            <Icon name="chevron-back-outline" size={35} color={'white'} />
-          </TouchableOpacity>
-          <Text style={styles.topTextStyle}>Thông tin tài khoản</Text>
-        </View>
-      </View>
+      <HeaderBar 
+        title={'Thông tin tài khoản'}
+        leftItem={'chevron-back-outline'}
+        onLeftEvent={()=>navigation.goBack()}
+      />
 
       <View style={styles.botContent}>
         <View>
@@ -196,24 +191,6 @@ export default function UserInfoScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  topMenu: {
-    height: '10%',
-    width: '100%',
-    backgroundColor: colors.primaryOrange,
-  },
-  topContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '80%',
-    height: '100%',
-    alignItems: 'center',
-  },
-  topTextStyle: {
-    alignSelf: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.white,
   },
   botContent: {
     flex: 2,

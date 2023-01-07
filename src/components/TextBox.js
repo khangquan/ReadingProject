@@ -21,7 +21,7 @@ export default function TextBox({
   return (
     <View style={styles.inputText}>
       <TextInput
-        style={{fontSize: 15, width: '90%'}}
+        style={{ fontSize: 15, width: '90%' }}
         placeholder={title}
         autoCapitalize="none"
         secureTextEntry={isSecure}
@@ -29,15 +29,20 @@ export default function TextBox({
         value={value}
         onBlur={onBlur}
       />
-      {isPasswordBox ? (
-        <TouchableOpacity onPress={onEvent}>
-          {isSecure ? (
-            <Icon name="eye-outline" size={30} color="black" />
-          ) : (
-            <Icon name="eye-off-outline" size={30} color="black" />
-          )}
-        </TouchableOpacity>
-      ) : null}
+      {
+        isPasswordBox ?
+          (
+            <TouchableOpacity onPress={onEvent}>
+              {
+                isSecure ?
+                  <Icon name="eye-outline" size={30} color="black" />
+                  :
+                  <Icon name="eye-off-outline" size={30} color="black" />
+              }
+            </TouchableOpacity>
+          )
+          : null
+      }
     </View>
   )
 }

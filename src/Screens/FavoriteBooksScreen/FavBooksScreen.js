@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { getBookType } from '../../redux/actions/GetBookAction'
 import { editFavBook } from '../../redux/actions/AccountAction'
+import HeaderBar from '../../components/HeaderBar'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
@@ -83,29 +84,13 @@ export default function FavBooksScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topMenu}>
-        <View style={styles.topContent}>
-          {edit ? (
-            <TouchableOpacity onPress={() => setEdit(!edit)}>
-              <Icon name="checkmark-outline" size={35} color={'white'} />
-            </TouchableOpacity>
-          ) : (
-            <>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack()
-                }}>
-                <Icon name="chevron-back-outline" size={35} color={'white'} />
-              </TouchableOpacity>
-              <Text style={styles.topTextStyle}>Danh sách yêu thích</Text>
-
-              <TouchableOpacity onPress={() => setEdit(!edit)}>
-                <Icon name="create-outline" size={35} color={'white'} />
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
-      </View>
+      <HeaderBar
+        title={edit ? null : 'Danh sách yêu thích'}
+        leftItem={edit ? null : 'chevron-back-outline'}
+        onLeftEvent={edit ? null : () => navigation.goBack()}
+        rightItem={edit ? 'checkmark-outline' : 'create-outline'}
+        onRightEvent={edit ? () => setEdit(!edit) : () => setEdit(!edit)}
+      />
       <FlatList
         data={userInfo.favBookData}
         keyExtractor={(item, index) => index.toString()}

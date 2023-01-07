@@ -57,7 +57,7 @@ export default function DetailScreen({ navigation }) {
         dispatch(getBookType(item))
       }}
       style={styles.renderViewStyle}>
-      <Image style={styles.flatListImg} source={item.image} />
+      <Image style={styles.flatListImg} source={{uri:item.image}} />
       <Text style={styles.flatListTitle}>{item.title}</Text>
       <Text style={styles.flatListAuthor}>{item.author}</Text>
     </TouchableOpacity>
@@ -126,7 +126,7 @@ export default function DetailScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-      <Image style={styles.imageBG} blurRadius={10} source={bookData.image} />
+      <Image style={styles.imageBG} blurRadius={10} source={{uri:bookData.image}} />
       <View style={styles.topContent}>
         <TouchableOpacity
           onPress={() => {
@@ -137,7 +137,7 @@ export default function DetailScreen({ navigation }) {
         </TouchableOpacity>
 
         <View style={styles.bookContent}>
-          <Image style={styles.bookImage} source={bookData.image} />
+          <Image style={styles.bookImage} source={{uri:bookData.image}} />
           <View style={styles.titleButtonStyle}>
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     borderColor: colors.primaryOrange,
+    resizeMode: 'cover'
   },
   titleButtonStyle: {
     marginLeft: 10,

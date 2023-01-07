@@ -12,6 +12,7 @@ import React from 'react'
 import { colors } from '../../defines/Colors'
 import { useDispatch } from 'react-redux'
 import { getBookType } from '../../redux/actions/GetBookAction'
+import HeaderBar from '../../components/HeaderBar'
 
 const windowHeight = Dimensions.get('window').height
 const windownWidth = Dimensions.get('window').width
@@ -37,11 +38,7 @@ export default function BooksTypeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topMenu}>
-        <View style={styles.topContent}>
-          <Text style={styles.topTextStyle}>Thể Loại</Text>
-        </View>
-      </View>
+      <HeaderBar title={"Thể Loại"}/>
       <FlatList
         data={DATA}
         renderItem={renderView}
@@ -79,24 +76,6 @@ const DATA = [
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  topMenu: {
-    height: '10%',
-    width: '100%',
-    backgroundColor: colors.primaryOrange,
-  },
-  topContent: {
-    justifyContent: 'center',
-    width: '90%',
-    height: '100%',
-    alignItems: 'center',
-    marginHorizontal: 20,
-  },
-  topTextStyle: {
-    //alignSelf: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
   },
   renderViewStyle: {
     width: windownWidth / 2,

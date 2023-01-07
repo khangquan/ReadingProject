@@ -15,6 +15,7 @@ import { colors } from '../../defines/Colors'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getBookData, getBookType } from '../../redux/actions/GetBookAction'
+import SearchBar from '../../components/SearchBar'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
@@ -51,48 +52,20 @@ export default function SearchScreen({ navigation }) {
     <TouchableOpacity
       onPress={() => handleDetail(item)}
       style={styles.renderViewStyle}>
-      <Image style={styles.flatListImg} source={item.image} />
+      <Image style={styles.flatListImg} source={{ uri: item.image }} />
       <Text style={styles.flatListTitle}>{item.title}</Text>
     </TouchableOpacity>
   )
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topMenu}>
-        <View style={styles.topContent}>
-          <TouchableOpacity
-            style={{ marginLeft: 10 }}
-            onPress={() => {
-              navigation.goBack()
-            }}>
-            <Icon name="chevron-back-outline" size={30} color="white" />
-          </TouchableOpacity>
-
-          <View style={styles.textInputWrapper}>
-            <TextInput
-              value={searchValue}
-              onChangeText={text => setSearchValue(text)}
-              style={styles.searchBoxStyle}
-              placeholder="Tên sách, tác giả,... cần tìm"
-            />
-            {searchValue ? (
-              <TouchableOpacity
-                style={styles.clearInputStyle}
-                onPress={() => {
-                  setSearchValue('')
-                }}>
-                <Icon name="close-outline" size={30} />
-              </TouchableOpacity>
-            ) : null}
-
-            <TouchableOpacity
-              style={styles.searchIconStyle}
-              onPress={() => handleSearch(searchValue)}>
-              <Icon name="search" size={30} />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+      <SearchBar
+        goBackEvent={() => navigation.goBack()}
+        onChangeText={text => setSearchValue(text)}
+        searchValue={searchValue}
+        setSearchEvent={() => setSearchValue('')}
+        searchEvent={() => handleSearch(searchValue)}
+      />
 
       <View style={styles.botContent}>
         {searchResult.length === 0 ? (
@@ -117,45 +90,6 @@ export default function SearchScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  topMenu: {
-    height: '10%',
-    width: '100%',
-    backgroundColor: colors.primaryOrange,
-  },
-  topContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    //marginHorizontal: 10
-  },
-  topTextStyle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  searchBoxStyle: {
-    padding: 10,
-    width: '75%',
-    borderRadius: 10,
-  },
-  textInputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    width: '80%',
-    marginRight: 20,
-    borderRadius: 10,
-  },
-  clearInputStyle: {
-    width: '10%',
-  },
-  searchIconStyle: {
-    position: 'absolute',
-    right: 0,
-    width: '15%',
   },
   botContent: {
     height: '100%',

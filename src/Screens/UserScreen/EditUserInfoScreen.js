@@ -12,6 +12,7 @@ import { colors } from '../../defines/Colors'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editFullname, editEmail, editPassword } from '../../redux/actions/AccountAction'
+import HeaderBar from '../../components/HeaderBar'
 
 export default function EditUserInfoScreen({ navigation, route }) {
   const { params } = route
@@ -55,18 +56,11 @@ export default function EditUserInfoScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.topMenu}>
-        <View style={styles.topContent}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack()
-            }}
-            style={styles.backStyle}>
-            <Icon name="chevron-back-outline" size={35} color={'white'} />
-          </TouchableOpacity>
-          <Text style={styles.topTextStyle}>Thay đổi thông tin</Text>
-        </View>
-      </View>
+      <HeaderBar
+        title={'Thay đổi thông tin'}
+        leftItem={'chevron-back-outline'}
+        onLeftEvent={() => navigation.goBack()}
+      />
 
       <View style={styles.botContent}>
         <View style={styles.userInfo}>
@@ -114,24 +108,6 @@ export default function EditUserInfoScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  topMenu: {
-    height: '10%',
-    width: '100%',
-    backgroundColor: colors.primaryOrange,
-  },
-  topContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '80%',
-    height: '100%',
-    alignItems: 'center',
-  },
-  topTextStyle: {
-    alignSelf: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.white,
   },
   botContent: {
     flex: 2,

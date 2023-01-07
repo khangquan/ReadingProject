@@ -22,7 +22,7 @@ export const increaseBookView = param => ({
 
 // export const getBookDataAPI = () => (
 //     async (dispatch) => {
-//         fetch('https://cattechsolutions.com/TongHopSach.json')
+//         fetch('https://mocki.io/v1/39c3d3e1-e607-4814-82c8-4f1f404a5fc7')
 //             .then((response) => response.json())
 //             .then((json) => {
 //                 dispatch(getBookData(json))
