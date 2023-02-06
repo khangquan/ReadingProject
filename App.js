@@ -6,11 +6,19 @@ import IntroScreen from './src/Screens/IntroScreen/IntroScreen';
 import Navigator from './src/Navigation/Navigator';
 import Loading from './src/components/Loading';
 import CreateNewPassScreen from './src/Screens/ForgotPassScreen/CreateNewPassScreen'
+import { createChannel } from './src/services/LocalNotification';
+import { RemoteNotification } from './src/services/RemoteNotification';
+import { useEffect } from 'react';
 
 LogBox.ignoreLogs(['Warning: ...']) // Ignore log notification by message
 LogBox.ignoreAllLogs() //Ignore all log notifications
 
 export default function App() {
+  useEffect(() => {
+    createChannel()
+    RemoteNotification()
+  },[])
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

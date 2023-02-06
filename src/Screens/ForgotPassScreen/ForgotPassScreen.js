@@ -7,10 +7,9 @@ import {
     TextInput,
     Dimensions
 } from 'react-native'
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { colors } from '../../defines/Colors'
+import { colors } from '../../utils/Colors'
 
 const windowWidth = Dimensions.get('window').width
 

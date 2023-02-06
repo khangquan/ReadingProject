@@ -1,4 +1,5 @@
 import {
+  IS_REGISTERING,
   REGISTER,
   EDIT_ACCOUNT_FULLNAME,
   EDIT_ACCOUNT_EMAIL,
@@ -9,10 +10,18 @@ import {
   EDIT_FAV_BOOK,
 } from '../../defines/ActionTypes'
 
-export const register = param => ({
-  type: REGISTER,
-  payload: param,
-})
+export const register = param => {
+  return (dispatch) => {
+    dispatch({ type: IS_REGISTERING });
+
+    setTimeout(() => {
+      dispatch({
+        type: REGISTER,
+        payload: param,
+      });
+    }, 2000);
+  }
+}
 
 export const editFullname = param => ({
   type: EDIT_ACCOUNT_FULLNAME,

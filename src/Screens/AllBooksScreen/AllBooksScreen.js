@@ -1,55 +1,36 @@
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
-  Image,
   SafeAreaView,
   Modal,
 } from 'react-native'
 import React from 'react'
-import { colors } from '../../defines/Colors'
-import {useEffect, useState} from 'react'
-import {useSelector, useDispatch} from 'react-redux'
-import {getBookData, getBookType} from '../../redux/actions/GetBookAction'
+import { colors } from '../../utils/Colors'
+import { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { getBookAPI, getBookType } from '../../redux/actions/GetBookAction'
 import HeaderBar from '../../components/HeaderBar'
+import AllBookList from '../../components/AllBookList'
 
-const windowHeight = Dimensions.get('window').height
-const windowWidth = Dimensions.get('window').width
-
-export default function AllBooksScreen({navigation, route}) {
-  const {params} = route
+export default function AllBooksScreen({ navigation, route }) {
+  const { params } = route
   const [modalVisible, setModalVisible] = useState(false)
   const [isAllBook, setIsAllBook] = useState(false)
   const dispatch = useDispatch()
-  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
+  const { allBooksData, bookData } = useSelector(state => state.bookGetData)
 
   useEffect(() => {
-    dispatch(getBookData())
-    checkIfAllBook()
-  }, [])
-
-  const checkIfAllBook = () => {
     if (params.type === 'Tất Cả') {
       setIsAllBook(true)
     } else setIsAllBook(false)
-  }
+  }, [])
 
   const handleDetail = item => {
     dispatch(getBookType(item))
     navigation.navigate('DetailScreen')
   }
-
-  const renderView = ({item}) => (
-    <TouchableOpacity
-      onPress={() => handleDetail(item)}
-      style={styles.renderViewStyle}>
-      <Image style={styles.flatListImg} source={{uri:item.image}} />
-      <Text style={styles.flatListTitle}>{item.title}</Text>
-    </TouchableOpacity>
-  )
 
   const handleFilterItem = item => {
     if (item === 'viewDecrease') {
@@ -61,7 +42,6 @@ export default function AllBooksScreen({navigation, route}) {
     } else {
       allBooksData.sort((a, b) => (a.title < b.title ? 1 : -1))
     }
-
     setModalVisible(false)
   }
 
@@ -89,7 +69,7 @@ export default function AllBooksScreen({navigation, route}) {
         </View>
       </Modal>
 
-      <HeaderBar 
+      <HeaderBar
         title={bookData.type}
         leftItem={'chevron-back-outline'}
         onLeftEvent={() => navigation.goBack()}
@@ -97,16 +77,12 @@ export default function AllBooksScreen({navigation, route}) {
         onRightEvent={() => setModalVisible(!modalVisible)}
       />
 
-      <FlatList
-        data={
+      <AllBookList
+        bookData={
           isAllBook
             ? allBooksData
-            : allBooksData.filter(item => item.type === bookData.type)
-        }
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderView}
-        numColumns={3}
-        showsVerticalScrollIndicator={false}
+            : allBooksData.filter(item => item.type === bookData.type)}
+        selectBookEvent={(item) => handleDetail(item)}
       />
     </SafeAreaView>
   )
@@ -135,26 +111,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  renderViewStyle: {
-    width: windowWidth / 3,
-    height: windowWidth / 2,
-    marginBottom: 60,
-    padding: 10,
-  },
-  flatListImg: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  flatListTitle: {
-    fontSize: 15,
-    alignSelf: 'center',
-    fontWeight: '500',
-  },
   filterModal: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalStyle: {
     margin: 20,

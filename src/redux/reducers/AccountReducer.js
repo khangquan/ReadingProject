@@ -1,4 +1,5 @@
 import {
+  IS_REGISTERING,
   REGISTER,
   EDIT_ACCOUNT_FULLNAME,
   EDIT_ACCOUNT_EMAIL,
@@ -10,6 +11,7 @@ import {
 } from '../../defines/ActionTypes'
 
 const initialState = {
+  isRegistering: false,
   userAccounts: [
     {
       id: new Date().getTime(),
@@ -18,27 +20,23 @@ const initialState = {
       pass: '123',
       avatar:
         'https://haycafe.vn/wp-content/uploads/2022/02/Anh-Avatar-Doremon-dep-ngau-cute.jpg',
-      favBookData: [
-        {
-          id: new Date().getTime(),
-          title: 'Dạy Con Làm Giàu',
-          image: require('../../../assets/Books/KinhTe/dayconlamgiau.jpg'),
-          author: 'Robert T. Kiyosaki',
-          type: 'Kinh Tế',
-          desc: 'Nếu bạn đã từng cảm thấy thất vọng vì việc làm công lãnh lương hay làm tư không cho bạn sự an toàn tài chính mà bạn khao khát , còn có cách thay thế. Nếu những đầu tư của bạn thất bại, bạn mệt mỏi vì những lời khuyên tài chính cũ xì, bạn lo lắng về việc nghỉ hưu, hay bạn chỉ dành nhiều thời gian hơn cho gia đình, bạn có thể tìm thấy con đường đến sự tự do về tài chính trong quyển sách này. Quyển sách gồm các câu chuyện thành công của những người đã đón nhận lời khuyên của người bố giàu và sau đó tìm thấy con đường đi đến sự thành công về tài chính của riêng mình. Và bạn cũng có thể tạo ra những câu chuyện thành công từ tập sách này',
-          status: 'Hoàn Thành',
-        },
-      ],
+      favBookData: [],
     },
   ],
 }
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
+    case IS_REGISTERING: 
+    return {
+      ...state,
+      isRegistering: true
+    }
     case REGISTER:
       return {
         ...state,
         userAccounts: [...state.userAccounts, action.payload],
+        isRegistering: false,
       }
 
     case EDIT_ACCOUNT_FULLNAME:

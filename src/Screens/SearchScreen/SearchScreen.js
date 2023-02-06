@@ -3,29 +3,19 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableOpacity,
-  TextInput,
-  Dimensions,
-  FlatList,
-  Image,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
-import React from 'react'
-import { colors } from '../../defines/Colors'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getBookData, getBookType } from '../../redux/actions/GetBookAction'
+import { getBookAPI, getBookType } from '../../redux/actions/GetBookAction'
 import SearchBar from '../../components/SearchBar'
-
-const windowHeight = Dimensions.get('window').height
-const windowWidth = Dimensions.get('window').width
+import AllBookList from '../../components/AllBookList'
 
 export default function SearchScreen({ navigation }) {
   const dispatch = useDispatch()
   const { allBooksData, bookData } = useSelector(state => state.bookGetData)
 
   useEffect(() => {
-    dispatch(getBookData())
+    dispatch(getBookAPI())
   }, [])
 
   const [searchValue, setSearchValue] = useState('')
@@ -48,15 +38,6 @@ export default function SearchScreen({ navigation }) {
     navigation.navigate('DetailScreen')
   }
 
-  const renderView = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => handleDetail(item)}
-      style={styles.renderViewStyle}>
-      <Image style={styles.flatListImg} source={{ uri: item.image }} />
-      <Text style={styles.flatListTitle}>{item.title}</Text>
-    </TouchableOpacity>
-  )
-
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
@@ -74,12 +55,9 @@ export default function SearchScreen({ navigation }) {
             <Text style={{ fontSize: 20 }}>Không tìm thấy sản phẩm phù hợp</Text>
           </View>
         ) : (
-          <FlatList
-            data={searchResult}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={renderView}
-            numColumns={3}
-            showsVerticalScrollIndicator={false}
+          <AllBookList 
+            bookData={searchResult}
+            selectBookEvent={(item) => handleDetail(item)}
           />
         )}
       </View>
@@ -103,21 +81,5 @@ const styles = StyleSheet.create({
   },
   resultTextStyle: {
     fontSize: 20,
-  },
-  renderViewStyle: {
-    width: windowWidth / 3,
-    height: windowWidth / 2,
-    marginBottom: 60,
-    padding: 10,
-  },
-  flatListImg: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  flatListTitle: {
-    fontSize: 15,
-    alignSelf: 'center',
-    fontWeight: '500',
   },
 })

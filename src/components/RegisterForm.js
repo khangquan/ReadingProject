@@ -40,6 +40,7 @@ export default function RegisterForm(props) {
                     'Email này đã được sử dụng! vui lòng chọn email khác!',
                 )
             } else {
+                Keyboard.dismiss()
                 dispatch(
                     register({
                         id: new Date().getTime(),
@@ -50,8 +51,10 @@ export default function RegisterForm(props) {
                         favBookData: [],
                     }),
                 )
-                Alert.alert('Thông báo', 'Đăng ký tài khoản thành công!!')
-                sendDataToLoginScreen()
+                setTimeout(() => {
+                    Alert.alert('Thông báo', 'Đăng ký tài khoản thành công!!')
+                    sendDataToLoginScreen()
+                }, 2000)
             }
         }
     }

@@ -4,10 +4,12 @@ import {
   INCREASE_BOOK_VIEW 
 } from "../../defines/ActionTypes"
 import TongHopSach from '../../books/TongHopSach'
+import { getAPI } from "../../services/API"
+import { APIuri } from "../../utils/APIuri"
 
-export const getBookData = () => ({
+export const getBookData = param => ({
   type: GET_BOOK_DATA,
-  payload: TongHopSach,
+  payload: param,
 })
 
 export const getBookType = param => ({
@@ -20,15 +22,10 @@ export const increaseBookView = param => ({
   payload: param,
 })
 
-// export const getBookDataAPI = () => (
-//     async (dispatch) => {
-//         fetch('https://mocki.io/v1/39c3d3e1-e607-4814-82c8-4f1f404a5fc7')
-//             .then((response) => response.json())
-//             .then((json) => {
-//                 dispatch(getBookData(json))
-//             })
-//             .catch((error) => {
-//                 console.log(error)
-//             })
-//     }
-// )
+export const getBookAPI = () => (
+  getAPI({
+    uri: APIuri.bookData,
+    success: (json) => getBookData(json),
+    fail: (error) => console.log(error)
+  })
+)

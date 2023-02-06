@@ -4,7 +4,7 @@ import {
     View,
     TouchableOpacity,
 } from 'react-native'
-import { colors } from '../defines/Colors'
+import { colors } from '../utils/Colors'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -13,7 +13,7 @@ export default function HeaderBar({
     title,
     rightItem,
     onLeftEvent,
-    onRightEvent
+    onRightEvent,
 }) {
     return (
         <View style={styles.topMenu}>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     topMenu: {
         height: '10%',
         width: '100%',
-        backgroundColor: colors.primaryOrange,
+        backgroundColor: colors.primaryOrange
     },
     topContent: {
         flexDirection: 'row',

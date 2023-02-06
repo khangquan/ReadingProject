@@ -6,10 +6,8 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native'
-import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { colors } from '../../defines/Colors'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { colors } from '../../utils/Colors'
 import { useDispatch, useSelector } from 'react-redux'
 import { editFullname, editEmail, editPassword } from '../../redux/actions/AccountAction'
 import HeaderBar from '../../components/HeaderBar'

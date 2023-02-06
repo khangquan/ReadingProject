@@ -9,34 +9,37 @@ import {
   StatusBar,
   Alert,
 } from 'react-native'
-import { useEffect, useState } from 'react'
-import { colors } from '../../defines/Colors'
-import { useSelector, useDispatch } from 'react-redux'
-import { getBookData, getBookType, increaseBookView } from '../../redux/actions/GetBookAction'
 import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
-import MenuIconBar from './MenuIconBar'
-import ViewMoreText from 'react-native-view-more-text'
-import FlatlistHorizon from '../../components/FlatlistHorizon'
+import { useEffect, useState } from 'react'
+
+import { useSelector, useDispatch } from 'react-redux'
+import { getBookType, increaseBookView } from '../../redux/actions/GetBookAction'
 import { addFavBook, editFavBook } from '../../redux/actions/AccountAction'
+import Icon from 'react-native-vector-icons/Ionicons'
+
+import { colors } from '../../utils/Colors'
+import MenuIconBar from '../../components/MenuIconBar'
+import MoreText from '../../components/MoreText'
+import BookListHorizon from '../../components/BookListHorizon'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
 export default function DetailScreen({ navigation }) {
+
+  const dispatch = useDispatch()
+  const [isLike, setIsLike] = useState(false)
+  const [userInfo, setUserInfo] = useState([])
+
+  const { currentUser } = useSelector(state => state.loginScreen)
+  const { userAccounts } = useSelector(state => state.register)
   const { allBooksData, bookData } = useSelector(state => state.bookGetData)
+
   const bookYouMayLike = allBooksData.filter(
     (item, index) => item.type === bookData.type,
   )
-  const dispatch = useDispatch()
-  const [isLike, setIsLike] = useState(false)
-
-  const [userInfo, setUserInfo] = useState([])
-  const { currentUser } = useSelector(state => state.loginScreen)
-  const { userAccounts } = useSelector(state => state.register)
 
   useEffect(() => {
-    dispatch(getBookData())
     let check = false
     userAccounts.forEach(user => {
       if (user.email === currentUser) setUserInfo(user)
@@ -50,34 +53,6 @@ export default function DetailScreen({ navigation }) {
       setIsLike(check)
     })
   }, [bookData])
-
-  const renderView = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        dispatch(getBookType(item))
-      }}
-      style={styles.renderViewStyle}>
-      <Image style={styles.flatListImg} source={{uri:item.image}} />
-      <Text style={styles.flatListTitle}>{item.title}</Text>
-      <Text style={styles.flatListAuthor}>{item.author}</Text>
-    </TouchableOpacity>
-  )
-
-  const renderViewMore = onPress => {
-    return (
-      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>
-        Xem thêm
-      </Text>
-    )
-  }
-
-  const renderViewLess = onPress => {
-    return (
-      <Text style={{ fontSize: 17, fontWeight: '500' }} onPress={onPress}>
-        Thu gọn
-      </Text>
-    )
-  }
 
   const handleAllBook = item => {
     dispatch(getBookType(item))
@@ -116,6 +91,7 @@ export default function DetailScreen({ navigation }) {
             type: bookData.type,
             desc: bookData.desc,
             status: bookData.status,
+            views: bookData.views,
           },
         }),
       )
@@ -126,7 +102,7 @@ export default function DetailScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-      <Image style={styles.imageBG} blurRadius={10} source={{uri:bookData.image}} />
+      <Image style={styles.imageBG} blurRadius={10} source={{ uri: bookData.image }} />
       <View style={styles.topContent}>
         <TouchableOpacity
           onPress={() => {
@@ -137,7 +113,7 @@ export default function DetailScreen({ navigation }) {
         </TouchableOpacity>
 
         <View style={styles.bookContent}>
-          <Image style={styles.bookImage} source={{uri:bookData.image}} />
+          <Image style={styles.bookImage} source={{ uri: bookData.image }} />
           <View style={styles.titleButtonStyle}>
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
@@ -154,7 +130,6 @@ export default function DetailScreen({ navigation }) {
 
       <ScrollView style={styles.botContent}>
         <View style={styles.iconMenuBar}>
-          <MenuIconBar />
           <MenuIconBar
             color={isLike ? 'red' : null}
             title={'heart'}
@@ -166,18 +141,15 @@ export default function DetailScreen({ navigation }) {
             textTitle={'Bình luận'}
             onEvent={() => console.log(userInfo)}
           />
-          <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'} />
-          <MenuIconBar />
+          <MenuIconBar
+            title={'share-outline'}
+            textTitle={'Chia sẻ'}
+          />
         </View>
 
         <View style={{ margin: 20 }}>
           <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
-          <ViewMoreText
-            numberOfLines={2}
-            renderViewMore={renderViewMore}
-            renderViewLess={renderViewLess}>
-            <Text style={{ fontSize: 18 }}>{bookData.desc}</Text>
-          </ViewMoreText>
+          <MoreText content={bookData.desc} />
         </View>
 
         <View style={{ margin: 20 }}>
@@ -187,11 +159,11 @@ export default function DetailScreen({ navigation }) {
           <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
         </View>
 
-        <FlatlistHorizon
+        <BookListHorizon
           title={'Có thể bạn quan tâm'}
           data={bookYouMayLike.filter((item, index) => index < 5)}
-          renderView={renderView}
-          onEvent={() => handleAllBook(bookData)}
+          allBookEvent={() => handleAllBook(bookData)}
+          selectBookEvent={(item) => dispatch(getBookType(item))}
         />
       </ScrollView>
     </View>
@@ -289,17 +261,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 0.6,
     borderColor: 'gray',
-  },
-  renderViewStyle: {
-    width: windowWidth / 3,
-    height: windowHeight / 4,
-    marginTop: 20,
-    marginBottom: 50,
-    marginHorizontal: 10,
-  },
-  flatListImg: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
   },
 })

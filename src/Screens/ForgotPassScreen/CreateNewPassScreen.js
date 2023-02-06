@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { colors } from '../../defines/Colors'
+import { colors } from '../../utils/Colors'
 import { Formik } from 'formik'
 import { checkRegValidate } from '../LoginScreen/CheckValidate'
 
@@ -98,14 +98,9 @@ export default function ConfirmScreen({ navigation }) {
                                 <Text style={styles.buttonCreate}>Reset mật khẩu</Text>
                             </TouchableOpacity>
                         </View>
-
                     </View>
-
-
                 )}
-
             </Formik>
-
         </ImageBackground>
     )
 }

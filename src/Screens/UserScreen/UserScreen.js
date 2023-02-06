@@ -2,20 +2,18 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   Alert,
   SafeAreaView,
   ScrollView,
 } from 'react-native'
-import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { colors } from '../../defines/Colors'
-import UserMenu from '../../components/UserMenu'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { appLogout } from '../../redux/actions/LoginScreenAction'
 import { Avatar } from '@react-native-material/core'
+
 import HeaderBar from '../../components/HeaderBar'
+import UserMenu from '../../components/UserMenu'
 
 export default function UserScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -24,14 +22,11 @@ export default function UserScreen({ navigation }) {
   const { userAccounts } = useSelector(state => state.register)
 
   useEffect(() => {
-    getCurrentUser()
-  }, [])
-
-  const getCurrentUser = () => {
     userAccounts.map(user => {
       if (user.email === currentUser) setUserInfo(user)
     })
-  }
+  }, [])
+  
   const handleLogout = item => {
     if (item === 'Đăng xuất') {
       Alert.alert('Lưu ý!', 'Bạn có muốn đăng xuất?', [
@@ -46,12 +41,14 @@ export default function UserScreen({ navigation }) {
           onPress: () => { },
         },
       ])
-    }
+    } else (
+      navigation.navigate("ScheduleScreen")
+    )
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderBar title={'Tài Khoản'}/>
+      <HeaderBar title={'Tài Khoản'} />
 
       <View style={styles.botContent}>
         <View style={styles.welcomeStyle}>
@@ -72,6 +69,8 @@ export default function UserScreen({ navigation }) {
             />
           )}
         </View>
+
+        {/* Danh mục menu tài khoản */}
         <ScrollView>
           <View>
             <UserMenu
@@ -127,6 +126,10 @@ const INTRODUCE = [
 
 const SETTING = [
   {
+    title: 'Hẹn giờ đọc sách',
+    iconName: 'alarm-outline',
+  },
+  {
     title: 'Đăng xuất',
     iconName: 'log-out-outline',
   },
@@ -164,4 +167,5 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginVertical: 5,
   },
+
 })

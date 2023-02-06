@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
-import { colors } from '../defines/Colors'
+import { colors } from '../utils/Colors'
 
 export default function UserMenu({title, iconName, onEvent}) {
   return (

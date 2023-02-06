@@ -1,10 +1,10 @@
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
 
-import {NavigationContainer} from '@react-navigation/native'
-import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import HomeScreen from '../Screens/HomeScreen/HomeScreen'
 import LoginScreen from '../Screens/LoginScreen/LoginScreen'
@@ -20,13 +20,15 @@ import FavBooksScreen from '../Screens/FavoriteBooksScreen/FavBooksScreen'
 import ForgotPassScreen from '../Screens/ForgotPassScreen/ForgotPassScreen'
 import ConfirmScreen from '../Screens/ForgotPassScreen/ConfirmScreen'
 import CreateNewPassScreen from '../Screens/ForgotPassScreen/CreateNewPassScreen'
+import ScheduleScreen from '../Screens/ScheduleScreen/ScheduleScreen'
 
 const Tabs = createBottomTabNavigator()
 const LoginStack = createNativeStackNavigator()
 const HomeStack = createNativeStackNavigator()
+const DetailStack = createNativeStackNavigator()
 
 const LoginStackNavigator = () => (
-  <LoginStack.Navigator screenOptions={{headerShown: false}}>
+  <LoginStack.Navigator screenOptions={{ headerShown: false }}>
     <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
     <LoginStack.Screen name="ForgotPassScreen" component={ForgotPassScreen} />
     <LoginStack.Screen name="ConfirmScreen" component={ConfirmScreen} />
@@ -35,22 +37,30 @@ const LoginStackNavigator = () => (
 )
 
 const HomeStackNavigator = () => (
-  <HomeStack.Navigator screenOptions={{headerShown: false}}>
+  <HomeStack.Navigator screenOptions={{ headerShown: false }}>
     <HomeStack.Screen name="HomeScreen" component={TabsNavigator} />
     <HomeStack.Screen name="SearchScreen" component={SearchScreen} />
     <HomeStack.Screen name="AllBooksScreen" component={AllBooksScreen} />
-    <HomeStack.Screen name="DetailScreen" component={DetailScreen} />
+    <HomeStack.Screen name='DetailScreen' component={DetailScreen} />
     <HomeStack.Screen name="ReadingScreen" component={ReadingScreen} />
     <HomeStack.Screen name="UserInfoScreen" component={UserInfoScreen} />
     <HomeStack.Screen name="EditUserInfoScreen" component={EditUserInfoScreen} />
     <HomeStack.Screen name="FavBooksScreen" component={FavBooksScreen} />
+    <HomeStack.Screen name="ScheduleScreen" component={ScheduleScreen} />
   </HomeStack.Navigator>
+)
+
+const DetailStackNavigator = () => (
+  <DetailStack.Navigator screenOptions={{ headerShown: false }}>
+    <DetailStack.Screen name='DetailScreen' component={DetailScreen} />
+    <DetailStack.Screen name='AllBooksScreen' component={AllBooksScreen} />
+  </DetailStack.Navigator>
 )
 
 const TabsNavigator = () => (
   <Tabs.Navigator
-    screenOptions={({route}) => ({
-      tabBarIcon: ({focused, color, size}) => {
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
         let iconName
         if (route.name === 'Trang Chủ') {
           iconName = focused ? 'home' : 'home-outline'
@@ -82,7 +92,7 @@ const TabsNavigator = () => (
 )
 
 export default function Navigator() {
-  const {isLogin} = useSelector(state => state.loginScreen)
+  const { isLogin } = useSelector(state => state.loginScreen)
   return (
     <NavigationContainer>
       {isLogin ? <HomeStackNavigator /> : <LoginStackNavigator />}

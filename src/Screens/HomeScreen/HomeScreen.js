@@ -1,51 +1,34 @@
 import {
-  View,
-  Text,
   StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
   ScrollView,
   SafeAreaView,
 } from 'react-native'
 import React, { useEffect } from 'react'
-import FlatlistHorizon from '../../components/FlatlistHorizon'
+
 import { useSelector, useDispatch } from 'react-redux'
-import { getBookData, getBookType, getBookDataAPI } from '../../redux/actions/GetBookAction'
+import { getBookType, getBookAPI } from '../../redux/actions/GetBookAction'
+
 import BannerSlider from '../../components/BannerSlider'
 import HeaderBar from '../../components/HeaderBar'
-import Icon from 'react-native-vector-icons/Ionicons'
+import BookListHorizon from '../../components/BookListHorizon'
 
-const windowWidth = Dimensions.get('window').width
-const windowHeight = Dimensions.get('window').height
-
-export default function HomeScreen({ navigation, route }) {
+export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch()
   const { allBooksData } = useSelector(state => state.bookGetData)
 
   useEffect(() => {
-    dispatch(getBookData())
+    dispatch(getBookAPI())
   }, [])
 
   const handleDetail = item => {
     dispatch(getBookType(item))
-    navigation.navigate('DetailScreen')
+    navigation.navigate('DetailScreen', item)
   }
 
   const handleAllBook = item => {
     dispatch(getBookType(item))
     navigation.navigate('AllBooksScreen', item)
   }
-
-  const renderView = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => handleDetail(item)}
-      style={styles.renderViewStyle}>
-      <Image style={styles.flatListImg} source={{ uri: item.image }} />
-      <Text style={styles.flatListTitle}>{item.title}</Text>
-      <Text style={styles.flatListAuthor}>{item.author}</Text>
-    </TouchableOpacity>
-  )
 
   const SachKinhTe = allBooksData.filter(item => item.type === "Kinh Tế")
   const SachKyNang = allBooksData.filter(item => item.type === "Kỹ Năng")
@@ -77,22 +60,22 @@ export default function HomeScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderBar 
-      title = {'Trang Chủ'}
-      leftItem = {'menu'}
-      rightItem = {'search'}
-      onRightEvent = {() => navigation.navigate('SearchScreen')}
+      <HeaderBar
+        title={'Trang Chủ'}
+        leftItem={'menu'}
+        rightItem={'search'}
+        onRightEvent={() => navigation.navigate('SearchScreen')}
       />
 
       <ScrollView>
         <BannerSlider />
         {flatListData.map((item, index) => {
           return (
-            <FlatlistHorizon
+            <BookListHorizon
               title={item.title}
               data={item.data}
-              renderView={renderView}
-              onEvent={() => handleAllBook(item)}
+              allBookEvent={() => handleAllBook(item)}
+              selectBookEvent={(item) => handleDetail(item)}
             />
           )
         })}
@@ -104,29 +87,5 @@ export default function HomeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  botContent: {
-    flex: 2,
-  },
-  renderViewStyle: {
-    width: windowWidth / 3,
-    height: windowHeight / 4,
-    marginTop: 20,
-    marginBottom: 50,
-    marginHorizontal: 10,
-  },
-  flatListImg: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover'
-  },
-  flatListTitle: {
-    width: '100%',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  flatListAuthor: {
-    width: '100%',
-    textAlign: 'center',
   },
 })

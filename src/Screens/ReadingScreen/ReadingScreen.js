@@ -6,13 +6,15 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from 'react-native'
+import React, { useState, useEffect } from 'react'
+
 import Icon from 'react-native-vector-icons/Ionicons'
-import React from 'react'
-import Slider from '@react-native-community/slider'
-import { colors } from '../../defines/Colors'
 import DeviceBrightness from '@adrianso/react-native-device-brightness'
 import Pdf from 'react-native-pdf'
-import { useState, useEffect } from 'react'
+
+import { colors } from '../../utils/Colors'
+import Slider from '@react-native-community/slider'
+
 
 export default function ReadingScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
@@ -206,8 +208,6 @@ export default function ReadingScreen({ navigation }) {
         }}
         style={styles.pdf} /> */}
     </View>
-
-
   )
 }
 

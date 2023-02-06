@@ -2,23 +2,22 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   SafeAreaView,
   Dimensions,
   FlatList,
   Image,
   Alert,
 } from 'react-native'
-import React from 'react'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { colors } from '../../defines/Colors'
+import React, { useState, useEffect } from 'react'
+
 import { useSelector, useDispatch } from 'react-redux'
-import { useState, useEffect } from 'react'
 import { getBookType } from '../../redux/actions/GetBookAction'
 import { editFavBook } from '../../redux/actions/AccountAction'
+
+import Icon from 'react-native-vector-icons/Ionicons'
+import { colors } from '../../utils/Colors'
 import HeaderBar from '../../components/HeaderBar'
 
-const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
 export default function FavBooksScreen({ navigation }) {
@@ -29,14 +28,10 @@ export default function FavBooksScreen({ navigation }) {
   const { userAccounts } = useSelector(state => state.register)
 
   useEffect(() => {
-    getCurrentUser()
-  }, [])
-
-  const getCurrentUser = () => {
     userAccounts.map(user => {
       if (user.email === currentUser) setUserInfo(user)
     })
-  }
+  }, [])
 
   const handleDetail = item => {
     dispatch(getBookType(item))
@@ -59,27 +54,25 @@ export default function FavBooksScreen({ navigation }) {
   }
 
   const renderView = ({ item }) => (
-    <>
-      <TouchableOpacity
-        disabled={edit ? true : false}
-        onPress={() => handleDetail(item)}
-        style={styles.renderViewStyle}>
-        <Image
-          blurRadius={edit ? 30 : 0}
-          style={styles.flatListImg}
-          source={item.image}
-        />
-        <Text style={styles.flatListTitle}>{item.title}</Text>
+    <TouchableOpacity
+      disabled={edit ? true : false}
+      onPress={() => handleDetail(item)}
+      style={styles.renderViewStyle}>
+      <Image
+        blurRadius={edit ? 30 : 0}
+        style={styles.flatListImg}
+        source={{ uri: item.image }}
+      />
+      <Text style={styles.flatListTitle}>{item.title}</Text>
 
-        {edit ? (
-          <TouchableOpacity
-            style={styles.iconDeleteStyle}
-            onPress={() => handleDeleteFavBook(item)}>
-            <Icon name="trash-outline" size={50} color="white" />
-          </TouchableOpacity>
-        ) : null}
-      </TouchableOpacity>
-    </>
+      {edit ? (
+        <TouchableOpacity
+          style={styles.iconDeleteStyle}
+          onPress={() => handleDeleteFavBook(item)}>
+          <Icon name="trash-outline" size={50} color="white" />
+        </TouchableOpacity>
+      ) : null}
+    </TouchableOpacity>
   )
 
   return (

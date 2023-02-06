@@ -1,3 +1,7 @@
+//Loading
+export const IS_LOGGING = 'IS_LOGGING'
+export const IS_REGISTERING = 'IS_REGISTERING'
+
 //Login - LogOut Action
 export const APP_LOGIN = 'APP_LOGIN'
 export const APP_LOGOUT = 'APP_LOGOUT'

@@ -9,13 +9,11 @@ import {
   SafeAreaView,
 } from 'react-native'
 import React from 'react'
-import { colors } from '../../defines/Colors'
 import { useDispatch } from 'react-redux'
 import { getBookType } from '../../redux/actions/GetBookAction'
 import HeaderBar from '../../components/HeaderBar'
 
-const windowHeight = Dimensions.get('window').height
-const windownWidth = Dimensions.get('window').width
+const windowWidth = Dimensions.get('window').width
 
 export default function BooksTypeScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -78,8 +76,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   renderViewStyle: {
-    width: windownWidth / 2,
-    height: windownWidth / 2,
+    width: windowWidth / 2,
+    height: windowWidth / 2,
     padding: 10,
   },
   flatListImg: {

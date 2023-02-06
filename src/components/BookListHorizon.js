@@ -7,27 +7,34 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import React from 'react'
-const windowHeight = Dimensions.get('window').height
-const windownWidth = Dimensions.get('window').width
+import BookCard from './BookCard'
 
-export default function FlatlistHorizon({
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
+
+export default function BookListHorizon({
     data,
-    renderView,
     title,
-    onEvent
+    allBookEvent,
+    selectBookEvent,
 }) {
     return (
         <View style={styles.Content}>
             <View style={styles.titleStyle}>
                 <Text style={styles.title}>{title}</Text>
-                <TouchableOpacity onPress={onEvent}>
+                <TouchableOpacity onPress={allBookEvent}>
                     <Text style={styles.showAll}>Tất cả {'>'}</Text>
                 </TouchableOpacity>
             </View>
 
             <FlatList
                 data={data}
-                renderItem={renderView}
+                renderItem={({ item }) =>
+                    <BookCard
+                        bookData={item}
+                        selectBookEvent={() => selectBookEvent(item)}
+                    />
+                }
                 keyExtractor={(item, index) => index.toString()}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -38,8 +45,8 @@ export default function FlatlistHorizon({
 
 const styles = StyleSheet.create({
     Content: {
-        width: windownWidth,
-        height: windowHeight / 2 - 40,
+        width: windowWidth,
+        height: windowHeight / 2,
         borderBottomWidth: 0.2,
         borderBottomColor: 'gray',
     },

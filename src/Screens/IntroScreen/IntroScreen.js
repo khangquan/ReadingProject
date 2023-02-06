@@ -1,16 +1,14 @@
-import {View, Text, StyleSheet, ImageBackground, Image} from 'react-native'
-import {useState} from 'react'
-import React from 'react'
+import { View, Text, StyleSheet, Image } from 'react-native'
+import React, { useState } from 'react'
 
+import Navigator from '../../Navigation/Navigator'
+import { colors } from '../../utils/Colors'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { colors } from '../../defines/Colors'
-import App from '../../../App'
-import Navigator from '../../Navigation/Navigator'
 
-export default function IntroScreen({onEvent}) {
+export default function IntroScreen() {
   const [showRealApp, setShowRealApp] = useState(false)
-  const renderView = ({item}) => (
+  const renderView = ({ item }) => (
     <View style={styles.slide}>
       <Image style={styles.images} source={item.image} />
       <Text style={styles.text}>{item.text}</Text>
