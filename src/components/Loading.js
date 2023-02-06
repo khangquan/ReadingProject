@@ -1,5 +1,4 @@
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
-import { colors } from '../utils/Colors'
 import React from 'react'
 import LottieView from 'lottie-react-native';
 

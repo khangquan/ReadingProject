@@ -27,11 +27,11 @@ const initialState = {
 
 const accountReducer = (state = initialState, action) => {
   switch (action.type) {
-    case IS_REGISTERING: 
-    return {
-      ...state,
-      isRegistering: true
-    }
+    case IS_REGISTERING:
+      return {
+        ...state,
+        isRegistering: true,
+      }
     case REGISTER:
       return {
         ...state,
@@ -100,10 +100,12 @@ const accountReducer = (state = initialState, action) => {
       }
     case EDIT_FAV_BOOK:
       state.userAccounts.map(account => {
-        let checkBook = account.favBookData
-        for (let i = 0; i < checkBook.length; i++) {
-          if (checkBook[i].title === action.payload.title) {
-            checkBook.splice(i, 1)
+        if (account.id === action.payload.userId) {
+          let checkBook = account.favBookData
+          for (let i = 0; i < checkBook.length; i++) {
+            if (checkBook[i].title === action.payload.title) {
+              checkBook.splice(i, 1)
+            }
           }
         }
       })

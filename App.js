@@ -4,8 +4,6 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { store, persistor } from './src/redux/store/Store'
 import IntroScreen from './src/Screens/IntroScreen/IntroScreen';
 import Navigator from './src/Navigation/Navigator';
-import Loading from './src/components/Loading';
-import CreateNewPassScreen from './src/Screens/ForgotPassScreen/CreateNewPassScreen'
 import { createChannel } from './src/services/LocalNotification';
 import { RemoteNotification } from './src/services/RemoteNotification';
 import { useEffect } from 'react';
@@ -26,7 +24,6 @@ export default function App() {
           barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
         />
         <Navigator />
-        {/* <Loading/> */}
       </PersistGate>
     </Provider>
   )

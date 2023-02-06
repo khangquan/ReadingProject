@@ -9,11 +9,10 @@ import {
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TextBox from './TextBox'
-import { appLogin, loginRequest } from '../redux/actions/LoginScreenAction'
+import { appLogin } from '../redux/actions/LoginScreenAction'
 import { Formik } from 'formik'
 import { styles } from '../Screens/LoginScreen/LoginScreenStyles'
 import { checkLogInValidate } from '../Screens/LoginScreen/CheckValidate'
-import Loading from './Loading'
 
 export default function LoginForm(props) {
     const dispatch = useDispatch()

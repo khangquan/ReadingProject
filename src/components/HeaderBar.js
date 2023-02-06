@@ -21,7 +21,9 @@ export default function HeaderBar({
                 <TouchableOpacity onPress={onLeftEvent}>
                     <Icon name={leftItem} size={30} color={'white'} />
                 </TouchableOpacity>
+
                 <Text style={styles.topTextStyle}>{title}</Text>
+                
                 <TouchableOpacity onPress={onRightEvent}>
                     <Icon name={rightItem} size={30} color={'white'} />
                 </TouchableOpacity>

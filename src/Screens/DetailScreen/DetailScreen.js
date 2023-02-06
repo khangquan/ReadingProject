@@ -10,14 +10,14 @@ import {
   Alert,
 } from 'react-native'
 import React from 'react'
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { getBookType, increaseBookView } from '../../redux/actions/GetBookAction'
-import { addFavBook, editFavBook } from '../../redux/actions/AccountAction'
+import {useSelector, useDispatch} from 'react-redux'
+import {getBookType, increaseBookView} from '../../redux/actions/GetBookAction'
+import {addFavBook, editFavBook} from '../../redux/actions/AccountAction'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import { colors } from '../../utils/Colors'
+import {colors} from '../../utils/Colors'
 import MenuIconBar from '../../components/MenuIconBar'
 import MoreText from '../../components/MoreText'
 import BookListHorizon from '../../components/BookListHorizon'
@@ -25,15 +25,14 @@ import BookListHorizon from '../../components/BookListHorizon'
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
-export default function DetailScreen({ navigation }) {
-
+export default function DetailScreen({navigation}) {
   const dispatch = useDispatch()
   const [isLike, setIsLike] = useState(false)
   const [userInfo, setUserInfo] = useState([])
 
-  const { currentUser } = useSelector(state => state.loginScreen)
-  const { userAccounts } = useSelector(state => state.register)
-  const { allBooksData, bookData } = useSelector(state => state.bookGetData)
+  const {currentUser} = useSelector(state => state.loginScreen)
+  const {userAccounts} = useSelector(state => state.register)
+  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
 
   const bookYouMayLike = allBooksData.filter(
     (item, index) => item.type === bookData.type,
@@ -42,14 +41,16 @@ export default function DetailScreen({ navigation }) {
   useEffect(() => {
     let check = false
     userAccounts.forEach(user => {
-      if (user.email === currentUser) setUserInfo(user)
-      user.favBookData.forEach(book => {
-        if (book.title === bookData.title) {
-          check = true
-        } else {
-          setIsLike(false)
-        }
-      })
+      if (user.email === currentUser) {
+        setUserInfo(user)
+        user.favBookData.forEach(book => {
+          if (book.title === bookData.title) {
+            check = true
+          } else {
+            setIsLike(false)
+          }
+        })
+      }
       setIsLike(check)
     })
   }, [bookData])
@@ -61,7 +62,7 @@ export default function DetailScreen({ navigation }) {
 
   const handleReadingScreen = item => {
     dispatch(increaseBookView(item))
-    navigation.navigate('ReadingScreen')
+    //navigation.navigate('ReadingScreen')
   }
 
   const handleLikeBook = bookData => {
@@ -71,30 +72,17 @@ export default function DetailScreen({ navigation }) {
           text: 'Yes',
           onPress: () => {
             setIsLike(false)
-            dispatch(editFavBook({ title: bookData.title }))
+            dispatch(editFavBook({userInfo, bookData}))
           },
         },
         {
           text: 'No',
-          onPress: () => { },
+          onPress: () => {},
         },
       ])
     } else {
       setIsLike(true)
-      dispatch(
-        addFavBook({
-          userId: userInfo.id,
-          favBook: {
-            title: bookData.title,
-            image: bookData.image,
-            author: bookData.author,
-            type: bookData.type,
-            desc: bookData.desc,
-            status: bookData.status,
-            views: bookData.views,
-          },
-        }),
-      )
+      dispatch(addFavBook({userInfo, bookData}))
       Alert.alert('Thành công', 'Đã thêm vào danh sách yêu thích!')
     }
   }
@@ -102,18 +90,27 @@ export default function DetailScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
-      <Image style={styles.imageBG} blurRadius={10} source={{ uri: bookData.image }} />
+      <Image
+        style={styles.imageBG}
+        blurRadius={10}
+        source={{uri: bookData.image}}
+      />
       <View style={styles.topContent}>
         <TouchableOpacity
           onPress={() => {
             navigation.goBack()
           }}
-          style={styles.backStyle}>
-          <Icon name="chevron-back-outline" size={35} color={colors.primaryOrange} />
+          style={styles.backStyle}
+        >
+          <Icon
+            name="chevron-back-outline"
+            size={35}
+            color={colors.primaryOrange}
+          />
         </TouchableOpacity>
 
         <View style={styles.bookContent}>
-          <Image style={styles.bookImage} source={{ uri: bookData.image }} />
+          <Image style={styles.bookImage} source={{uri: bookData.image}} />
           <View style={styles.titleButtonStyle}>
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
@@ -121,7 +118,8 @@ export default function DetailScreen({ navigation }) {
               onPress={() => {
                 handleReadingScreen(bookData.title)
               }}
-              style={styles.readButton}>
+              style={styles.readButton}
+            >
               <Text style={styles.buttonText}>ĐỌC NGAY</Text>
             </TouchableOpacity>
           </View>
@@ -139,31 +137,27 @@ export default function DetailScreen({ navigation }) {
           <MenuIconBar
             title={'chatbubble-ellipses-outline'}
             textTitle={'Bình luận'}
-            onEvent={() => console.log(userInfo)}
           />
-          <MenuIconBar
-            title={'share-outline'}
-            textTitle={'Chia sẻ'}
-          />
+          <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'} />
         </View>
 
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
+        <View style={{margin: 20}}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Giới Thiệu</Text>
           <MoreText content={bookData.desc} />
         </View>
 
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
-          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
-          <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
-          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
+        <View style={{margin: 20}}>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Thông Tin</Text>
+          <Text style={{fontSize: 18}}>Thể loại: {bookData.type}</Text>
+          <Text style={{fontSize: 18}}>Lượt Xem: {bookData.views}</Text>
+          <Text style={{fontSize: 18}}>Trạng Thái: {bookData.status}</Text>
         </View>
 
         <BookListHorizon
           title={'Có thể bạn quan tâm'}
           data={bookYouMayLike.filter((item, index) => index < 5)}
           allBookEvent={() => handleAllBook(bookData)}
-          selectBookEvent={(item) => dispatch(getBookType(item))}
+          selectBookEvent={item => dispatch(getBookType(item))}
         />
       </ScrollView>
     </View>
@@ -202,7 +196,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     borderColor: colors.primaryOrange,
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
   titleButtonStyle: {
     marginLeft: 10,

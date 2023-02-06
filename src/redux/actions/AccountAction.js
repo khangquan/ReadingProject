@@ -11,15 +11,22 @@ import {
 } from '../../defines/ActionTypes'
 
 export const register = param => {
-  return (dispatch) => {
-    dispatch({ type: IS_REGISTERING });
+  return dispatch => {
+    dispatch({type: IS_REGISTERING})
 
     setTimeout(() => {
       dispatch({
         type: REGISTER,
-        payload: param,
-      });
-    }, 2000);
+        payload: {
+          id: new Date().getTime(),
+          fullname: param.fullname,
+          email: param.email,
+          pass: param.pass,
+          avatar: null,
+          favBookData: [],
+        },
+      })
+    }, 2000)
   }
 }
 
@@ -50,10 +57,24 @@ export const delAvatar = param => ({
 
 export const addFavBook = param => ({
   type: ADD_FAV_BOOK,
-  payload: param,
+  payload: {
+    userId: param.userInfo.id,
+    favBook: {
+      title: param.bookData.title,
+      image: param.bookData.image,
+      author: param.bookData.author,
+      type: param.bookData.type,
+      desc: param.bookData.desc,
+      status: param.bookData.status,
+      views: param.bookData.views,
+    },
+  },
 })
 
 export const editFavBook = param => ({
   type: EDIT_FAV_BOOK,
-  payload: param,
+  payload: {
+    userId: param.userInfo.id,
+    title: param.bookData.title,
+  },
 })

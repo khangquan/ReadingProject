@@ -42,14 +42,7 @@ export default function RegisterForm(props) {
             } else {
                 Keyboard.dismiss()
                 dispatch(
-                    register({
-                        id: new Date().getTime(),
-                        fullname: fullname,
-                        email: email,
-                        pass: pass,
-                        avatar: null,
-                        favBookData: [],
-                    }),
+                    register({fullname,email,pass})
                 )
                 setTimeout(() => {
                     Alert.alert('Thông báo', 'Đăng ký tài khoản thành công!!')

@@ -8,24 +8,24 @@ import {
   Image,
   Alert,
 } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { getBookType } from '../../redux/actions/GetBookAction'
-import { editFavBook } from '../../redux/actions/AccountAction'
+import {useSelector, useDispatch} from 'react-redux'
+import {getBookType} from '../../redux/actions/GetBookAction'
+import {editFavBook} from '../../redux/actions/AccountAction'
 
 import Icon from 'react-native-vector-icons/Ionicons'
-import { colors } from '../../utils/Colors'
+import {colors} from '../../utils/Colors'
 import HeaderBar from '../../components/HeaderBar'
 
 const windowWidth = Dimensions.get('window').width
 
-export default function FavBooksScreen({ navigation }) {
+export default function FavBooksScreen({navigation}) {
   const dispatch = useDispatch()
   const [userInfo, setUserInfo] = useState([])
   const [edit, setEdit] = useState(false)
-  const { currentUser } = useSelector(state => state.loginScreen)
-  const { userAccounts } = useSelector(state => state.register)
+  const {currentUser} = useSelector(state => state.loginScreen)
+  const {userAccounts} = useSelector(state => state.register)
 
   useEffect(() => {
     userAccounts.map(user => {
@@ -38,37 +38,39 @@ export default function FavBooksScreen({ navigation }) {
     navigation.navigate('DetailScreen')
   }
 
-  const handleDeleteFavBook = item => {
+  const handleDeleteFavBook = bookData => {
     Alert.alert('Thông báo!', 'Bạn có muốn xóa khỏi danh sách yêu thích?', [
       {
         text: 'Yes',
         onPress: () => {
-          dispatch(editFavBook({ title: item.title }))
+          dispatch(editFavBook({userInfo, bookData}))
         },
       },
       {
         text: 'No',
-        onPress: () => { },
+        onPress: () => {},
       },
     ])
   }
 
-  const renderView = ({ item }) => (
+  const renderView = ({item}) => (
     <TouchableOpacity
       disabled={edit ? true : false}
       onPress={() => handleDetail(item)}
-      style={styles.renderViewStyle}>
+      style={styles.renderViewStyle}
+    >
       <Image
         blurRadius={edit ? 30 : 0}
         style={styles.flatListImg}
-        source={{ uri: item.image }}
+        source={{uri: item.image}}
       />
       <Text style={styles.flatListTitle}>{item.title}</Text>
 
       {edit ? (
         <TouchableOpacity
           style={styles.iconDeleteStyle}
-          onPress={() => handleDeleteFavBook(item)}>
+          onPress={() => handleDeleteFavBook(item)}
+        >
           <Icon name="trash-outline" size={50} color="white" />
         </TouchableOpacity>
       ) : null}
@@ -132,6 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     alignSelf: 'center',
     fontWeight: '500',
+    textAlign: 'center',
   },
   iconDeleteStyle: {
     position: 'absolute',

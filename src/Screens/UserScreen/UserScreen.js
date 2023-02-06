@@ -6,27 +6,27 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { appLogout } from '../../redux/actions/LoginScreenAction'
-import { Avatar } from '@react-native-material/core'
+import {useDispatch, useSelector} from 'react-redux'
+import {appLogout} from '../../redux/actions/LoginScreenAction'
+import {Avatar} from '@react-native-material/core'
 
 import HeaderBar from '../../components/HeaderBar'
 import UserMenu from '../../components/UserMenu'
 
-export default function UserScreen({ navigation }) {
+export default function UserScreen({navigation}) {
   const dispatch = useDispatch()
   const [userInfo, setUserInfo] = useState([])
-  const { currentUser } = useSelector(state => state.loginScreen)
-  const { userAccounts } = useSelector(state => state.register)
+  const {currentUser} = useSelector(state => state.loginScreen)
+  const {userAccounts} = useSelector(state => state.register)
 
   useEffect(() => {
     userAccounts.map(user => {
       if (user.email === currentUser) setUserInfo(user)
     })
   }, [])
-  
+
   const handleLogout = item => {
     if (item === 'Đăng xuất') {
       Alert.alert('Lưu ý!', 'Bạn có muốn đăng xuất?', [
@@ -38,12 +38,10 @@ export default function UserScreen({ navigation }) {
         },
         {
           text: 'No',
-          onPress: () => { },
+          onPress: () => {},
         },
       ])
-    } else (
-      navigation.navigate("ScheduleScreen")
-    )
+    } else navigation.navigate('ScheduleScreen')
   }
 
   return (
@@ -64,7 +62,7 @@ export default function UserScreen({ navigation }) {
           ) : (
             <Avatar
               style={styles.labelAvatar}
-              image={{ uri: userInfo.avatar }}
+              image={{uri: userInfo.avatar}}
               size={60}
             />
           )}
@@ -167,5 +165,4 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginVertical: 5,
   },
-
 })
