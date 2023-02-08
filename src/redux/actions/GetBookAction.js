@@ -1,7 +1,8 @@
 import { 
   GET_BOOK_DATA, 
   GET_BOOK_TYPE, 
-  INCREASE_BOOK_VIEW 
+  INCREASE_BOOK_VIEW, 
+  POST_COMMENT,
 } from "../../defines/ActionTypes"
 import TongHopSach from '../../books/TongHopSach'
 import { getAPI } from "../../services/API"
@@ -20,6 +21,11 @@ export const getBookType = param => ({
 export const increaseBookView = param => ({
   type: INCREASE_BOOK_VIEW,
   payload: param,
+})
+
+export const postComment = param => ({
+  type: POST_COMMENT,
+  payload: param
 })
 
 export const getBookAPI = () => (

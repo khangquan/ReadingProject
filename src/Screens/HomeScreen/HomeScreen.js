@@ -37,21 +37,25 @@ export default function HomeScreen({ navigation }) {
 
   const flatListData = [
     {
+      id: 1,
       title: "Sách Kinh Tế",
       type: "Kinh Tế",
       data: SachKinhTe.filter((item, index) => index < 5),
     },
     {
+      id: 2,
       title: "Sách Kỹ Năng",
       type: "Kỹ Năng",
       data: SachKyNang.filter((item, index) => index < 5),
     },
     {
+      id: 3,
       title: "Sách Tôn Giáo",
       type: "Tôn Giáo",
       data: SachTonGiao.filter((item, index) => index < 5),
     },
     {
+      id: 4,
       title: "Sách Văn Học",
       type: "Văn Học",
       data: SachVanHoc.filter((item, index) => index < 5),

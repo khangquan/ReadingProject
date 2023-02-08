@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     flatListImg: {
         width: '100%',
         height: '100%',
-        resizeMode: 'cover'
+        resizeMode: 'cover',
     },
     flatListTitle: {
         width: '100%',

@@ -119,13 +119,13 @@ const styles = StyleSheet.create({
   },
   modalStyle: {
     margin: 20,
-    backgroundColor: colors.primaryOrange,
+    backgroundColor: colors.white,
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
+      width: 2,
       height: 2,
     },
     shadowOpacity: 0.25,
@@ -133,7 +133,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   filterButton: {
-    backgroundColor: 'white',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -143,12 +142,13 @@ const styles = StyleSheet.create({
   filterText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: colors.primaryOrange
   },
   closeModal: {
     position: 'absolute',
     right: -10,
     top: -10,
-    backgroundColor: 'white',
+    backgroundColor: colors.primaryOrange,
     height: 30,
     width: 30,
     borderRadius: 50,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   closeModalText: {
-    color: colors.primaryOrange,
+    color: colors.white,
     fontSize: 20,
     fontWeight: 'bold',
   },

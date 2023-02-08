@@ -1,5 +1,6 @@
 import { LogBox, Platform, StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
+import { Provider as PaperProvider } from 'react-native-paper';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { store, persistor } from './src/redux/store/Store'
 import IntroScreen from './src/Screens/IntroScreen/IntroScreen';
@@ -15,16 +16,18 @@ export default function App() {
   useEffect(() => {
     createChannel()
     RemoteNotification()
-  },[])
+  }, [])
 
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <StatusBar
-          barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-        />
-        <Navigator />
-      </PersistGate>
-    </Provider>
+    <PaperProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <StatusBar
+            barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
+          />
+          <Navigator />
+        </PersistGate>
+      </Provider>
+    </PaperProvider>
   )
 }

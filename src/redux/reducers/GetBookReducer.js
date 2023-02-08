@@ -1,7 +1,8 @@
-import { 
-  GET_BOOK_DATA, 
-  GET_BOOK_TYPE, 
-  INCREASE_BOOK_VIEW 
+import {
+  GET_BOOK_DATA,
+  GET_BOOK_TYPE,
+  INCREASE_BOOK_VIEW,
+  POST_COMMENT,
 } from "../../defines/ActionTypes"
 
 const initialState = {
@@ -24,6 +25,12 @@ const getBookReducer = (state = initialState, action) => {
       return {
         ...state,
       }
+    case POST_COMMENT:
+      state.allBooksData.map(book => {
+        if (book.title === action.payload.title) {
+          book.comments.push(action.payload.comments)
+        }
+      })
     default:
       return state
   }

@@ -36,7 +36,7 @@ export default function BooksTypeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderBar title={"Thể Loại"}/>
+      <HeaderBar title={"Thể Loại"} />
       <FlatList
         data={DATA}
         renderItem={renderView}
@@ -50,22 +50,27 @@ export default function BooksTypeScreen({ navigation }) {
 
 const DATA = [
   {
+    id: 1,
     type: 'Văn Học',
     image: require('../../../assets/BookTypeScreen/vanhoc.jpg'),
   },
   {
+    id: 2,
     type: 'Tôn Giáo',
     image: require('../../../assets/BookTypeScreen/tongiao.jpg'),
   },
   {
+    id: 3,
     type: 'Kỹ Năng',
     image: require('../../../assets/BookTypeScreen/kynang.jpg'),
   },
   {
+    id: 4,
     type: 'Kinh Tế',
     image: require('../../../assets/BookTypeScreen/kinhte.jpg'),
   },
   {
+    id: 5,
     type: 'Tất Cả',
     image: require('../../../assets/BookTypeScreen/tatca.jpg'),
   },

@@ -10,29 +10,31 @@ import {
   Alert,
 } from 'react-native'
 import React from 'react'
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 
-import {useSelector, useDispatch} from 'react-redux'
-import {getBookType, increaseBookView} from '../../redux/actions/GetBookAction'
-import {addFavBook, editFavBook} from '../../redux/actions/AccountAction'
+import { useSelector, useDispatch } from 'react-redux'
+import { getBookType, increaseBookView } from '../../redux/actions/GetBookAction'
+import { addFavBook, editFavBook } from '../../redux/actions/AccountAction'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-import {colors} from '../../utils/Colors'
+import { colors } from '../../utils/Colors'
 import MenuIconBar from '../../components/MenuIconBar'
 import MoreText from '../../components/MoreText'
 import BookListHorizon from '../../components/BookListHorizon'
+import Comments from '../../components/Comments'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
-export default function DetailScreen({navigation}) {
+export default function DetailScreen({ navigation }) {
   const dispatch = useDispatch()
   const [isLike, setIsLike] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
   const [userInfo, setUserInfo] = useState([])
 
-  const {currentUser} = useSelector(state => state.loginScreen)
-  const {userAccounts} = useSelector(state => state.register)
-  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
+  const { currentUser } = useSelector(state => state.loginScreen)
+  const { userAccounts } = useSelector(state => state.register)
+  const { allBooksData, bookData } = useSelector(state => state.bookGetData)
 
   const bookYouMayLike = allBooksData.filter(
     (item, index) => item.type === bookData.type,
@@ -72,17 +74,17 @@ export default function DetailScreen({navigation}) {
           text: 'Yes',
           onPress: () => {
             setIsLike(false)
-            dispatch(editFavBook({userInfo, bookData}))
+            dispatch(editFavBook({ userInfo, bookData }))
           },
         },
         {
           text: 'No',
-          onPress: () => {},
+          onPress: () => { },
         },
       ])
     } else {
       setIsLike(true)
-      dispatch(addFavBook({userInfo, bookData}))
+      dispatch(addFavBook({ userInfo, bookData }))
       Alert.alert('Thành công', 'Đã thêm vào danh sách yêu thích!')
     }
   }
@@ -93,7 +95,7 @@ export default function DetailScreen({navigation}) {
       <Image
         style={styles.imageBG}
         blurRadius={10}
-        source={{uri: bookData.image}}
+        source={{ uri: bookData.image }}
       />
       <View style={styles.topContent}>
         <TouchableOpacity
@@ -110,10 +112,12 @@ export default function DetailScreen({navigation}) {
         </TouchableOpacity>
 
         <View style={styles.bookContent}>
-          <Image style={styles.bookImage} source={{uri: bookData.image}} />
+          <Image style={styles.bookImage} source={{ uri: bookData.image }} />
           <View style={styles.titleButtonStyle}>
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
+
+
             <TouchableOpacity
               onPress={() => {
                 handleReadingScreen(bookData.title)
@@ -137,20 +141,21 @@ export default function DetailScreen({navigation}) {
           <MenuIconBar
             title={'chatbubble-ellipses-outline'}
             textTitle={'Bình luận'}
+            onEvent={() => setModalVisible(true)}
           />
           <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'} />
         </View>
 
-        <View style={{margin: 20}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Giới Thiệu</Text>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
           <MoreText content={bookData.desc} />
         </View>
 
-        <View style={{margin: 20}}>
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Thông Tin</Text>
-          <Text style={{fontSize: 18}}>Thể loại: {bookData.type}</Text>
-          <Text style={{fontSize: 18}}>Lượt Xem: {bookData.views}</Text>
-          <Text style={{fontSize: 18}}>Trạng Thái: {bookData.status}</Text>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
+          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
+          <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
+          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
         </View>
 
         <BookListHorizon
@@ -159,6 +164,8 @@ export default function DetailScreen({navigation}) {
           allBookEvent={() => handleAllBook(bookData)}
           selectBookEvent={item => dispatch(getBookType(item))}
         />
+
+        {modalVisible && <Comments visible={modalVisible} onEvent={()=>setModalVisible(false)}/>}
       </ScrollView>
     </View>
   )

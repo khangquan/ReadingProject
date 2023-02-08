@@ -5,21 +5,25 @@ import {
   Alert,
   SafeAreaView,
   ScrollView,
+  Modal,
+  TouchableOpacity
 } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
-import {useDispatch, useSelector} from 'react-redux'
-import {appLogout} from '../../redux/actions/LoginScreenAction'
-import {Avatar} from '@react-native-material/core'
+import { useDispatch, useSelector } from 'react-redux'
+import { appLogout } from '../../redux/actions/LoginScreenAction'
+import { Avatar } from '@react-native-material/core'
+import { colors } from '../../utils/Colors'
 
 import HeaderBar from '../../components/HeaderBar'
 import UserMenu from '../../components/UserMenu'
 
-export default function UserScreen({navigation}) {
+export default function UserScreen({ navigation }) {
+  const [modalVisible, setModalVisible] = useState(false)
   const dispatch = useDispatch()
   const [userInfo, setUserInfo] = useState([])
-  const {currentUser} = useSelector(state => state.loginScreen)
-  const {userAccounts} = useSelector(state => state.register)
+  const { currentUser } = useSelector(state => state.loginScreen)
+  const { userAccounts } = useSelector(state => state.register)
 
   useEffect(() => {
     userAccounts.map(user => {
@@ -38,17 +42,38 @@ export default function UserScreen({navigation}) {
         },
         {
           text: 'No',
-          onPress: () => {},
+          onPress: () => { },
         },
       ])
     } else navigation.navigate('ScheduleScreen')
   }
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <HeaderBar title={'Tài Khoản'} />
+  const handleIntroduceMenu = item => {
+    if (item === 'Giới thiệu App')
+      navigation.navigate('AppInfo')
+    else
+      setModalVisible(true)
+  }
 
-      <View style={styles.botContent}>
+  return (
+      <SafeAreaView style={styles.container}>
+        <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={styles.modalPosition}>
+          <View style={styles.modalStyle}>
+            <Text style={styles.modalTitle}>Thông Báo</Text>
+            <Text style={styles.modalContent}>Mọi thắc mắc vui lòng liên hệ qua email: kedoquan@gmail.com</Text>
+
+            <TouchableOpacity style={styles.closeModal}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeModalText}> OK </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+        <HeaderBar title={'Tài Khoản'} />
+
         <View style={styles.welcomeStyle}>
           <Text style={styles.welcomeText}>Chào mừng,</Text>
           <Text style={styles.accountText}>{userInfo.fullname}</Text>
@@ -62,7 +87,7 @@ export default function UserScreen({navigation}) {
           ) : (
             <Avatar
               style={styles.labelAvatar}
-              image={{uri: userInfo.avatar}}
+              image={{ uri: userInfo.avatar }}
               size={60}
             />
           )}
@@ -90,7 +115,8 @@ export default function UserScreen({navigation}) {
           <View>
             <Text style={styles.menuTitle}>GIỚI THIỆU/ HƯỚNG DẪN</Text>
             {INTRODUCE.map((item, index) => {
-              return <UserMenu iconName={item.iconName} title={item.title} />
+              return <UserMenu iconName={item.iconName} title={item.title}
+                onEvent={() => handleIntroduceMenu(item.title)} />
             })}
           </View>
           <View>
@@ -106,8 +132,8 @@ export default function UserScreen({navigation}) {
             })}
           </View>
         </ScrollView>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+     
   )
 }
 
@@ -137,9 +163,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  botContent: {
-    flex: 2,
-  },
   welcomeText: {
     fontSize: 20,
     margin: 10,
@@ -165,4 +188,39 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginVertical: 5,
   },
+  modalTitle: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
+    marginBottom: 5,
+  },
+  modalContent: {
+    fontSize: 18,
+    color: 'black',
+    textAlign: 'center',
+  },
+  modalPosition: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalStyle: {
+    backgroundColor: colors.white,
+    borderRadius: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+  },
+  closeModal: {
+    marginTop: 10,
+    borderRadius: 50,
+  },
+  closeModalText: {
+    color: colors.primaryOrange,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+
 })
