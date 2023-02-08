@@ -23,3 +23,4 @@ export const EDIT_FAV_BOOK = 'EDIT_FAV_BOOK'
 
 //Book Comments Action
 export const POST_COMMENT = 'POST_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'

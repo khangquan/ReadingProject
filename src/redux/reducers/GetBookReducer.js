@@ -1,4 +1,5 @@
 import {
+  DELETE_COMMENT,
   GET_BOOK_DATA,
   GET_BOOK_TYPE,
   INCREASE_BOOK_VIEW,
@@ -28,9 +29,26 @@ const getBookReducer = (state = initialState, action) => {
     case POST_COMMENT:
       state.allBooksData.map(book => {
         if (book.title === action.payload.title) {
-          book.comments.push(action.payload.comments)
+          book.comments.push(action.payload)
         }
       })
+      return {
+        ...state,
+      }
+    case DELETE_COMMENT: 
+      state.allBooksData.map(book => {
+        if(book.title === action.payload.bookTitle) {
+          let bookComment = book.comments
+          for(let i=0; i<bookComment.length;i++) {
+            if(bookComment[i].id === action.payload.commentId) {
+              bookComment.splice(i,1)
+            }
+          }
+        }
+      })
+      return {
+        ...state,
+      }
     default:
       return state
   }

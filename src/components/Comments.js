@@ -4,8 +4,7 @@ import {
     TouchableOpacity,
     Dimensions, ScrollView,
     TextInput,
-    Keyboard,
-    FlatList,
+    Alert,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -13,21 +12,45 @@ import { Avatar } from '@react-native-material/core'
 import { colors } from '../utils/Colors'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { postComment } from '../redux/actions/GetBookAction'
+import { postComment, deleteComment } from '../redux/actions/GetBookAction'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
-export default function Comments({ onEvent, visible }) {
+export default function Comments({ onEvent, visible, userInfo }) {
     const [commentData, setCommentData] = useState()
+    const [userComments, setUserComments] = useState([])
     const { bookData } = useSelector(state => state.bookGetData)
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        setUserComments(bookData.comments)
+    }, [])
+
     const handleSendComment = bookData => {
         dispatch(postComment({
+            id: new Date().getTime(),
             title: bookData.title,
-            comments: commentData
+            comments: commentData,
+            userAvatar: userInfo.avatar,
+            userName: userInfo.fullname,
         }))
+        setCommentData('')
+    }
+
+    const handleDeleteComment = data => {
+        Alert.alert('Thông báo!', 'Bạn có muốn xóa bình luận này không?', [
+            {
+                text: 'Yes',
+                onPress: () => {
+                    dispatch(deleteComment({
+                        commentId: data.id,
+                        bookTitle: data.title
+                    }))
+                },
+            },
+            { text: 'No', onPress: () => { } },
+        ])
     }
 
     return (
@@ -39,28 +62,45 @@ export default function Comments({ onEvent, visible }) {
                     </TouchableOpacity>
                     <ScrollView>
                         {
-                            bookData.comments.map((item, index) => {
+                            userComments.map(item => {
                                 return (
                                     <View style={styles.comments}>
-                                        <Avatar
-                                            autoColor={true}
-                                            label={'KQ'}
-                                            size={40}
-                                        />
+                                        {
+                                            item.userAvatar == null ?
+                                                <Avatar
+                                                    autoColor={true}
+                                                    label={item.userName}
+                                                    size={40}
+                                                /> : <Avatar
+                                                    autoColor={true}
+                                                    image={{ uri: item.userAvatar }}
+                                                    size={40}
+                                                />
+                                        }
+
                                         <View style={styles.commentWrapper}>
-                                            <Text style={styles.userName}>Khang Quân</Text>
-                                            <Text style={styles.userComment}>{item}</Text>
+                                            <Text style={styles.userName}>{item.userName}</Text>
+                                            <Text style={styles.userComment}>{item.comments}</Text>
                                         </View>
 
-                                        <TouchableOpacity style={styles.like}>
+                                        <TouchableOpacity style={styles.like}
+                                            onPress={() => console.log(userInfo)}
+                                        >
                                             <Text style={styles.button}>Like</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.reply}>
                                             <Text style={styles.button}>Reply</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.delete}>
-                                            <Text style={styles.button}>Delete</Text>
-                                        </TouchableOpacity>
+
+                                        {
+                                            userInfo.fullname !== userComments.userName ?
+                                                <TouchableOpacity style={styles.delete}
+                                                    onPress={() => handleDeleteComment(item)}
+                                                >
+                                                    <Text style={styles.button}>Delete</Text>
+                                                </TouchableOpacity> : null
+                                        }
+
                                     </View>
                                 )
                             })
@@ -85,6 +125,8 @@ export default function Comments({ onEvent, visible }) {
                 </View>
             </View>
         </Modal>
+
+
     )
 }
 

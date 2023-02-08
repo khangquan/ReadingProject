@@ -143,7 +143,9 @@ export default function DetailScreen({ navigation }) {
             textTitle={'Bình luận'}
             onEvent={() => setModalVisible(true)}
           />
-          <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'} />
+          <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'} 
+            onEvent={() => console.log(bookData)}
+          />
         </View>
 
         <View style={{ margin: 20 }}>
@@ -165,7 +167,7 @@ export default function DetailScreen({ navigation }) {
           selectBookEvent={item => dispatch(getBookType(item))}
         />
 
-        {modalVisible && <Comments visible={modalVisible} onEvent={()=>setModalVisible(false)}/>}
+        {modalVisible && <Comments userInfo={userInfo} visible={modalVisible} onEvent={() => setModalVisible(false)} />}
       </ScrollView>
     </View>
   )

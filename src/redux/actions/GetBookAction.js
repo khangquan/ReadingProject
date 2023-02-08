@@ -3,6 +3,7 @@ import {
   GET_BOOK_TYPE, 
   INCREASE_BOOK_VIEW, 
   POST_COMMENT,
+  DELETE_COMMENT,
 } from "../../defines/ActionTypes"
 import TongHopSach from '../../books/TongHopSach'
 import { getAPI } from "../../services/API"
@@ -25,6 +26,11 @@ export const increaseBookView = param => ({
 
 export const postComment = param => ({
   type: POST_COMMENT,
+  payload: param
+})
+
+export const deleteComment = param => ({
+  type: DELETE_COMMENT,
   payload: param
 })
 
