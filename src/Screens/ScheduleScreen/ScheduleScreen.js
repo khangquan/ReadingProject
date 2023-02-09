@@ -1,30 +1,64 @@
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import Moment from 'react-moment';
 import { colors } from '../../utils/Colors'
+import { useDispatch } from 'react-redux';
 import { LocalNotification } from '../../services/LocalNotification'
+import { delSchedule, setSchedule } from '../../redux/actions/AccountAction';
 import HeaderBar from '../../components/HeaderBar'
 
-export default function ScheduleScreen({ navigation }) {
+export default function ScheduleScreen({ navigation, route }) {
+    const dispatch = useDispatch()
+    const userInfo = route.params
+    const [userId, setUserId] = useState('')
+
     const [showPicker, setShowPicker] = useState(false)
-    const [time, setTime] = useState(new Date())
-    const [text, setText] = useState('')
+    const [timeSelected, setTimeSelected] = useState(new Date())
+
+    const [showTime, setShowTime] = useState('')
+    const [hour, setHour] = useState('')
+    const [min, setMin] = useState('')
+
+    useEffect(() => {
+        setUserId(userInfo.id)
+        let userSchedule = userInfo.schedule
+        if (userInfo.schedule != null) {
+            setHour(userSchedule.getHours())
+            setMin(userSchedule.getMinutes())
+        }
+
+    }, [])
+
     const onChange = (event, selectedTime) => {
         const currentTime = selectedTime;
         setShowPicker(false)
-        setTime(currentTime);
+        setTimeSelected(currentTime);
 
-        let tempTime = new Date(currentTime)
-        let ftime = ' ' + tempTime.getHours() + ' Giờ ' + tempTime.getMinutes() + ' Phút '
-        setText(ftime)
+        setHour(timeSelected.getHours())
+        setMin(timeSelected.getMinutes())
+
     };
 
-    const handleNotification = () => {
-        LocalNotification()
+    const handleSetSchedule = (time) => {
+        if (!time) {
+            Alert.alert('Bạn chưa chọn giờ nhắc!')
+        } else {
+            dispatch(setSchedule({ time, userId }))
+            Alert.alert('Đã lưu lịch nhắc đọc sách')
+        }
     };
+
+    const handleDeleteSchedule = () => {
+        if (userInfo.schedule === null) {
+            Alert.alert('Không có thông tin lịch nhắc để xóa')
+        } else {
+            dispatch(delSchedule({ userId }))
+            Alert.alert('Đã xóa lịch nhắc đọc sách')
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -37,8 +71,8 @@ export default function ScheduleScreen({ navigation }) {
                 <Icon name='alarm-outline' size={100} color={colors.primaryOrange} />
                 <Text style={styles.textStyle}>Cho phép ứng dụng gửi Notification nhắc nhở bạn đọc sách hàng ngày</Text>
 
-                <Text style={{ marginTop: 10 }}>Thời gian đã chọn:
-                    {text ? text : ' Chưa chọn thời gian'}
+                <Text style={{ marginTop: 10 }}>Thời gian đã chọn :
+                    {hour && min ? ` ${hour} Giờ ${min} Phút` : 'Chưa Đặt Lịch Nhắc'}
                 </Text>
 
                 <TouchableOpacity
@@ -48,9 +82,16 @@ export default function ScheduleScreen({ navigation }) {
                     <Text style={{ fontSize: 15, color: 'white' }}>Chọn lại</Text>
                 </TouchableOpacity>
 
+                {/* <TouchableOpacity
+                    style={styles.buttonStyle}
+                    onPress={() => console.log(userInfo)}
+                >
+                    <Text style={{ fontSize: 15, color: 'white' }}>Chọn lại</Text>
+                </TouchableOpacity> */}
+
                 {showPicker && (
                     <DateTimePicker
-                        value={time}
+                        value={timeSelected}
                         mode='time'
                         is24Hour={true}
                         display='default'
@@ -61,14 +102,15 @@ export default function ScheduleScreen({ navigation }) {
 
             <View style={styles.bottom}>
                 <TouchableOpacity style={styles.confirmButton}
-                    onPress={handleNotification}
+                    onPress={() => handleSetSchedule(timeSelected)}
                 >
-                    <Text style={{ fontSize: 20, color: 'white' }}>Xác Nhận</Text>
+                    <Text style={{ fontSize: 20, color: 'white' }}>Lưu Hẹn Giờ</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.cancelButton}
+                    onPress={handleDeleteSchedule}
                 >
-                    <Text style={{ fontSize: 20, color: 'white' }}>Hủy</Text>
+                    <Text style={{ fontSize: 20, color: 'white' }}>Xóa Hẹn Giờ</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

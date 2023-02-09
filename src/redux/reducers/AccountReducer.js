@@ -8,6 +8,8 @@ import {
   DEL_ACCOUNT_AVATAR,
   ADD_FAV_BOOK,
   EDIT_FAV_BOOK,
+  READING_SCHEDULE,
+  DELETE_SCHEDULE,
 } from '../../defines/ActionTypes'
 
 const initialState = {
@@ -21,6 +23,7 @@ const initialState = {
       avatar:
         'https://haycafe.vn/wp-content/uploads/2022/02/Anh-Avatar-Doremon-dep-ngau-cute.jpg',
       favBookData: [],
+      schedule: null
     },
   ],
 }
@@ -107,6 +110,24 @@ const accountReducer = (state = initialState, action) => {
               checkBook.splice(i, 1)
             }
           }
+        }
+      })
+      return {
+        ...state,
+      }
+    case READING_SCHEDULE:
+      state.userAccounts.map(account => {
+        if (account.id === action.payload.userId) {
+          account.schedule = action.payload.schedule
+        }
+      })
+      return {
+        ...state,
+      }
+    case DELETE_SCHEDULE:
+      state.userAccounts.map(account => {
+        if (account.id === action.payload.userId) {
+          account.schedule = null
         }
       })
       return {

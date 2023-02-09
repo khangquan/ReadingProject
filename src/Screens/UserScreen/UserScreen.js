@@ -45,14 +45,15 @@ export default function UserScreen({ navigation }) {
           onPress: () => { },
         },
       ])
-    } else navigation.navigate('ScheduleScreen')
+    } else navigation.navigate('ScheduleScreen',userInfo)
   }
 
   const handleIntroduceMenu = item => {
     if (item === 'Giới thiệu App')
       navigation.navigate('AppInfo')
     else
-      setModalVisible(true)
+      //setModalVisible(true)
+      console.log(userInfo)
   }
 
   return (

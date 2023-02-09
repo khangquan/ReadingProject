@@ -20,6 +20,8 @@ export const ADD_ACCOUNT_AVATAR = 'ADD_ACCOUNT_AVATAR'
 export const DEL_ACCOUNT_AVATAR = 'DEL_ACCOUNT_AVATAR'
 export const ADD_FAV_BOOK = 'ADD_FAV_BOOK'
 export const EDIT_FAV_BOOK = 'EDIT_FAV_BOOK'
+export const READING_SCHEDULE = 'READING_SCHEDULE'
+export const DELETE_SCHEDULE = 'DELETE_SCHEDULE'
 
 //Book Comments Action
 export const POST_COMMENT = 'POST_COMMENT'

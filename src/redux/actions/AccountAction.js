@@ -8,11 +8,13 @@ import {
   DEL_ACCOUNT_AVATAR,
   ADD_FAV_BOOK,
   EDIT_FAV_BOOK,
+  READING_SCHEDULE,
+  DELETE_SCHEDULE,
 } from '../../defines/ActionTypes'
 
 export const register = param => {
   return dispatch => {
-    dispatch({type: IS_REGISTERING})
+    dispatch({ type: IS_REGISTERING })
 
     setTimeout(() => {
       dispatch({
@@ -24,6 +26,7 @@ export const register = param => {
           pass: param.pass,
           avatar: null,
           favBookData: [],
+          schedule: null,
         },
       })
     }, 2000)
@@ -77,4 +80,19 @@ export const editFavBook = param => ({
     userId: param.userInfo.id,
     title: param.bookData.title,
   },
+})
+
+export const setSchedule = param => ({
+  type: READING_SCHEDULE,
+  payload: {
+    userId: param.userId,
+    schedule: param.time
+  }
+})
+
+export const delSchedule = param => ({
+  type: DELETE_SCHEDULE,
+  payload: {
+    userId: param.userId,
+  }
 })
