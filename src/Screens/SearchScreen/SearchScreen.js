@@ -1,18 +1,13 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-} from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getBookAPI, getBookType } from '../../redux/actions/GetBookAction'
+import {StyleSheet, Text, View, SafeAreaView, Alert} from 'react-native'
+import React, {useState, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {getBookAPI, getBookType} from '../../redux/actions/GetBookAction'
 import SearchBar from '../../components/SearchBar'
 import AllBookList from '../../components/AllBookList'
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen({navigation}) {
   const dispatch = useDispatch()
-  const { allBooksData, bookData } = useSelector(state => state.bookGetData)
+  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
 
   useEffect(() => {
     dispatch(getBookAPI())
@@ -22,15 +17,19 @@ export default function SearchScreen({ navigation }) {
   const [searchResult, setSearchResult] = useState([0])
 
   const handleSearch = searchValue => {
-    let bookData = allBooksData.filter(item => {
-      let title = item.title.toLowerCase()
-      let author = item.author.toLowerCase()
-      let searchData = searchValue.toLowerCase()
-      if (title.includes(searchData) || author.includes(searchData)) {
-        return item
-      } else return 0
-    })
-    setSearchResult(bookData)
+    if (!searchValue) {
+      Alert.alert('Vui lòng nhập tên sản phẩm cần tìm')
+    } else {
+      let bookData = allBooksData.filter(item => {
+        let title = item.title.toLowerCase()
+        let author = item.author.toLowerCase()
+        let searchData = searchValue.toLowerCase()
+        if (title.includes(searchData) || author.includes(searchData)) {
+          return item
+        } else return 0
+      })
+      setSearchResult(bookData)
+    }
   }
 
   const handleDetail = item => {
@@ -51,13 +50,14 @@ export default function SearchScreen({ navigation }) {
       <View style={styles.botContent}>
         {searchResult.length === 0 ? (
           <View
-            style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-            <Text style={{ fontSize: 20 }}>Không tìm thấy sản phẩm phù hợp</Text>
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}
+          >
+            <Text style={{fontSize: 20}}>Không tìm thấy sản phẩm phù hợp</Text>
           </View>
         ) : (
-          <AllBookList 
+          <AllBookList
             bookData={searchResult}
-            selectBookEvent={(item) => handleDetail(item)}
+            selectBookEvent={item => handleDetail(item)}
           />
         )}
       </View>

@@ -38,9 +38,9 @@ export default function AllBooksScreen({ navigation, route }) {
     } else if (item === 'viewIncrease') {
       allBooksData.sort((a, b) => (a.views > b.views ? 1 : -1))
     } else if (item === 'a-z') {
-      allBooksData.sort((a, b) => (a.title > b.title ? 1 : -1))
+      allBooksData.sort((a, b) => a.title.localeCompare(b.title))
     } else {
-      allBooksData.sort((a, b) => (a.title < b.title ? 1 : -1))
+      allBooksData.sort((a, b) => b.title.localeCompare(a.title))
     }
     setModalVisible(false)
   }

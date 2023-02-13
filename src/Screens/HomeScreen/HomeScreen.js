@@ -66,7 +66,6 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <HeaderBar
         title={'Trang Chủ'}
-        leftItem={'menu'}
         rightItem={'search'}
         onRightEvent={() => navigation.navigate('SearchScreen')}
       />

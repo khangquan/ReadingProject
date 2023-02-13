@@ -52,8 +52,7 @@ export default function UserScreen({ navigation }) {
     if (item === 'Giới thiệu App')
       navigation.navigate('AppInfo')
     else
-      //setModalVisible(true)
-      console.log(userInfo)
+      setModalVisible(true)
   }
 
   return (
