@@ -7,7 +7,7 @@ import rootReducer from '../reducers'
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['loginScreen', 'register', 'bookGetData']
+  whitelist: ['loginScreen', 'register']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

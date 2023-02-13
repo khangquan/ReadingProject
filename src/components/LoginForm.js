@@ -87,11 +87,14 @@ export default function LoginForm(props) {
                         ) : null}
 
                         <View style={styles.buttonContent}>
+                            
                             <TouchableOpacity
                                 style={styles.buttonLoginWrapper}
-                                onPress={handleSubmit}>
+                                onPress={handleSubmit}
+                            >
                                 <Text style={styles.buttonLogin}>Đăng Nhập</Text>
                             </TouchableOpacity>
+
                             <TouchableOpacity onPress={handleForgetPass}>
                                 <Text style={styles.forgotPass}>Quên mật khẩu?</Text>
                             </TouchableOpacity>

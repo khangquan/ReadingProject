@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {Avatar} from '@react-native-material/core'
 import {colors} from '../utils/Colors'
 
