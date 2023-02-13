@@ -1,6 +1,4 @@
-//LOCAL NOTIFICATION
 import PushNotification from "react-native-push-notification";
-import { Platform } from "react-native";
 
 PushNotification.configure({
     onNotification: function (notification) {
@@ -24,21 +22,27 @@ export const createChannel = () => {
     )
 }
 
-export const LocalNotification = () => {
-    PushNotification.localNotification({
+export const LocalNotificationSchedule = (userSchedule) => {
+    PushNotification.localNotificationSchedule({
         channelId: 'channel-id',
         channelName: 'my channel',
         autoCancel: true,
-        bigText: 'This is local notification demo',
-        subText: 'Local notification demo',
-        title: 'Local Notification title',
-        message: 'Local notification message',
+        title: 'THÔNG BÁO ĐẾN GIỜ ĐỌC SÁCH',
+        message: 'Đã đến giờ đọc sách',
+        repeatType: 'day',
+        repeatTime: 2,
+        date: userSchedule,
+        allowWhileIdle: true,
         playSound: true,
         soundName: 'default',
         vibrate: true,
     })
 }
 
-//*************************************** */
+export const CancelAllNotification = () => {
+    PushNotification.cancelAllLocalNotifications()
+}
+
+
 
 
