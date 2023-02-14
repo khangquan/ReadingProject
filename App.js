@@ -25,7 +25,8 @@ export default function App() {
           <StatusBar
             barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
           />
-          <Navigator />
+          {/* <Navigator /> */}
+          <IntroScreen/>
         </PersistGate>
       </Provider>
     </PaperProvider>

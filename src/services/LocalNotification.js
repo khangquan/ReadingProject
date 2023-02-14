@@ -30,7 +30,7 @@ export const LocalNotificationSchedule = (userSchedule) => {
         title: 'THÔNG BÁO ĐẾN GIỜ ĐỌC SÁCH',
         message: 'Đã đến giờ đọc sách',
         repeatType: 'day',
-        repeatTime: 2,
+        repeatTime: 1,
         date: userSchedule,
         allowWhileIdle: true,
         playSound: true,

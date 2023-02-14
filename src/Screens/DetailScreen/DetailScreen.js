@@ -22,6 +22,7 @@ import MenuIconBar from '../../components/MenuIconBar'
 import MoreText from '../../components/MoreText'
 import BookListHorizon from '../../components/BookListHorizon'
 import Comments from '../../components/Comments'
+import BookLoading from '../../components/BookLoading'
 
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -31,6 +32,7 @@ export default function DetailScreen({ navigation }) {
   const [isLike, setIsLike] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [userInfo, setUserInfo] = useState([])
+  const [bookLoading, setBookLoading] = useState(false)
 
   const { currentUser } = useSelector(state => state.loginScreen)
   const { userAccounts } = useSelector(state => state.register)
@@ -63,8 +65,12 @@ export default function DetailScreen({ navigation }) {
   }
 
   const handleReadingScreen = item => {
-    dispatch(increaseBookView(item))
-    navigation.navigate('ReadingScreen')
+    setBookLoading(true)
+    setTimeout(() => {
+      dispatch(increaseBookView(item))
+      navigation.navigate('ReadingScreen')
+      setBookLoading(false)
+    }, 1000)
   }
 
   const handleLikeBook = bookData => {
@@ -90,86 +96,90 @@ export default function DetailScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar hidden={true} />
-      <Image
-        style={styles.imageBG}
-        blurRadius={10}
-        source={{ uri: bookData.image }}
-      />
-      <View style={styles.topContent}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.goBack()
-          }}
-          style={styles.backStyle}
-        >
-          <Icon
-            name="chevron-back-outline"
-            size={35}
-            color={colors.primaryOrange}
-          />
-        </TouchableOpacity>
+    <>
+      <View style={styles.container}>
+        <StatusBar hidden={true} />
+        <Image
+          style={styles.imageBG}
+          blurRadius={10}
+          source={{ uri: bookData.image }}
+        />
+        <View style={styles.topContent}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack()
+            }}
+            style={styles.backStyle}
+          >
+            <Icon
+              name="chevron-back-outline"
+              size={35}
+              color={colors.primaryOrange}
+            />
+          </TouchableOpacity>
 
-        <View style={styles.bookContent}>
-          <Image style={styles.bookImage} source={{ uri: bookData.image }} />
-          <View style={styles.titleButtonStyle}>
-            <Text style={styles.titleText}>{bookData.title}</Text>
-            <Text style={styles.authorText}>{bookData.author}</Text>
+          <View style={styles.bookContent}>
+            <Image style={styles.bookImage} source={{ uri: bookData.image }} />
+            <View style={styles.titleButtonStyle}>
+              <Text style={styles.titleText}>{bookData.title}</Text>
+              <Text style={styles.authorText}>{bookData.author}</Text>
 
 
-            <TouchableOpacity
-              onPress={() => {
-                handleReadingScreen(bookData.title)
-              }}
-              style={styles.readButton}
-            >
-              <Text style={styles.buttonText}>ĐỌC NGAY</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  handleReadingScreen(bookData.title)
+                }}
+                style={styles.readButton}
+              >
+                <Text style={styles.buttonText}>ĐỌC NGAY</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
+
+        <ScrollView style={styles.botContent}>
+          <View style={styles.iconMenuBar}>
+            <MenuIconBar
+              color={isLike ? 'red' : null}
+              title={'heart'}
+              textTitle={'Thích'}
+              onEvent={() => handleLikeBook(bookData)}
+            />
+            <MenuIconBar
+              title={'chatbubble-ellipses-outline'}
+              textTitle={'Bình luận'}
+              onEvent={() => setModalVisible(true)}
+            />
+            <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'}
+              onEvent={() => console.log(bookData)}
+            />
+          </View>
+
+          <View style={{ margin: 20 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
+            <MoreText content={bookData.desc} />
+          </View>
+
+          <View style={{ margin: 20 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
+            <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
+            <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
+            <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
+          </View>
+
+          <BookListHorizon
+            title={'Có thể bạn quan tâm'}
+            data={bookYouMayLike.filter((item, index) => index < 5)}
+            allBookEvent={() => handleAllBook(bookData)}
+            selectBookEvent={item => dispatch(getBookType(item))}
+          />
+
+          {modalVisible && <Comments userInfo={userInfo} visible={modalVisible} onEvent={() => setModalVisible(false)} />}
+        </ScrollView>
       </View>
 
-      <ScrollView style={styles.botContent}>
-        <View style={styles.iconMenuBar}>
-          <MenuIconBar
-            color={isLike ? 'red' : null}
-            title={'heart'}
-            textTitle={'Thích'}
-            onEvent={() => handleLikeBook(bookData)}
-          />
-          <MenuIconBar
-            title={'chatbubble-ellipses-outline'}
-            textTitle={'Bình luận'}
-            onEvent={() => setModalVisible(true)}
-          />
-          <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'} 
-            onEvent={() => console.log(bookData)}
-          />
-        </View>
-
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
-          <MoreText content={bookData.desc} />
-        </View>
-
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
-          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
-          <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
-          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
-        </View>
-
-        <BookListHorizon
-          title={'Có thể bạn quan tâm'}
-          data={bookYouMayLike.filter((item, index) => index < 5)}
-          allBookEvent={() => handleAllBook(bookData)}
-          selectBookEvent={item => dispatch(getBookType(item))}
-        />
-
-        {modalVisible && <Comments userInfo={userInfo} visible={modalVisible} onEvent={() => setModalVisible(false)} />}
-      </ScrollView>
-    </View>
+      {bookLoading ? <BookLoading /> : null}
+    </>
   )
 }
 

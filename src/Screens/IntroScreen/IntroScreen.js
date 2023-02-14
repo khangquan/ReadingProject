@@ -5,13 +5,21 @@ import Navigator from '../../Navigation/Navigator'
 import { colors } from '../../utils/Colors'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import Icon from 'react-native-vector-icons/Ionicons'
+import LottieView from 'lottie-react-native';
 
 export default function IntroScreen() {
   const [showRealApp, setShowRealApp] = useState(false)
   const renderView = ({ item }) => (
     <View style={styles.slide}>
-      <Image style={styles.images} source={item.image} />
+
+      <View style={styles.introStyle}>
+        <LottieView source={item.image} autoPlay loop />
+      </View>
+
+
       <Text style={styles.text}>{item.text}</Text>
+
+
     </View>
   )
 
@@ -49,40 +57,35 @@ export default function IntroScreen() {
 const slides = [
   {
     key: 1,
-    text: 'Share Your Favorite Books With You Family And Friends',
-    image: require('../../../assets/IntroScreen/image1.png'),
+    text: 'Đọc sách mọi lúc mọi nơi',
+    image: require('../../../assets/IntroScreen/intro1.json'),
   },
   {
     key: 2,
-    text: 'Discover 10 Million Books Shelved Online On Single Click',
-    image: require('../../../assets/IntroScreen/image2.png'),
+    text: 'Chia sẻ với tất cả người thân của bạn',
+    image: require('../../../assets/IntroScreen/intro2.json'),
   },
   {
     key: 3,
-    text: 'But And Sell Books With Us',
-    image: require('../../../assets/IntroScreen/image3.png'),
+    text: 'Kho sách với hơn 10 ngàn tựa sách chỉ với một cú click!',
+    image: require('../../../assets/IntroScreen/intro3.json'),
   },
 ]
 
 const styles = StyleSheet.create({
   slide: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    resizeMode: 'cover',
     backgroundColor: colors.introColor,
   },
-  images: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    resizeMode: 'cover',
-  },
   text: {
+    width: '80%',
     fontSize: 26,
     textAlign: 'center',
-    width: '80%',
     fontWeight: 'bold',
     color: colors.primaryOrange,
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 100
   },
   buttonCircle: {
     width: 50,
@@ -90,4 +93,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  introStyle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  }
 })
