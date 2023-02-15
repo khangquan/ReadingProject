@@ -8,6 +8,7 @@ import {
 import React from 'react'
 import { colors } from '../utils/Colors'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../utils/Icon'
 
 export default function SearchBar({
     goBackEvent,
@@ -22,7 +23,7 @@ export default function SearchBar({
                 <TouchableOpacity
                     style={{ marginLeft: 10 }}
                     onPress={goBackEvent}>
-                    <Icon name="chevron-back-outline" size={30} color="white" />
+                    <Icon name={IconString.goBack} size={30} color={colors.white} />
                 </TouchableOpacity>
 
                 <View style={styles.textInputWrapper}>
@@ -36,14 +37,14 @@ export default function SearchBar({
                         <TouchableOpacity
                             style={styles.clearInputStyle}
                             onPress={setSearchEvent}>
-                            <Icon name="close-outline" size={30} />
+                            <Icon name={IconString.close} size={30} />
                         </TouchableOpacity>
                     ) : null}
 
                     <TouchableOpacity
                         style={styles.searchIconStyle}
                         onPress={searchEvent}>
-                        <Icon name="search" size={30} />
+                        <Icon name={IconString.search} size={30} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     topTextStyle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: colors.white,
     },
     searchBoxStyle: {
         padding: 10,
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     textInputWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         width: '80%',
         marginRight: 20,
         borderRadius: 10,

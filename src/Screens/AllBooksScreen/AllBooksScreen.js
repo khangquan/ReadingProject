@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import { colors } from '../../utils/Colors'
+import { IconString } from '../../utils/Icon'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getBookAPI, getBookType } from '../../redux/actions/GetBookAction'
@@ -71,9 +72,9 @@ export default function AllBooksScreen({ navigation, route }) {
 
       <HeaderBar
         title={bookData.type}
-        leftItem={'chevron-back-outline'}
+        leftItem={IconString.goBack}
         onLeftEvent={() => navigation.goBack()}
-        rightItem={'filter-outline'}
+        rightItem={IconString.filter}
         onRightEvent={() => setModalVisible(!modalVisible)}
       />
 
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: colors.blackTrans,
   },
   modalStyle: {
     margin: 20,
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: {
       width: 2,
       height: 2,

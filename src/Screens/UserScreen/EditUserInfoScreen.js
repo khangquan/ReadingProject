@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { colors } from '../../utils/Colors'
+import { IconString } from '../../utils/Icon'
 import { useDispatch, useSelector } from 'react-redux'
 import { editFullname, editEmail, editPassword } from '../../redux/actions/AccountAction'
 import HeaderBar from '../../components/HeaderBar'
@@ -56,7 +57,7 @@ export default function EditUserInfoScreen({ navigation, route }) {
     <SafeAreaView style={styles.container}>
       <HeaderBar
         title={'Thay đổi thông tin'}
-        leftItem={'chevron-back-outline'}
+        leftItem={IconString.goBack}
         onLeftEvent={() => navigation.goBack()}
       />
 
@@ -96,7 +97,7 @@ export default function EditUserInfoScreen({ navigation, route }) {
         <TouchableOpacity
           style={styles.confirmButton}
           onPress={handleChangeInfo}>
-          <Text style={{ fontSize: 20, color: 'white' }}>Xác nhận</Text>
+          <Text style={{ fontSize: 20, color: colors.white }}>Xác nhận</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   userInfoText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'black',
+    color: colors.black,
     width: '30%',
   },
   textBoxAndEdit: {
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
   textBoxStyle: {
     width: '80%',
     fontSize: 20,
-    color: 'black',
+    color: colors.black,
   },
   confirmButton: {
     width: '40%',

@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { IconString } from '../../utils/Icon'
 
 import HeaderBar from '../../components/HeaderBar'
 
@@ -8,7 +9,7 @@ export default function AppInfo({ navigation }) {
         <View style={styles.container}>
             <HeaderBar
                 title={'Thông Tin Ứng Dụng'}
-                leftItem={'chevron-back-outline'}
+                leftItem={IconString.goBack}
                 onLeftEvent={() => navigation.goBack()}
             />
             <View style={styles.content}>

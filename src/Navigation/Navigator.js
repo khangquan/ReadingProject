@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../utils/Icon'
+import { colors } from '../utils/Colors'
 import React from 'react'
 
 import { NavigationContainer } from '@react-navigation/native'
@@ -42,7 +44,7 @@ const HomeStackNavigator = () => (
     <HomeStack.Screen name="HomeScreen" component={TabsNavigator} />
     <HomeStack.Screen name="SearchScreen" component={SearchScreen} />
     <HomeStack.Screen name="AllBooksScreen" component={AllBooksScreen} />
-    <HomeStack.Screen name='DetailScreen' component={DetailScreen} />
+    <HomeStack.Screen name='DetailScreen' component={DetailStackNavigator} />
     <HomeStack.Screen name="ReadingScreen" component={ReadingScreen} />
     <HomeStack.Screen name="UserInfoScreen" component={UserInfoScreen} />
     <HomeStack.Screen name="EditUserInfoScreen" component={EditUserInfoScreen} />
@@ -65,13 +67,13 @@ const TabsNavigator = () => (
       tabBarIcon: ({ focused, color, size }) => {
         let iconName
         if (route.name === 'Trang Chủ') {
-          iconName = focused ? 'home' : 'home-outline'
+          iconName = focused ? IconString.homeFill : IconString.homeOutline
           size = focused ? 35 : 30
         } else if (route.name === 'Tài Khoản') {
-          iconName = focused ? 'person-circle' : 'person-circle-outline'
+          iconName = focused ? IconString.userCircleFill : IconString.userCircleOutline
           size = focused ? 35 : 30
         } else if (route.name === 'Thể Loại') {
-          iconName = focused ? 'apps' : 'apps-outline'
+          iconName = focused ? IconString.categoryFill : IconString.categoryOutline
           size = focused ? 35 : 30
         }
         return <Icon name={iconName} size={size} color={color} />
@@ -81,11 +83,11 @@ const TabsNavigator = () => (
       },
       tabBarStyle: {
         height: '10%',
-        backgroundColor: '#FB7849',
+        backgroundColor: colors.primaryOrange,
       },
       headerShown: false,
-      tabBarActiveTintColor: 'white',
-      tabBarInactiveTintColor: 'lightgray',
+      tabBarActiveTintColor: colors.white,
+      tabBarInactiveTintColor: colors.lightGray,
     })}>
     <Tabs.Screen name="Trang Chủ" component={HomeScreen} />
     <Tabs.Screen name="Thể Loại" component={BooksTypeScreen} />

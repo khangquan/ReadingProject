@@ -4,6 +4,7 @@ import {
   SafeAreaView,
 } from 'react-native'
 import React, { useEffect } from 'react'
+import { IconString } from '../../utils/Icon'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { getBookType, getBookAPI } from '../../redux/actions/GetBookAction'
@@ -66,7 +67,7 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <HeaderBar
         title={'Trang Chủ'}
-        rightItem={'search'}
+        rightItem={IconString.search}
         onRightEvent={() => navigation.navigate('SearchScreen')}
       />
 

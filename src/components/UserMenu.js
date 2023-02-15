@@ -3,23 +3,23 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React from 'react'
 import { colors } from '../utils/Colors'
+import { IconString } from '../utils/Icon'
 
 export default function UserMenu({title, iconName, onEvent}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onEvent} style={styles.content}>
         <View style={styles.circle}>
-          <Icon name={iconName} size={20} color="white" />
+          <Icon name={iconName} size={20} color={colors.white} />
         </View>
 
         <Text style={styles.contentText}>{title}</Text>
 
-        <Icon name="chevron-forward-outline" size={20} color={colors.primaryOrange} />
+        <Icon name={IconString.goForward} size={20} color={colors.primaryOrange} />
       </TouchableOpacity>
     </View>
   )
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: 'lightgray',
-    backgroundColor: 'white',
+    borderBottomColor: colors.lightGray,
+    backgroundColor: colors.white,
   },
   circle: {
     height: 35,

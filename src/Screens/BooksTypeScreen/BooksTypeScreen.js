@@ -12,6 +12,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { getBookType } from '../../redux/actions/GetBookAction'
 import HeaderBar from '../../components/HeaderBar'
+import { colors } from '../../utils/Colors'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   flatListTextWrapper: {
-    backgroundColor: 'gray',
+    backgroundColor: colors.gray,
     width: '80%',
     height: '20%',
     position: 'absolute',
@@ -100,15 +101,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     bottom: '50%',
     borderRadius: 10,
-    borderColor: 'white',
+    borderColor: colors.white,
     borderWidth: 1,
-    backgroundColor: 'rgba(52, 52, 52, 0.4)',
+    backgroundColor: colors.blackTrans,
   },
   flatListTitle: {
     width: '100%',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
-    color: 'white',
+    color: colors.white,
   },
 })

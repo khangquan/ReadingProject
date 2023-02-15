@@ -7,7 +7,7 @@ import AllBookList from '../../components/AllBookList'
 
 export default function SearchScreen({navigation}) {
   const dispatch = useDispatch()
-  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
+  const {allBooksData} = useSelector(state => state.bookGetData)
 
   useEffect(() => {
     dispatch(getBookAPI())

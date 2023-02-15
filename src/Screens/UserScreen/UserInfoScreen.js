@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { delAvatar, editAvatar } from '../../redux/actions/AccountAction'
 
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../../utils/Icon'
+import { colors } from '../../utils/Colors'
 import { Avatar } from '@react-native-material/core'
 import { launchImageLibrary } from 'react-native-image-picker'
 
@@ -93,7 +95,7 @@ export default function UserInfoScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <HeaderBar
         title={'Thông tin tài khoản'}
-        leftItem={'chevron-back-outline'}
+        leftItem={IconString.goBack}
         onLeftEvent={() => navigation.goBack()}
       />
 
@@ -117,7 +119,7 @@ export default function UserInfoScreen({ navigation }) {
           <TouchableOpacity
             onPress={handleEditAvatar}
             style={styles.editAvatar}>
-            <Icon name="create" size={25} color={'black'} />
+            <Icon name={IconString.edit} size={25} color={colors.black} />
           </TouchableOpacity>
         </View>
 

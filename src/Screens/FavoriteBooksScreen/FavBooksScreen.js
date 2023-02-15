@@ -15,6 +15,7 @@ import {getBookType} from '../../redux/actions/GetBookAction'
 import {editFavBook} from '../../redux/actions/AccountAction'
 
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../../utils/Icon'
 import {colors} from '../../utils/Colors'
 import HeaderBar from '../../components/HeaderBar'
 
@@ -71,7 +72,7 @@ export default function FavBooksScreen({navigation}) {
           style={styles.iconDeleteStyle}
           onPress={() => handleDeleteFavBook(item)}
         >
-          <Icon name="trash-outline" size={50} color="white" />
+          <Icon name={IconString.delete} size={50} color={colors.white} />
         </TouchableOpacity>
       ) : null}
     </TouchableOpacity>
@@ -81,9 +82,9 @@ export default function FavBooksScreen({navigation}) {
     <SafeAreaView style={styles.container}>
       <HeaderBar
         title={edit ? null : 'Danh sách yêu thích'}
-        leftItem={edit ? null : 'chevron-back-outline'}
+        leftItem={edit ? null : IconString.goBack}
         onLeftEvent={edit ? null : () => navigation.goBack()}
-        rightItem={edit ? 'checkmark-outline' : 'create-outline'}
+        rightItem={edit ? IconString.checkmark : IconString.edit}
         onRightEvent={edit ? () => setEdit(!edit) : () => setEdit(!edit)}
       />
       <FlatList
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#FFFF',
+    color: colors.white,
   },
   renderViewStyle: {
     width: windowWidth / 3,

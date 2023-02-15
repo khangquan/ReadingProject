@@ -7,13 +7,14 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { IconString } from '../../utils/Icon'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import DeviceBrightness from '@adrianso/react-native-device-brightness'
-import Pdf from 'react-native-pdf'
 
 import { colors } from '../../utils/Colors'
 import Slider from '@react-native-community/slider'
+import { ScrollView } from 'react-native-gesture-handler'
 
 
 export default function ReadingScreen({ navigation }) {
@@ -36,7 +37,7 @@ export default function ReadingScreen({ navigation }) {
     <View
       style={[
         styles.container,
-        { backgroundColor: darkScreen ? 'black' : 'white' },
+        { backgroundColor: darkScreen ? colors.black : colors.white },
       ]}>
       <View style={styles.topMenu}>
         <View style={styles.topContent}>
@@ -45,17 +46,17 @@ export default function ReadingScreen({ navigation }) {
               navigation.goBack()
             }}>
             <Icon
-              name="chevron-back-outline"
+              name={IconString.goBack}
               size={35}
-              color={darkScreen ? 'white' : colors.primaryOrange}
+              color={darkScreen ? colors.white : colors.primaryOrange}
             />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
             <Icon
-              name="menu-outline"
+              name={IconString.menu}
               size={35}
-              color={darkScreen ? 'white' : colors.primaryOrange}
+              color={darkScreen ? colors.white : colors.primaryOrange}
             />
           </TouchableOpacity>
         </View>
@@ -94,18 +95,18 @@ export default function ReadingScreen({ navigation }) {
               <Text style={styles.modalItemTitle}>Màu nền:</Text>
               <View style={styles.modalItemStyle}>
                 <TouchableOpacity
-                  style={[styles.bgclButton, { backgroundColor: 'white' }]}
+                  style={[styles.bgclButton, { backgroundColor: colors.white }]}
                   onPress={() => setDarkScreen(false)}>
                   {darkScreen ? null : (
-                    <Icon name="checkmark-outline" size={25} color="black" />
+                    <Icon name={IconString.checkmark} size={25} color={colors.black} />
                   )}
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={[styles.bgclButton, { backgroundColor: 'black' }]}
+                  style={[styles.bgclButton, { backgroundColor: colors.black }]}
                   onPress={() => setDarkScreen(true)}>
                   {darkScreen ? (
-                    <Icon name="checkmark-outline" size={25} color="white" />
+                    <Icon name={IconString.checkmark} size={25} color={colors.white} />
                   ) : null}
                 </TouchableOpacity>
               </View>
@@ -118,7 +119,7 @@ export default function ReadingScreen({ navigation }) {
                     styles.lineHeighTextStyle,
                     {
                       backgroundColor:
-                        textLineHeight === 30 ? 'lightgreen' : null,
+                        textLineHeight === 30 ? colors.lightGreen : null,
                     },
                   ]}
                   onPress={() => setTextLineHeight(30)}>
@@ -129,7 +130,7 @@ export default function ReadingScreen({ navigation }) {
                     styles.lineHeighTextStyle,
                     {
                       backgroundColor:
-                        textLineHeight === 40 ? 'lightgreen' : null,
+                        textLineHeight === 40 ? colors.lightGreen : null,
                     },
                   ]}
                   onPress={() => setTextLineHeight(40)}>
@@ -140,7 +141,7 @@ export default function ReadingScreen({ navigation }) {
                     styles.lineHeighTextStyle,
                     {
                       backgroundColor:
-                        textLineHeight === 50 ? 'lightgreen' : null,
+                        textLineHeight === 50 ? colors.lightGreen : null,
                     },
                   ]}
                   onPress={() => setTextLineHeight(50)}>
@@ -151,20 +152,20 @@ export default function ReadingScreen({ navigation }) {
               {/* Chỉnh độ sáng màn hình */}
               <Text style={styles.modalItemTitle}>Độ sáng:</Text>
               <View style={styles.modalItemStyle}>
-                <Icon name={'moon'} size={20} />
+                <Icon name={IconString.moon} size={20} />
                 <Slider
                   style={{ width: 180, height: 40, marginHorizontal: 10 }}
                   minimumValue={0}
                   maximumValue={1}
                   minimumTrackTintColor={colors.primaryOrange}
-                  maximumTrackTintColor="#000000"
+                  maximumTrackTintColor={colors.black}
                   value={brightness}
                   onValueChange={brightness => {
                     setBrightness(brightness)
                     DeviceBrightness.setBrightnessLevel(brightness)
                   }}
                 />
-                <Icon name={'sunny-outline'} size={30} />
+                <Icon name={IconString.sun} size={30} />
               </View>
 
               <TouchableOpacity activeOpacity={0.7} onPress={getBrightness}>
@@ -176,10 +177,11 @@ export default function ReadingScreen({ navigation }) {
       </Modal>
 
       <View style={styles.bookContentStyle}>
+        <ScrollView>
         <Text
           style={{
             fontSize: textSize,
-            color: darkScreen ? 'white' : 'black',
+            color: darkScreen ? colors.white : colors.black,
             lineHeight: textLineHeight,
           }}>
           Thực tập hạnh phúc Theo tôi, hạnh phúc có nghĩa là ít đau khổ.Nếu
@@ -193,20 +195,8 @@ export default function ReadingScreen({ navigation }) {
           và một bình bát thế mà quý Ngài rất mực hạnh phúc bởi vì quý Ngài đã
           đạt được một điều vô cùng quý báu, đó là tự do.
         </Text>
+        </ScrollView>
       </View>
-
-      {/* <Pdf
-        enablePaging={true}
-        trustAllCerts={false}
-        source={require('../../src/books/TonGiao/gian.pdf')}
-        horizontal={true}
-        onError={(error) => {
-          console.log(error);
-        }}
-        onPressLink={(uri) => {
-          console.log(`Link pressed: ${uri}`);
-        }}
-        style={styles.pdf} /> */}
     </View>
   )
 }
@@ -214,10 +204,6 @@ export default function ReadingScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  pdf: {
-    width: '100%',
-    height: '100%',
   },
   topMenu: {
     height: '10%',
@@ -233,7 +219,7 @@ const styles = StyleSheet.create({
   },
   bookContentStyle: {
     alignItems: 'center',
-    flex: 1,
+    flex: 2,
     margin: 20,
   },
 
@@ -242,10 +228,10 @@ const styles = StyleSheet.create({
     width: 320,
     marginTop: 20,
     marginRight: 10,
-    backgroundColor: '#FCFAED',
+    backgroundColor: colors.white,
     borderRadius: 20,
     padding: 30,
-    shadowColor: '#000',
+    shadowColor: colors.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -271,7 +257,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderColor: 'lightgray',
+    borderColor: colors.lightGray,
     marginBottom: 20,
   },
   bgclButton: {

@@ -13,6 +13,7 @@ import React, {useState, useEffect} from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 import {Avatar} from '@react-native-material/core'
 import {colors} from '../utils/Colors'
+import { IconString } from '../utils/Icon'
 
 import {useDispatch, useSelector} from 'react-redux'
 import {postComment, deleteComment} from '../redux/actions/GetBookAction'
@@ -121,7 +122,7 @@ export default function Comments({onEvent, visible, userInfo}) {
               style={styles.sendComment}
               onPress={() => handleSendComment(bookData)}
             >
-              <Icon name="send" size={30} color={colors.primaryOrange} />
+              <Icon name={IconString.send} size={30} color={colors.primaryOrange} />
             </TouchableOpacity>
           </View>
         </View>

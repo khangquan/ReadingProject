@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../../utils/Icon'
 import { colors } from '../../utils/Colors'
 import { Formik } from 'formik'
 import { checkRegValidate } from '../LoginScreen/CheckValidate'
@@ -30,7 +31,7 @@ export default function ConfirmScreen({ navigation }) {
 
                     }}>
                     <Icon
-                        name="chevron-back-outline"
+                        name={IconString.goBack}
                         size={35}
                         color={colors.primaryOrange}
                     />
@@ -45,9 +46,9 @@ export default function ConfirmScreen({ navigation }) {
                 validationSchema={checkRegValidate}
                 onSubmit={({ pass, confirmPass }) => {
                     if (pass !== confirmPass) {
-                        console.log('Mật khẩu xác nhận không giống với mật khẩu!')
+                        Alert.alert('Mật khẩu xác nhận không giống với mật khẩu!')
                     } else {
-                        console.log('Reset mật khẩu thành công!!')
+                        Alert.alert('Reset mật khẩu thành công!!')
                     }
                 }
                 }>
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     title: {
-        color: 'white',
+        color: colors.white,
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: colors.white,
         marginBottom: 20,
         marginHorizontal: 20
     },
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
         marginLeft: 25,
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: colors.white,
     },
     buttonCreateWrapper: {
         width: '70%',
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     buttonCreate: {
-        color: 'white',
+        color: colors.white,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center'
@@ -163,10 +164,10 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         padding: 8,
         borderRadius: 15,
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         //Add shadow
         elevation: 5,
-        shadowColor: 'gray ',
+        shadowColor: colors.gray,
         shadowOpacity: 5,
         shadowRadius: 5,
         shadowOffset: {
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     errorText: {
-        color: 'red',
+        color: colors.red,
         marginLeft: 25,
         marginBottom: 10,
     },

@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../../utils/Icon'
 import { colors } from '../../utils/Colors'
 
 const windowWidth = Dimensions.get('window').width
@@ -29,7 +30,7 @@ export default function ForgetPassScreen({ navigation }) {
                         navigation.goBack()
                     }}>
                     <Icon
-                        name="chevron-back-outline"
+                        name={IconString.goBack}
                         size={35}
                         color={colors.primaryOrange}
                     />
@@ -80,10 +81,10 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         padding: 8,
         borderRadius: 15,
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         //Add shadow
         elevation: 5,
-        shadowColor: 'gray ',
+        shadowColor: colors.gray,
         shadowOpacity: 5,
         shadowRadius: 5,
         shadowOffset: {
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        color: 'white',
+        color: colors.white,
         fontSize: 40,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
         width: '80%',
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: colors.white,
         marginBottom: 20,
     },
     buttonResetWrapper: {
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     buttonReset: {
-        color: 'white',
+        color: colors.white,
         fontSize: 20,
         fontWeight: 'bold',
     },

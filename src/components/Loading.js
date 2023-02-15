@@ -1,6 +1,7 @@
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import React from 'react'
 import LottieView from 'lottie-react-native';
+import { colors } from '../utils/Colors';
 
 export default function Loading() {
     return (
@@ -14,6 +15,6 @@ const styles = StyleSheet.create({
     loadingStyle: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)'
+        backgroundColor: colors.blackTrans,
     }
 })

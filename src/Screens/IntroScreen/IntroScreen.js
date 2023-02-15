@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 import Navigator from '../../Navigation/Navigator'
 import { colors } from '../../utils/Colors'
+import { IconString } from '../../utils/Icon'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import Icon from 'react-native-vector-icons/Ionicons'
 import LottieView from 'lottie-react-native';
@@ -11,27 +12,22 @@ export default function IntroScreen() {
   const [showRealApp, setShowRealApp] = useState(false)
   const renderView = ({ item }) => (
     <View style={styles.slide}>
-
       <View style={styles.introStyle}>
         <LottieView source={item.image} autoPlay loop />
       </View>
-
-
       <Text style={styles.text}>{item.text}</Text>
-
-
     </View>
   )
 
   const renderNextButton = () => (
     <View style={styles.buttonCircle}>
-      <Icon name="arrow-forward-circle-outline" color={colors.primaryOrange} size={50} />
+      <Icon name={IconString.arrowForward} color={colors.primaryOrange} size={50} />
     </View>
   )
 
   const renderDoneButton = () => (
     <View style={styles.buttonCircle}>
-      <Icon name="checkmark-circle-outline" color={colors.primaryOrange} size={50} />
+      <Icon name={IconString.checkmarkCircle} color={colors.primaryOrange} size={50} />
     </View>
   )
 

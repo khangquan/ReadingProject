@@ -16,8 +16,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getBookType, increaseBookView } from '../../redux/actions/GetBookAction'
 import { addFavBook, editFavBook } from '../../redux/actions/AccountAction'
 import Icon from 'react-native-vector-icons/Ionicons'
-
+import { IconString } from '../../utils/Icon'
 import { colors } from '../../utils/Colors'
+import { shareOnFacebook } from 'react-native-social-share'
+
 import MenuIconBar from '../../components/MenuIconBar'
 import MoreText from '../../components/MoreText'
 import BookListHorizon from '../../components/BookListHorizon'
@@ -95,8 +97,19 @@ export default function DetailScreen({ navigation }) {
     }
   }
 
+  const handeFBShare = () => {
+    shareOnFacebook({
+      'text':'Thư Viện Sách Hay',
+      'link':'https://facebook.com/',
+      'image': require('../../../assets/BookTypeScreen/kynang.jpg'),
+    },
+    (results) => {
+      console.log(results);
+    }
+  );
+  }
+
   return (
-    <>
       <View style={styles.container}>
         <StatusBar hidden={true} />
         <Image
@@ -112,7 +125,7 @@ export default function DetailScreen({ navigation }) {
             style={styles.backStyle}
           >
             <Icon
-              name="chevron-back-outline"
+              name={IconString.goBack}
               size={35}
               color={colors.primaryOrange}
             />
@@ -123,7 +136,6 @@ export default function DetailScreen({ navigation }) {
             <View style={styles.titleButtonStyle}>
               <Text style={styles.titleText}>{bookData.title}</Text>
               <Text style={styles.authorText}>{bookData.author}</Text>
-
 
               <TouchableOpacity
                 onPress={() => {
@@ -140,18 +152,18 @@ export default function DetailScreen({ navigation }) {
         <ScrollView style={styles.botContent}>
           <View style={styles.iconMenuBar}>
             <MenuIconBar
-              color={isLike ? 'red' : null}
-              title={'heart'}
+              color={isLike ? colors.red : null}
+              title={IconString.heart}
               textTitle={'Thích'}
               onEvent={() => handleLikeBook(bookData)}
             />
             <MenuIconBar
-              title={'chatbubble-ellipses-outline'}
+              title={IconString.comment}
               textTitle={'Bình luận'}
               onEvent={() => setModalVisible(true)}
             />
-            <MenuIconBar title={'share-outline'} textTitle={'Chia sẻ'}
-              onEvent={() => console.log(bookData)}
+            <MenuIconBar title={IconString.share} textTitle={'Chia sẻ'}
+              onEvent={handeFBShare}
             />
           </View>
 
@@ -176,10 +188,9 @@ export default function DetailScreen({ navigation }) {
 
           {modalVisible && <Comments userInfo={userInfo} visible={modalVisible} onEvent={() => setModalVisible(false)} />}
         </ScrollView>
-      </View>
 
-      {bookLoading ? <BookLoading /> : null}
-    </>
+        {bookLoading ? <BookLoading /> : null}
+      </View>
   )
 }
 
@@ -232,7 +243,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   buttonText: {
-    color: 'white',
+    color: colors.white,
     fontSize: 15,
     fontWeight: 'bold',
   },
@@ -240,8 +251,8 @@ const styles = StyleSheet.create({
     color: colors.primaryOrange,
     fontWeight: 'bold',
     fontSize: 20,
-    borderColor: 'white',
-    textShadowColor: 'black',
+    borderColor: colors.white,
+    textShadowColor: colors.black,
     textShadowRadius: 3,
     textShadowOffset: {
       width: 2,
@@ -251,7 +262,7 @@ const styles = StyleSheet.create({
   authorText: {
     color: colors.primaryOrange,
     fontSize: 18,
-    textShadowColor: 'black',
+    textShadowColor: colors.black,
     textShadowRadius: 3,
     textShadowOffset: {
       width: 2,
@@ -271,8 +282,8 @@ const styles = StyleSheet.create({
   botContent: {
     borderTopLeftRadius: 60,
     borderTopRightRadius: 60,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     borderWidth: 0.6,
-    borderColor: 'gray',
+    borderColor: colors.gray,
   },
 })

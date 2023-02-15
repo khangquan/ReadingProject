@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../../utils/Icon'
 import { colors } from '../../utils/Colors'
 
 export default function ConfirmScreen({ navigation }) {
@@ -24,14 +25,14 @@ export default function ConfirmScreen({ navigation }) {
                         navigation.goBack()
                     }}>
                     <Icon
-                        name="chevron-back-outline"
+                        name={IconString.goBack}
                         size={35}
                         color={colors.primaryOrange}
                     />
                 </TouchableOpacity>
             </View>
             <View style={styles.cenContent}>
-                <Icon name='mail' size={100} color={colors.primaryOrange} />
+                <Icon name={IconString.mail} size={100} color={colors.primaryOrange} />
                 <Text style={styles.title}>Kiểm tra lại mail của bạn</Text>
                 <Text style={styles.text}>Chúng tôi đã gửi một mail hướng dẫn khôi phục mật khẩu vào email của bạn</Text>
 
@@ -48,7 +49,7 @@ export default function ConfirmScreen({ navigation }) {
 
             </View>
             <View style={styles.botContent}>
-                <Text style={[styles.buttonSkip, { color: 'white' }]}>Chưa nhận được mail? thử kiểm tra hộp thư spam của bạn,</Text>
+                <Text style={[styles.buttonSkip, { color: colors.white }]}>Chưa nhận được mail? thử kiểm tra hộp thư spam của bạn,</Text>
                 <TouchableOpacity onPress={() => { navigation.goBack() }}>
                     <Text style={[styles.buttonSkip, { color: colors.primaryOrange }]}>hoặc thử nhập một email khác</Text>
                 </TouchableOpacity>
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: 'white',
+        color: colors.white,
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
         width: '80%',
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: colors.white,
         marginBottom: 20,
     },
     buttonResetWrapper: {
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     buttonReset: {
-        color: 'white',
+        color: colors.white,
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center'

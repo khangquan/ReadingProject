@@ -7,6 +7,8 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../utils/Icon'
+import { colors } from '../utils/Colors'
 
 const windowWidth = Dimensions.get('window').width
 export default function TextBox({
@@ -35,9 +37,9 @@ export default function TextBox({
             <TouchableOpacity onPress={onEvent}>
               {
                 isSecure ?
-                  <Icon name="eye-outline" size={30} color="black" />
+                  <Icon name={IconString.showPass} size={30} color={colors.black} />
                   :
-                  <Icon name="eye-off-outline" size={30} color="black" />
+                  <Icon name={IconString.hiddenPass} size={30} color={colors.black} />
               }
             </TouchableOpacity>
           )
@@ -54,11 +56,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 8,
     borderRadius: 15,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
 
     //Add shadow
     elevation: 5,
-    shadowColor: 'gray ',
+    shadowColor: colors.gray,
     shadowOpacity: 5,
     shadowRadius: 5,
     shadowOffset: {

@@ -13,6 +13,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { appLogout } from '../../redux/actions/LoginScreenAction'
 import { Avatar } from '@react-native-material/core'
+import { IconString } from '../../utils/Icon'
 import { colors } from '../../utils/Colors'
 
 import HeaderBar from '../../components/HeaderBar'
@@ -98,14 +99,14 @@ export default function UserScreen({ navigation }) {
           <View>
             <UserMenu
               title={'Thông tin tài khoản'}
-              iconName={'person-outline'}
+              iconName={IconString.user}
               onEvent={() => {
                 navigation.navigate('UserInfoScreen')
               }}
             />
             <UserMenu
               title={'Danh sách yêu thích'}
-              iconName={'heart-outline'}
+              iconName={IconString.heart}
               onEvent={() => {
                 navigation.navigate('FavBooksScreen')
               }}
@@ -140,22 +141,22 @@ export default function UserScreen({ navigation }) {
 const INTRODUCE = [
   {
     title: 'Giới thiệu App',
-    iconName: 'book-outline',
+    iconName: IconString.book,
   },
   {
     title: 'Góp ý',
-    iconName: 'chatbubble-ellipses-outline',
+    iconName: IconString.chatBubble,
   },
 ]
 
 const SETTING = [
   {
     title: 'Hẹn giờ đọc sách',
-    iconName: 'alarm-outline',
+    iconName: IconString.alarm,
   },
   {
     title: 'Đăng xuất',
-    iconName: 'log-out-outline',
+    iconName: IconString.logOut
   },
 ]
 
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: 'lightgray',
+    borderBottomColor: colors.lightGray,
   },
   menuTitle: {
     margin: 10,
@@ -192,19 +193,19 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: 'black',
+    color: colors.black,
     marginBottom: 5,
   },
   modalContent: {
     fontSize: 18,
-    color: 'black',
+    color: colors.black,
     textAlign: 'center',
   },
   modalPosition: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: colors.blackTrans,
   },
   modalStyle: {
     backgroundColor: colors.white,

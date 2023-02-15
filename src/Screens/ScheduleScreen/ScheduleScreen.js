@@ -10,6 +10,7 @@ import React, {useEffect, useState} from 'react'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { IconString } from '../../utils/Icon'
 import {colors} from '../../utils/Colors'
 import {useDispatch} from 'react-redux'
 import {LocalNotificationSchedule, CancelAllNotification} from '../../services/LocalNotification'
@@ -68,11 +69,11 @@ export default function ScheduleScreen({navigation, route}) {
     <SafeAreaView style={styles.container}>
       <HeaderBar
         title={'Hẹn Giờ Đọc Sách'}
-        leftItem={'chevron-back-outline'}
+        leftItem={IconString.goBack}
         onLeftEvent={() => navigation.goBack()}
       />
       <View style={styles.center}>
-        <Icon name="alarm-outline" size={100} color={colors.primaryOrange} />
+        <Icon name={IconString.alarm} size={100} color={colors.primaryOrange} />
         <Text style={styles.textStyle}>
           Cho phép ứng dụng gửi Notification nhắc nhở bạn đọc sách hàng ngày
         </Text>
@@ -86,7 +87,7 @@ export default function ScheduleScreen({navigation, route}) {
           style={styles.buttonStyle}
           onPress={() => setShowPicker(true)}
         >
-          <Text style={{fontSize: 15, color: 'white'}}>Chọn lại</Text>
+          <Text style={{fontSize: 15, color: colors.white}}>Chọn lại</Text>
         </TouchableOpacity>
 
         {showPicker && (
@@ -105,14 +106,14 @@ export default function ScheduleScreen({navigation, route}) {
           style={styles.confirmButton}
           onPress={() => handleSetSchedule(timeSelected)}
         >
-          <Text style={{fontSize: 20, color: 'white'}}>Lưu Hẹn Giờ</Text>
+          <Text style={{fontSize: 20, color: colors.white}}>Lưu Hẹn Giờ</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.cancelButton}
           onPress={handleDeleteSchedule}
         >
-          <Text style={{fontSize: 20, color: 'white'}}>Xóa Hẹn Giờ</Text>
+          <Text style={{fontSize: 20, color: colors.white}}>Xóa Hẹn Giờ</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

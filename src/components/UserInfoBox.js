@@ -6,6 +6,8 @@ import {
 } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { IconString } from '../utils/Icon'
+import { colors } from '../utils/Colors'
 
 export default function UserInfoBox({
     title,
@@ -30,16 +32,16 @@ export default function UserInfoBox({
                     isPassBox ?
                         (<TouchableOpacity onPress={onPassBoxEvent}>
                             {showPass ? (
-                                <Icon name="eye" size={25} color={'black'} />
+                                <Icon name={IconString.showPass} size={25} color={colors.black} />
                             ) : (
-                                <Icon name="eye-off" size={25} color={'black'} />
+                                <Icon name={IconString.hiddenPass} size={25} color={colors.black} />
                             )}
                         </TouchableOpacity>) : null
                 }
 
                 <TouchableOpacity
                     onPress={onEvent}>
-                    <Icon name="create" size={25} color={'black'} />
+                    <Icon name={IconString.edit} size={25} color={colors.black} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -57,10 +59,10 @@ const styles = StyleSheet.create({
     userInfoText: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: 'black',
+        color: colors.black,
     },
     textBoxAndEdit: {
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         width: '70%',
         borderWidth: 1,
         borderRadius: 15,
@@ -72,6 +74,6 @@ const styles = StyleSheet.create({
     textBoxStyle: {
         width: '80%',
         fontSize: 20,
-        color: 'black',
+        color: colors.black,
     },
 })

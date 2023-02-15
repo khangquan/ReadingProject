@@ -41,7 +41,7 @@ export default function AllBookList({ bookData, selectBookEvent }) {
 
 const styles = StyleSheet.create({
   Content: {
-    flex: 1
+    flex: 1,
   },
   renderViewStyle: {
     width: windowWidth / 3,
