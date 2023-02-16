@@ -28,7 +28,6 @@ import AppInfo from '../Screens/AppInfoScreen/AppInfo'
 const Tabs = createBottomTabNavigator()
 const LoginStack = createNativeStackNavigator()
 const HomeStack = createNativeStackNavigator()
-const DetailStack = createNativeStackNavigator()
 
 const LoginStackNavigator = () => (
   <LoginStack.Navigator screenOptions={{ headerShown: false }}>
@@ -44,7 +43,7 @@ const HomeStackNavigator = () => (
     <HomeStack.Screen name="HomeScreen" component={TabsNavigator} />
     <HomeStack.Screen name="SearchScreen" component={SearchScreen} />
     <HomeStack.Screen name="AllBooksScreen" component={AllBooksScreen} />
-    <HomeStack.Screen name='DetailScreen' component={DetailStackNavigator} />
+    <HomeStack.Screen name='DetailScreen' component={DetailScreen} />
     <HomeStack.Screen name="ReadingScreen" component={ReadingScreen} />
     <HomeStack.Screen name="UserInfoScreen" component={UserInfoScreen} />
     <HomeStack.Screen name="EditUserInfoScreen" component={EditUserInfoScreen} />
@@ -52,13 +51,6 @@ const HomeStackNavigator = () => (
     <HomeStack.Screen name="ScheduleScreen" component={ScheduleScreen} />
     <HomeStack.Screen name="AppInfo" component={AppInfo} />
   </HomeStack.Navigator>
-)
-
-const DetailStackNavigator = () => (
-  <DetailStack.Navigator screenOptions={{ headerShown: false }}>
-    <DetailStack.Screen name='DetailScreen' component={DetailScreen} />
-    <DetailStack.Screen name='AllBooksScreen' component={AllBooksScreen} />
-  </DetailStack.Navigator>
 )
 
 const TabsNavigator = () => (
