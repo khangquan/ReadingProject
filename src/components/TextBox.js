@@ -19,10 +19,13 @@ export default function TextBox({
   onChangeText,
   value,
   onBlur,
+  refName,
+  onFocus
 }) {
   return (
     <View style={styles.inputText}>
       <TextInput
+        ref={refName}
         style={{ fontSize: 15, width: '90%' }}
         placeholder={title}
         autoCapitalize="none"
@@ -30,6 +33,7 @@ export default function TextBox({
         onChangeText={onChangeText}
         value={value}
         onBlur={onBlur}
+        onSubmitEditing={onFocus}
       />
       {
         isPasswordBox ?

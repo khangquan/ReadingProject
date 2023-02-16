@@ -6,7 +6,7 @@ import {
     Alert,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TextBox from './TextBox'
 import { register } from '../redux/actions/AccountAction'
@@ -18,6 +18,10 @@ export default function RegisterForm(props) {
     const LOGIN = 'LOGIN'
     const dispatch = useDispatch()
     const { userAccounts } = useSelector(state => state.register)
+
+    const inputEmail = useRef()
+    const inputPass = useRef()
+    const inputConfirmPass = useRef()
 
     const sendDataToLoginScreen = () => {
         props.screen(LOGIN)
@@ -42,7 +46,7 @@ export default function RegisterForm(props) {
             } else {
                 Keyboard.dismiss()
                 dispatch(
-                    register({fullname,email,pass})
+                    register({ fullname, email, pass })
                 )
                 setTimeout(() => {
                     Alert.alert('Thông báo', 'Đăng ký tài khoản thành công!!')
@@ -51,6 +55,7 @@ export default function RegisterForm(props) {
             }
         }
     }
+
     return (
         <View style={styles.inputContent}>
             <KeyboardAwareScrollView
@@ -81,6 +86,7 @@ export default function RegisterForm(props) {
                                 onChangeText={handleChange('fullname')}
                                 onBlur={handleBlur('fullname')}
                                 value={values.fullname}
+                                onFocus={() => inputEmail.current.focus()}
                             />
                             {errors.fullname && touched.fullname ? (
                                 <Text style={styles.errorText}>{errors.fullname}</Text>
@@ -89,9 +95,11 @@ export default function RegisterForm(props) {
                             <Text style={styles.text}>Email của bạn</Text>
                             <TextBox
                                 title="Nhập email bạn"
+                                refName={inputEmail}
                                 onChangeText={handleChange('email')}
                                 onBlur={handleBlur('email')}
                                 value={values.email}
+                                onFocus={() => inputPass.current.focus()}
                             />
                             {errors.email && touched.email ? (
                                 <Text style={styles.errorText}>{errors.email}</Text>
@@ -100,10 +108,12 @@ export default function RegisterForm(props) {
                             <Text style={styles.text}>Mật khẩu của bạn</Text>
                             <TextBox
                                 title="Nhập mật khẩu của bạn"
+                                refName={inputPass}
                                 isSecure={true}
                                 onChangeText={handleChange('pass')}
                                 onBlur={handleBlur('pass')}
                                 value={values.pass}
+                                onFocus={() => inputConfirmPass.current.focus()}
                             />
                             {errors.pass && touched.pass ? (
                                 <Text style={styles.errorText}>{errors.pass}</Text>
@@ -112,6 +122,7 @@ export default function RegisterForm(props) {
                             <Text style={styles.text}>Xác nhận mật khẩu của bạn</Text>
                             <TextBox
                                 title="Nhập lại mật khẩu của bạn"
+                                refName={inputConfirmPass}
                                 isSecure={true}
                                 onChangeText={handleChange('confirmPass')}
                                 onBlur={handleBlur('confirmPass')}

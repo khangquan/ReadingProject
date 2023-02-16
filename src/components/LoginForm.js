@@ -6,7 +6,7 @@ import {
     Keyboard,
     Alert,
 } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TextBox from './TextBox'
 import { appLogin } from '../redux/actions/LoginScreenAction'
@@ -18,6 +18,8 @@ export default function LoginForm(props) {
     const dispatch = useDispatch()
     const { userAccounts } = useSelector(state => state.register)
     const [secure, setSecure] = useState(true)
+
+    const inputPass = useRef()
 
     //Ẩn hoặc hiện mật khẩu
     const handleShowPass = () => {
@@ -35,8 +37,8 @@ export default function LoginForm(props) {
             item => item.email === email && item.pass === pass,
         )
         if (result) {
-                Keyboard.dismiss()
-                dispatch(appLogin(email))
+            Keyboard.dismiss()
+            dispatch(appLogin(email))
         } else {
             Alert.alert('Lỗi', 'Bạn đã nhập sai email hoặc mật khẩu !')
         }
@@ -67,6 +69,7 @@ export default function LoginForm(props) {
                             onBlur={handleBlur('email')}
                             onChangeText={handleChange('email')}
                             value={values.email}
+                            onFocus={() => inputPass?.current.focus()}
                         />
                         {errors.email && touched.email ? (
                             <Text style={styles.errorText}>{errors.email}</Text>
@@ -76,6 +79,7 @@ export default function LoginForm(props) {
                         <TextBox
                             isSecure={secure}
                             title="Nhập mật khẩu"
+                            refName={inputPass}
                             onEvent={handleShowPass}
                             isPasswordBox={true}
                             onBlur={handleBlur('pass')}
@@ -87,7 +91,7 @@ export default function LoginForm(props) {
                         ) : null}
 
                         <View style={styles.buttonContent}>
-                            
+
                             <TouchableOpacity
                                 style={styles.buttonLoginWrapper}
                                 onPress={handleSubmit}
