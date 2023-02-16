@@ -6,18 +6,18 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native'
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { IconString } from '../../utils/Icon'
-import {colors} from '../../utils/Colors'
-import {useDispatch} from 'react-redux'
-import {LocalNotificationSchedule, CancelAllNotification} from '../../services/LocalNotification'
-import {delSchedule, setSchedule} from '../../redux/actions/AccountAction'
+import { colors } from '../../utils/Colors'
+import { useDispatch } from 'react-redux'
+import { LocalNotificationSchedule, CancelAllNotification } from '../../services/LocalNotification'
+import { delSchedule, setSchedule } from '../../redux/actions/AccountAction'
 import HeaderBar from '../../components/HeaderBar'
 
-export default function ScheduleScreen({navigation, route}) {
+export default function ScheduleScreen({ navigation, route }) {
   const dispatch = useDispatch()
   const userInfo = route.params
   const [userId, setUserId] = useState('')
@@ -29,9 +29,9 @@ export default function ScheduleScreen({navigation, route}) {
   useEffect(() => {
     setUserId(userInfo.id)
     let userSchedule = userInfo.schedule
-    if(userSchedule) {
-        setTimeSelected(userSchedule)
-        setShowTime(userSchedule)
+    if (userSchedule) {
+      setShowTime(new Date(userSchedule))
+      setTimeSelected(new Date(userSchedule))
     }
   }, [])
 
@@ -46,7 +46,7 @@ export default function ScheduleScreen({navigation, route}) {
     if (!showTime) {
       Alert.alert('Bạn chưa chọn giờ nhắc!')
     } else {
-      dispatch(setSchedule({time, userId}))
+      dispatch(setSchedule({ time, userId }))
       Alert.alert('Đã lưu lịch nhắc đọc sách')
       LocalNotificationSchedule(userInfo.schedule)
       setTimeSelected(time)
@@ -57,7 +57,7 @@ export default function ScheduleScreen({navigation, route}) {
     if (userInfo.schedule === null) {
       Alert.alert('Không có thông tin lịch nhắc để xóa')
     } else {
-      dispatch(delSchedule({userId}))
+      dispatch(delSchedule({ userId }))
       Alert.alert('Đã xóa lịch nhắc đọc sách')
       CancelAllNotification()
       setTimeSelected(new Date())
@@ -78,16 +78,27 @@ export default function ScheduleScreen({navigation, route}) {
           Cho phép ứng dụng gửi Notification nhắc nhở bạn đọc sách hàng ngày
         </Text>
 
-        <Text style={{marginTop: 10}}>
+        <Text style={{ marginTop: 10 }}>
           Thời gian đã chọn :
-          {showTime ? ` ${timeSelected.getHours()} Giờ ${timeSelected.getMinutes()} Phút` : 'Chưa Đặt Lịch Nhắc'}
+          {
+            showTime ?
+              `${timeSelected.getHours()} Giờ ${timeSelected.getMinutes()} Phút`
+              : 'Chưa Đặt Lịch Nhắc'
+          }
         </Text>
 
         <TouchableOpacity
           style={styles.buttonStyle}
           onPress={() => setShowPicker(true)}
         >
-          <Text style={{fontSize: 15, color: colors.white}}>Chọn lại</Text>
+          <Text style={{ fontSize: 15, color: colors.white }}>Chọn lại</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => console.log(userInfo.schedule)}
+        >
+          <Text style={{ fontSize: 15, color: colors.white }}>Chọn lại</Text>
         </TouchableOpacity>
 
         {showPicker && (
@@ -106,14 +117,14 @@ export default function ScheduleScreen({navigation, route}) {
           style={styles.confirmButton}
           onPress={() => handleSetSchedule(timeSelected)}
         >
-          <Text style={{fontSize: 20, color: colors.white}}>Lưu Hẹn Giờ</Text>
+          <Text style={{ fontSize: 20, color: colors.white }}>Lưu Hẹn Giờ</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.cancelButton}
           onPress={handleDeleteSchedule}
         >
-          <Text style={{fontSize: 20, color: colors.white}}>Xóa Hẹn Giờ</Text>
+          <Text style={{ fontSize: 20, color: colors.white }}>Xóa Hẹn Giờ</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
