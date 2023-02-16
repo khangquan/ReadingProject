@@ -99,98 +99,100 @@ export default function DetailScreen({ navigation }) {
 
   const handeFBShare = () => {
     shareOnFacebook({
-      'text':'Thư Viện Sách Hay',
-      'link':'https://facebook.com/',
+      'text': 'Thư Viện Sách Hay',
+      'link': 'https://facebook.com/',
       'image': require('../../../assets/BookTypeScreen/kynang.jpg'),
     },
-    (results) => {
-      console.log(results);
-    }
-  );
+      (results) => {
+        console.log(results);
+      }
+    );
   }
 
   return (
-      <View style={styles.container}>
-        <StatusBar hidden={true} />
-        <Image
-          style={styles.imageBG}
-          blurRadius={10}
-          source={{ uri: bookData.image }}
-        />
-        <View style={styles.topContent}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.goBack()
-            }}
-            style={styles.backStyle}
-          >
-            <Icon
-              name={IconString.goBack}
-              size={35}
-              color={colors.primaryOrange}
-            />
-          </TouchableOpacity>
+    <View style={styles.container}>
+      <StatusBar hidden={true} />
+      <Image
+        style={styles.imageBG}
+        blurRadius={10}
+        source={{ uri: bookData.image }}
+      />
+      <View style={styles.topContent}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack()
+          }}
+          style={styles.backStyle}
+        >
+          <Icon
+            name={IconString.goBack}
+            size={35}
+            color={colors.primaryOrange}
+          />
+        </TouchableOpacity>
 
-          <View style={styles.bookContent}>
-            <Image style={styles.bookImage} source={{ uri: bookData.image }} />
-            <View style={styles.titleButtonStyle}>
-              <Text style={styles.titleText}>{bookData.title}</Text>
-              <Text style={styles.authorText}>{bookData.author}</Text>
+        <View style={styles.bookContent}>
+          <Image style={styles.bookImage} source={{ uri: bookData.image }} />
+          <View style={styles.titleButtonStyle}>
+            <Text style={styles.titleText}>{bookData.title}</Text>
+            <Text style={styles.authorText}>{bookData.author}</Text>
 
-              <TouchableOpacity
-                onPress={() => {
-                  handleReadingScreen(bookData.title)
-                }}
-                style={styles.readButton}
-              >
-                <Text style={styles.buttonText}>ĐỌC NGAY</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                handleReadingScreen(bookData.title)
+              }}
+              style={styles.readButton}
+            >
+              <Text style={styles.buttonText}>ĐỌC NGAY</Text>
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
 
-        <ScrollView style={styles.botContent}>
-          <View style={styles.iconMenuBar}>
-            <MenuIconBar
+      <ScrollView style={styles.botContent}>
+        <View style={styles.iconMenuBar}>
+          <MenuIconBar
+              isLike={isLike}
+              isAnimation={true}
               color={isLike ? colors.red : null}
               title={IconString.heart}
               textTitle={'Thích'}
               onEvent={() => handleLikeBook(bookData)}
             />
-            <MenuIconBar
-              title={IconString.comment}
-              textTitle={'Bình luận'}
-              onEvent={() => setModalVisible(true)}
-            />
-            <MenuIconBar title={IconString.share} textTitle={'Chia sẻ'}
-              onEvent={handeFBShare}
-            />
-          </View>
-
-          <View style={{ margin: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
-            <MoreText content={bookData.desc} />
-          </View>
-
-          <View style={{ margin: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
-            <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
-            <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
-            <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
-          </View>
-
-          <BookListHorizon
-            title={'Có thể bạn quan tâm'}
-            data={bookYouMayLike.filter((item, index) => index < 5)}
-            allBookEvent={() => handleAllBook(bookData)}
-            selectBookEvent={item => dispatch(getBookType(item))}
+          <MenuIconBar
+            title={IconString.comment}
+            textTitle={'Bình luận'}
+            onEvent={() => setModalVisible(true)}
           />
+          <MenuIconBar title={IconString.share} textTitle={'Chia sẻ'}
+            onEvent={handeFBShare}
+          />
+        </View>
 
-          {modalVisible && <Comments userInfo={userInfo} visible={modalVisible} onEvent={() => setModalVisible(false)} />}
-        </ScrollView>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
+          <MoreText content={bookData.desc} />
+        </View>
 
-        {bookLoading ? <BookLoading /> : null}
-      </View>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
+          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
+          <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
+          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
+        </View>
+
+        <BookListHorizon
+          title={'Có thể bạn quan tâm'}
+          data={bookYouMayLike.filter((item, index) => index < 5)}
+          allBookEvent={() => handleAllBook(bookData)}
+          selectBookEvent={item => dispatch(getBookType(item))}
+        />
+
+        {modalVisible && <Comments userInfo={userInfo} visible={modalVisible} onEvent={() => setModalVisible(false)} />}
+      </ScrollView>
+
+      {bookLoading ? <BookLoading /> : null}
+    </View>
   )
 }
 
@@ -241,6 +243,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: 'absolute',
     bottom: 0,
+  },
+  heart: {
+
   },
   buttonText: {
     color: colors.white,
