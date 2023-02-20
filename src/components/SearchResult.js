@@ -1,71 +1,74 @@
 import {
-    StyleSheet,
-    Text,
-    View,
-    FlatList,
-    Dimensions,
-    TouchableOpacity,
-    Image,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Dimensions,
+  TouchableOpacity,
 } from 'react-native'
 import React from 'react'
+import {colors} from '../utils/Colors'
 
 const windowWidth = Dimensions.get('window').width
 
-export default function SearchResult({ bookData, selectBookEvent, searchValue }) {
-    const renderSearch = ({ item }) => {
-        let lowerCaseValue = searchValue.toLowerCase()
+export default function SearchResult({bookData, selectBookEvent, searchValue}) {
+  const renderSearch = ({item}) => {
+    let lowerCaseValue = searchValue.toLowerCase()
 
-        let title = item.title.toLowerCase()
-        let removeAccents = title.normalize("NFD").replace(/\p{Diacritic}/gu, "")
-        let author = item.author.toLowerCase()
+    let title = item.title.toLowerCase()
+    let removeTitleAccents = title
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+    let author = item.author.toLowerCase()
+    let removeAuthorAccents = author
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
 
-        if (lowerCaseValue === '') {
-            return (null)
-        } else if (removeAccents.includes(lowerCaseValue) || author.includes(lowerCaseValue)) {
-            return (
-                <TouchableOpacity
-                    onPress={() => selectBookEvent(item)}
-                    style={styles.renderViewStyle}>
-                    <Image style={styles.flatListImg}
-                        source={{ uri: item.image }}
-                    />
-                    <Text style={styles.flatListTitle}>{item.title}</Text>
-                </TouchableOpacity>
-            )
-        }
+    if (lowerCaseValue === '') {
+      return null
+    } else if (
+      removeTitleAccents.includes(lowerCaseValue) ||
+      removeAuthorAccents.includes(lowerCaseValue)
+    ) {
+      return (
+        <TouchableOpacity
+          onPress={() => selectBookEvent(item)}
+          style={styles.renderViewStyle}
+        >
+          <Text style={styles.Title}>{item.title}</Text>
+          <Text style={styles.Author}>{item.author}</Text>
+        </TouchableOpacity>
+      )
     }
+  }
 
-    return (
-        <View style={styles.Content}>
-            <FlatList
-                data={bookData}
-                renderItem={renderSearch}
-                numColumns={3}
-                showsVerticalScrollIndicator={false}
-            />
-        </View>
-    )
+  return (
+    <View style={styles.Content}>
+      <FlatList
+        data={bookData}
+        keyExtractor={(item,index) => index.toString()}
+        renderItem={renderSearch}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    Content: {
-        flex: 1,
-    },
-    renderViewStyle: {
-        width: windowWidth / 3,
-        height: windowWidth / 2,
-        marginBottom: 60,
-        padding: 10,
-    },
-    flatListImg: {
-        width: '100%',
-        height: '100%',
-        resizeMode: 'cover',
-    },
-    flatListTitle: {
-        fontSize: 15,
-        alignSelf: 'center',
-        fontWeight: '500',
-        textAlign: 'center'
-    },
+  Content: {
+    flex: 1,
+  },
+  renderViewStyle: {
+    width: windowWidth - 30,
+    alignSelf: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.gray,
+  },
+  Title: {
+    fontSize: 18,
+    color: colors.black,
+    fontWeight: '600',
+    width: '100%',
+  },
 })

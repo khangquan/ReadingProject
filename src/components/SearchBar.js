@@ -1,6 +1,5 @@
 import {
     StyleSheet,
-    Text,
     View,
     TextInput,
     TouchableOpacity,
@@ -15,7 +14,6 @@ export default function SearchBar({
     onChangeText,
     searchValue,
     setSearchEvent,
-    searchEvent,
 }) {
     return (
         <View style={styles.topMenu}>
@@ -62,7 +60,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        //marginHorizontal: 10
     },
     topTextStyle: {
         fontSize: 20,

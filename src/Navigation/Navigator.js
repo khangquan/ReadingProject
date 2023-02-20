@@ -8,7 +8,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import IntroScreen from '../Screens/IntroScreen/IntroScreen'
 import HomeScreen from '../Screens/HomeScreen/HomeScreen'
 import LoginScreen from '../Screens/LoginScreen/LoginScreen'
 import UserScreen from '../Screens/UserScreen/UserScreen'
@@ -29,6 +28,8 @@ import AppInfo from '../Screens/AppInfoScreen/AppInfo'
 const Tabs = createBottomTabNavigator()
 const LoginStack = createNativeStackNavigator()
 const HomeStack = createNativeStackNavigator()
+const BookTypeStack = createNativeStackNavigator()
+const UserStack = createNativeStackNavigator()
 
 const LoginStackNavigator = () => (
   <LoginStack.Navigator screenOptions={{ headerShown: false }}>
@@ -46,12 +47,24 @@ const HomeStackNavigator = () => (
     <HomeStack.Screen name="AllBooksScreen" component={AllBooksScreen} />
     <HomeStack.Screen name='DetailScreen' component={DetailScreen} />
     <HomeStack.Screen name="ReadingScreen" component={ReadingScreen} />
+    <HomeStack.Screen name="FavBooksScreen" component={FavBooksScreen} />
     <HomeStack.Screen name="UserInfoScreen" component={UserInfoScreen} />
     <HomeStack.Screen name="EditUserInfoScreen" component={EditUserInfoScreen} />
-    <HomeStack.Screen name="FavBooksScreen" component={FavBooksScreen} />
     <HomeStack.Screen name="ScheduleScreen" component={ScheduleScreen} />
     <HomeStack.Screen name="AppInfo" component={AppInfo} />
   </HomeStack.Navigator>
+)
+
+const BookTypeStackNavigator = () => (
+  <BookTypeStack.Navigator screenOptions={{ headerShown: false }}>
+    <BookTypeStack.Screen name="BooksTypeScreen" component={BooksTypeScreen} />
+  </BookTypeStack.Navigator>
+)
+
+const UserStackNavigator = () => (
+  <UserStack.Navigator screenOptions={{ headerShown: false}}>
+    <UserStack.Screen name="UserScreen" component={UserScreen}/>
+  </UserStack.Navigator>
 )
 
 const TabsNavigator = () => (
@@ -61,30 +74,32 @@ const TabsNavigator = () => (
         let iconName
         if (route.name === 'Trang Chủ') {
           iconName = focused ? IconString.homeFill : IconString.homeOutline
-          size = focused ? 35 : 30
+          size = focused ? 40 : 30
         } else if (route.name === 'Tài Khoản') {
           iconName = focused ? IconString.userCircleFill : IconString.userCircleOutline
-          size = focused ? 35 : 30
+          size = focused ? 40 : 30
         } else if (route.name === 'Thể Loại') {
           iconName = focused ? IconString.categoryFill : IconString.categoryOutline
-          size = focused ? 35 : 30
+          size = focused ? 40 : 30
         }
         return <Icon name={iconName} size={size} color={color} />
       },
       tabBarLabelStyle: {
-        fontSize: 14,
+        fontSize: 15,
+        marginBottom: 5
       },
       tabBarStyle: {
         height: '10%',
         backgroundColor: colors.primaryOrange,
+        padding: 5,
       },
       headerShown: false,
       tabBarActiveTintColor: colors.white,
       tabBarInactiveTintColor: colors.lightGray,
     })}>
     <Tabs.Screen name="Trang Chủ" component={HomeScreen} />
-    <Tabs.Screen name="Thể Loại" component={BooksTypeScreen} />
-    <Tabs.Screen name="Tài Khoản" component={UserScreen} />
+    <Tabs.Screen name="Thể Loại" component={BookTypeStackNavigator} />
+    <Tabs.Screen name="Tài Khoản" component={UserStackNavigator} />
   </Tabs.Navigator>
 )
 

@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { getBookAPI, getBookType } from '../../redux/actions/GetBookAction'
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native'
+import React, {useState, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import {getBookAPI, getBookType} from '../../redux/actions/GetBookAction'
 import SearchBar from '../../components/SearchBar'
-import AllBookList from '../../components/AllBookList'
+import SearchResult from '../../components/SearchResult'
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen({navigation}) {
   const dispatch = useDispatch()
-  const { allBooksData } = useSelector(state => state.bookGetData)
+  const {allBooksData} = useSelector(state => state.bookGetData)
 
   useEffect(() => {
     dispatch(getBookAPI())
@@ -29,14 +29,11 @@ export default function SearchScreen({ navigation }) {
         setSearchEvent={() => setSearchValue('')}
       />
 
-      <View style={styles.botContent}>
-        <AllBookList
-          bookData={allBooksData}
-          isSearchScreen={true}
-          searchValue={searchValue}
-          selectBookEvent={item => handleDetail(item)}
-        />
-      </View>
+      <SearchResult
+        bookData={allBooksData}
+        selectBookEvent={item => handleDetail(item)}
+        searchValue={searchValue}
+      />
     </SafeAreaView>
   )
 }
@@ -44,18 +41,5 @@ export default function SearchScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  botContent: {
-    height: '100%',
-    width: '100%',
-  },
-  resultStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-  },
-  resultTextStyle: {
-    fontSize: 20,
   },
 })

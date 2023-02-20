@@ -5,36 +5,38 @@ import {
   Modal,
   TouchableOpacity,
   Dimensions,
-  ScrollView,
   TextInput,
   Alert,
-  KeyboardAvoidingView,
-  Keyboard
+  ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { Avatar } from '@react-native-material/core'
-import { colors } from '../utils/Colors'
-import { IconString } from '../utils/Icon'
+import GestureRecognizer from 'react-native-swipe-gestures'
+import {Avatar} from '@react-native-material/core'
+import {colors} from '../utils/Colors'
+import {IconString} from '../utils/Icon'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { postComment, deleteComment } from '../redux/actions/GetBookAction'
+import {useDispatch, useSelector} from 'react-redux'
+import {postComment, deleteComment} from '../redux/actions/GetBookAction'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
-export default function Comments({ onEvent, visible, userInfo }) {
-  const [commentData, setCommentData] = useState()
+export default function Comments({onEvent, visible, userInfo}) {
+  const [commentData, setCommentData] = useState('')
   const [userComments, setUserComments] = useState([])
-  const { bookData } = useSelector(state => state.bookGetData)
+  const {bookData} = useSelector(state => state.bookGetData)
   const dispatch = useDispatch()
+
+  const scroll = useRef()
 
   useEffect(() => {
     setUserComments(bookData.comments)
   }, [])
 
   const handleSendComment = bookData => {
-    if (commentData === '') {
+    if (!commentData || commentData.length === null || commentData.length === 0) {
       alert('Bạn chưa nhập bình luận')
     } else {
       dispatch(
@@ -48,7 +50,6 @@ export default function Comments({ onEvent, visible, userInfo }) {
       )
       setCommentData('')
     }
-
   }
 
   const handleDeleteComment = data => {
@@ -64,78 +65,67 @@ export default function Comments({ onEvent, visible, userInfo }) {
           )
         },
       },
-      { text: 'No', onPress: () => { } },
+      {text: 'No', onPress: () => {}},
     ])
   }
 
   return (
-    <Modal visible={visible} animationType={'slide'} transparent={true}>
-      <View style={styles.modal}>
-        <View style={styles.commentBoxStyle}>
-          <TouchableOpacity style={styles.closeModal} onPress={onEvent}>
-            <Text style={styles.closeModalText}> X </Text>
-          </TouchableOpacity>
-          <ScrollView>
-            {userComments.map(item => {
-              return (
-                <View style={styles.comments}>
-                  {item.userAvatar == null ? (
-                    <Avatar autoColor={true} label={item.userName} size={40} />
-                  ) : (
-                    <Avatar
-                      autoColor={true}
-                      image={{ uri: item.userAvatar }}
-                      size={40}
-                    />
-                  )}
+    <GestureRecognizer onSwipeDown={onEvent}>
+      <Modal visible={visible} animationType={'slide'} transparent={true}>
+          <View style={styles.modal}>
+            <View style={styles.commentBoxStyle}>
+              <ScrollView
+                keyboardShouldPersistTaps={'handled'}
+                showsVerticalScrollIndicator={false}
+                ref={scroll}
+                onContentSizeChange={() => scroll.current.scrollToEnd()}
+              >
+                {userComments.map(item => {
+                  return (
+                    <View style={styles.comments}>
+                      {item.userAvatar == null ? (
+                        <Avatar
+                          autoColor={true}
+                          label={item.userName}
+                          size={40}
+                        />
+                      ) : (
+                        <Avatar
+                          autoColor={true}
+                          image={{uri: item.userAvatar}}
+                          size={40}
+                        />
+                      )}
+                      <View style={styles.commentWrapper}>
+                        <Text style={styles.userName}>{item.userName}</Text>
+                        <Text style={styles.userComment}>{item.comments}</Text>
+                        {userInfo.fullname !== userComments.userName ? (
+                          <TouchableOpacity
+                            style={styles.delete}
+                            onPress={() => handleDeleteComment(item)}
+                          >
+                            <Text style={styles.button}>Delete</Text>
+                          </TouchableOpacity>
+                        ) : null}
+                      </View>
+                    </View>
+                  )
+                })}
+              </ScrollView>
 
-                  <View style={styles.commentWrapper}>
-                    <Text style={styles.userName}>{item.userName}</Text>
-                    <Text style={styles.userComment}>{item.comments}</Text>
-                  </View>
-
-                  {/* <TouchableOpacity
-                    style={styles.like}
-                    onPress={() => console.log(userInfo)}
-                  >
-                    <Text style={styles.button}>Like</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.reply}>
-                    <Text style={styles.button}>Reply</Text>
-                  </TouchableOpacity> */}
-
-                  {userInfo.fullname !== userComments.userName ? (
-                    <TouchableOpacity
-                      style={styles.delete}
-                      onPress={() => handleDeleteComment(item)}
-                    >
-                      <Text style={styles.button}>Delete</Text>
-                    </TouchableOpacity>
-                  ) : null}
-                </View>
-              )
-            })}
-          </ScrollView>
-
-          <View style={styles.commentsInput}>
-            <TextInput
-              style={styles.inputComment}
-              placeholder="Viết bình luận"
-              value={commentData}
-              onChangeText={text => setCommentData(text)}
-            />
-
-            <TouchableOpacity
-              style={styles.sendComment}
-              onPress={() => handleSendComment(bookData)}
-            >
-              <Icon name={IconString.send} size={30} color={colors.primaryOrange} />
-            </TouchableOpacity>
-
+              <View style={styles.commentsInput}>
+                <TextInput
+                  style={styles.inputComment}
+                  placeholder="Viết bình luận"
+                  value={commentData}
+                  onChangeText={text => setCommentData(text)}
+                  onSubmitEditing={() => handleSendComment(bookData)}
+                />
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
-    </Modal>
+      </Modal>
+    </GestureRecognizer>
   )
 }
 
@@ -144,20 +134,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
   },
-  closeModal: {
-    position: 'absolute',
-    right: 10,
-    top: -10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  closeModalText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    backgroundColor: colors.primaryOrange,
-    color: colors.white,
-    borderRadius: 50,
-  },
+
   commentBoxStyle: {
     width: windowWidth,
     height: windowHeight - 100,
@@ -189,16 +166,16 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 20,
   },
-  like: {
-    position: 'absolute',
-    bottom: 0,
-    right: 160,
-  },
-  reply: {
-    position: 'absolute',
-    bottom: 0,
-    right: 100,
-  },
+  // like: {
+  //   position: 'absolute',
+  //   bottom: 0,
+  //   right: 160,
+  // },
+  // reply: {
+  //   position: 'absolute',
+  //   bottom: 0,
+  //   right: 100,
+  // },
   delete: {
     position: 'absolute',
     bottom: 0,
@@ -218,13 +195,9 @@ const styles = StyleSheet.create({
     borderColor: colors.primaryOrange,
   },
   inputComment: {
-    width: '85%',
+    width: '100%',
     borderRadius: 20,
     fontSize: 20,
     padding: 10,
-  },
-  sendComment: {
-    position: 'absolute',
-    right: 10,
   },
 })

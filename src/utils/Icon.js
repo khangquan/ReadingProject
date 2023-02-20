@@ -24,6 +24,8 @@ export const IconString = {
     book: 'book',
     chatBubble: 'chatbubble-ellipses',
     logOut: 'log-out',
+    goToTop: 'arrow-up-circle-outline',
+    reset: 'refresh-outline',
 
 
     //Navigation Icon
