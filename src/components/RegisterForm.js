@@ -134,8 +134,16 @@ export default function RegisterForm(props) {
 
                             <View style={styles.buttonContent}>
                                 <TouchableOpacity
-                                    style={styles.buttonLoginWrapper}
-                                    onPress={handleSubmit}>
+                                    style={[styles.buttonLoginWrapper,
+                                    {
+                                        opacity: !values.fullname || !values.email || !values.pass || !values.confirmPass ? 0.3 : null
+                                    }
+                                    ]}
+                                    onPress={handleSubmit}
+                                    disabled={
+                                        !values.fullname || !values.email || !values.pass || !values.confirmPass ? true : false
+                                    }
+                                >
                                     <Text style={styles.buttonLogin}>Tạo tài khoản</Text>
                                 </TouchableOpacity>
                                 <Text style={styles.TermsOfServices}>

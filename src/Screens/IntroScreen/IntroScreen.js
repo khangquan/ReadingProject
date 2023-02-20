@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import Navigator from '../../Navigation/Navigator'
 import { colors } from '../../utils/Colors'
@@ -10,6 +11,8 @@ import LottieView from 'lottie-react-native';
 
 export default function IntroScreen() {
   const [showRealApp, setShowRealApp] = useState(false)
+  const { isFirstRun } = useSelector(state => state.loginScreen)
+
   const renderView = ({ item }) => (
     <View style={styles.slide}>
       <View style={styles.introStyle}>
@@ -31,18 +34,36 @@ export default function IntroScreen() {
     </View>
   )
 
+  const renderSkipButton = () => (
+    <View style={styles.buttonSkip}>
+      <Text style={styles.skip}>Bỏ Qua</Text>
+    </View>
+  )
+
   const onDone = () => {
     setShowRealApp(true)
   }
 
-  if (showRealApp) {
+  const onSkip = () => {
+    setShowRealApp(true)
+  }
+
+
+
+  if (showRealApp || !isFirstRun) {
+
     return <Navigator />
+
   } else {
     return (
+
       <AppIntroSlider
         renderItem={renderView}
         data={slides}
         onDone={onDone}
+        onSkip={onSkip}
+        showSkipButton={true}
+        renderSkipButton={renderSkipButton}
         renderNextButton={renderNextButton}
         renderDoneButton={renderDoneButton}
       />
@@ -85,6 +106,17 @@ const styles = StyleSheet.create({
   },
   buttonCircle: {
     width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  skip: {
+    color: colors.primaryOrange,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  buttonSkip: {
+    width: 100,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',

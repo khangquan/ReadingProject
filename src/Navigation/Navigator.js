@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
+import IntroScreen from '../Screens/IntroScreen/IntroScreen'
 import HomeScreen from '../Screens/HomeScreen/HomeScreen'
 import LoginScreen from '../Screens/LoginScreen/LoginScreen'
 import UserScreen from '../Screens/UserScreen/UserScreen'

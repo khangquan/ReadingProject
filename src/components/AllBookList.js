@@ -8,12 +8,13 @@ import {
   Image,
 } from 'react-native'
 import React from 'react'
+import SearchResult from './SearchResult'
 
 const windowWidth = Dimensions.get('window').width
 const placeHolderImg = require('../../assets/Books/placeHolderImg.jpg')
 
-export default function AllBookList({ bookData, selectBookEvent }) {
-  const renderView = ({ item }) => (
+export default function AllBookList({ bookData, selectBookEvent, isSearchScreen, searchValue }) {
+  const renderAll = ({ item }) => (
     <TouchableOpacity
       onPress={() => selectBookEvent(item)}
       style={styles.renderViewStyle}>
@@ -26,15 +27,24 @@ export default function AllBookList({ bookData, selectBookEvent }) {
       <Text style={styles.flatListTitle}>{item.title}</Text>
     </TouchableOpacity>
   )
+
   return (
     <View style={styles.Content}>
-      <FlatList
-        data={bookData}
-        renderItem={renderView}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={3}
-        showsVerticalScrollIndicator={false}
-      />
+      {
+        isSearchScreen ?
+          <SearchResult bookData={bookData}
+            selectBookEvent={selectBookEvent}
+            searchValue={searchValue}
+          />
+          :
+          <FlatList
+            data={bookData}
+            renderItem={renderAll}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={3}
+            showsVerticalScrollIndicator={false}
+          />
+      }
     </View>
   )
 }
@@ -58,5 +68,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     alignSelf: 'center',
     fontWeight: '500',
+    textAlign: 'center'
   },
 })

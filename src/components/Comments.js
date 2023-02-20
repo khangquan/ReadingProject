@@ -8,23 +8,25 @@ import {
   ScrollView,
   TextInput,
   Alert,
+  KeyboardAvoidingView,
+  Keyboard
 } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
-import {Avatar} from '@react-native-material/core'
-import {colors} from '../utils/Colors'
+import { Avatar } from '@react-native-material/core'
+import { colors } from '../utils/Colors'
 import { IconString } from '../utils/Icon'
 
-import {useDispatch, useSelector} from 'react-redux'
-import {postComment, deleteComment} from '../redux/actions/GetBookAction'
+import { useDispatch, useSelector } from 'react-redux'
+import { postComment, deleteComment } from '../redux/actions/GetBookAction'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
-export default function Comments({onEvent, visible, userInfo}) {
+export default function Comments({ onEvent, visible, userInfo }) {
   const [commentData, setCommentData] = useState()
   const [userComments, setUserComments] = useState([])
-  const {bookData} = useSelector(state => state.bookGetData)
+  const { bookData } = useSelector(state => state.bookGetData)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -32,16 +34,21 @@ export default function Comments({onEvent, visible, userInfo}) {
   }, [])
 
   const handleSendComment = bookData => {
-    dispatch(
-      postComment({
-        id: new Date().getTime(),
-        title: bookData.title,
-        comments: commentData,
-        userAvatar: userInfo.avatar,
-        userName: userInfo.fullname,
-      }),
-    )
-    setCommentData('')
+    if (commentData === '') {
+      alert('Bạn chưa nhập bình luận')
+    } else {
+      dispatch(
+        postComment({
+          id: new Date().getTime(),
+          title: bookData.title,
+          comments: commentData,
+          userAvatar: userInfo.avatar,
+          userName: userInfo.fullname,
+        }),
+      )
+      setCommentData('')
+    }
+
   }
 
   const handleDeleteComment = data => {
@@ -57,7 +64,7 @@ export default function Comments({onEvent, visible, userInfo}) {
           )
         },
       },
-      {text: 'No', onPress: () => {}},
+      { text: 'No', onPress: () => { } },
     ])
   }
 
@@ -77,7 +84,7 @@ export default function Comments({onEvent, visible, userInfo}) {
                   ) : (
                     <Avatar
                       autoColor={true}
-                      image={{uri: item.userAvatar}}
+                      image={{ uri: item.userAvatar }}
                       size={40}
                     />
                   )}
@@ -124,6 +131,7 @@ export default function Comments({onEvent, visible, userInfo}) {
             >
               <Icon name={IconString.send} size={30} color={colors.primaryOrange} />
             </TouchableOpacity>
+
           </View>
         </View>
       </View>

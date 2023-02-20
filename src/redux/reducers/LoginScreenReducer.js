@@ -3,6 +3,7 @@ import { APP_LOGIN, APP_LOGOUT, IS_LOGGING } from "../../defines/ActionTypes"
 const initialState = {
   isLogging: false,
   isLogin: false,
+  isFirstRun: true,
   currentUser: '',
 }
 
@@ -18,6 +19,7 @@ const loginScreenReducer = (state = initialState, action) => {
         ...state,
         isLogging: false,
         isLogin: true,
+        isFirstRun: false,
         currentUser: action.payload,
       }
     case APP_LOGOUT:
@@ -25,6 +27,7 @@ const loginScreenReducer = (state = initialState, action) => {
         ...state,
         isLogging: false,
         isLogin: false,
+        isFirstRun: true,
       }
     default:
       return state

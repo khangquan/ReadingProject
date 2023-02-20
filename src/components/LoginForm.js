@@ -18,6 +18,8 @@ export default function LoginForm(props) {
     const dispatch = useDispatch()
     const { userAccounts } = useSelector(state => state.register)
     const [secure, setSecure] = useState(true)
+    const [checkEmail, setCheckEmail] = useState(false)
+    const [checkPass, setCheckPass] = useState(false)
 
     const inputPass = useRef()
 
@@ -65,7 +67,6 @@ export default function LoginForm(props) {
                         <Text style={styles.text}>Email</Text>
                         <TextBox
                             title="Nhập email của bạn"
-                            onEvent={handleShowPass}
                             onBlur={handleBlur('email')}
                             onChangeText={handleChange('email')}
                             value={values.email}
@@ -93,8 +94,13 @@ export default function LoginForm(props) {
                         <View style={styles.buttonContent}>
 
                             <TouchableOpacity
-                                style={styles.buttonLoginWrapper}
+                                style={[styles.buttonLoginWrapper,
+                                {
+                                    opacity: !values.email || !values.pass ? 0.3 : null
+                                }
+                                ]}
                                 onPress={handleSubmit}
+                                disabled={!values.email || !values.pass ? true : false}
                             >
                                 <Text style={styles.buttonLogin}>Đăng Nhập</Text>
                             </TouchableOpacity>
@@ -102,6 +108,7 @@ export default function LoginForm(props) {
                             <TouchableOpacity onPress={handleForgetPass}>
                                 <Text style={styles.forgotPass}>Quên mật khẩu?</Text>
                             </TouchableOpacity>
+
                         </View>
                     </View>
                 )}

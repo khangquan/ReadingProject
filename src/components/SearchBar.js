@@ -41,11 +41,9 @@ export default function SearchBar({
                         </TouchableOpacity>
                     ) : null}
 
-                    <TouchableOpacity
-                        style={styles.searchIconStyle}
-                        onPress={searchEvent}>
+                    <View style={styles.searchIconStyle}>
                         <Icon name={IconString.search} size={30} />
-                    </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
