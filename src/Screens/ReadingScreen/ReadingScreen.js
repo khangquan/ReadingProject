@@ -6,17 +6,17 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from 'react-native'
-import React, {useState, useEffect, useRef} from 'react'
-import {IconString} from '../../utils/Icon'
+import React, { useState, useEffect, useRef } from 'react'
+import { IconString } from '../../utils/Icon'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import DeviceBrightness from '@adrianso/react-native-device-brightness'
 
-import {colors} from '../../utils/Colors'
+import { colors } from '../../utils/Colors'
 import Slider from '@react-native-community/slider'
-import {ScrollView} from 'react-native-gesture-handler'
+import { ScrollView } from 'react-native-gesture-handler'
 
-export default function ReadingScreen({navigation}) {
+export default function ReadingScreen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false)
   const [textSize, setTextSize] = useState(23)
   const [darkScreen, setDarkScreen] = useState(false)
@@ -46,7 +46,7 @@ export default function ReadingScreen({navigation}) {
     <View
       style={[
         styles.container,
-        {backgroundColor: darkScreen ? colors.black : colors.white},
+        { backgroundColor: darkScreen ? colors.black : colors.white },
       ]}
     >
       <View style={styles.topMenu}>
@@ -91,7 +91,7 @@ export default function ReadingScreen({navigation}) {
                     }
                   }}
                 >
-                  <Text style={{fontWeight: 'bold', fontSize: 20}}>A</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 20 }}>A</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -101,7 +101,7 @@ export default function ReadingScreen({navigation}) {
                     }
                   }}
                 >
-                  <Text style={{fontWeight: 'bold', fontSize: 30}}>A</Text>
+                  <Text style={{ fontWeight: 'bold', fontSize: 30 }}>A</Text>
                 </TouchableOpacity>
               </View>
 
@@ -109,7 +109,7 @@ export default function ReadingScreen({navigation}) {
               <Text style={styles.modalItemTitle}>Màu nền:</Text>
               <View style={styles.modalItemStyle}>
                 <TouchableOpacity
-                  style={[styles.bgclButton, {backgroundColor: colors.white}]}
+                  style={[styles.bgclButton, { backgroundColor: colors.white }]}
                   onPress={() => setDarkScreen(false)}
                 >
                   {darkScreen ? null : (
@@ -122,7 +122,7 @@ export default function ReadingScreen({navigation}) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={[styles.bgclButton, {backgroundColor: colors.black}]}
+                  style={[styles.bgclButton, { backgroundColor: colors.black }]}
                   onPress={() => setDarkScreen(true)}
                 >
                   {darkScreen ? (
@@ -148,7 +148,7 @@ export default function ReadingScreen({navigation}) {
                   ]}
                   onPress={() => setTextLineHeight(30)}
                 >
-                  <Text style={{fontSize: 20}}>Nhỏ</Text>
+                  <Text style={{ fontSize: 20 }}>Nhỏ</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
@@ -160,7 +160,7 @@ export default function ReadingScreen({navigation}) {
                   ]}
                   onPress={() => setTextLineHeight(40)}
                 >
-                  <Text style={{fontSize: 20}}>Trung Bình</Text>
+                  <Text style={{ fontSize: 20 }}>Trung Bình</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
@@ -172,7 +172,7 @@ export default function ReadingScreen({navigation}) {
                   ]}
                   onPress={() => setTextLineHeight(50)}
                 >
-                  <Text style={{fontSize: 20}}>Lớn</Text>
+                  <Text style={{ fontSize: 20 }}>Lớn</Text>
                 </TouchableOpacity>
               </View>
 
@@ -181,7 +181,7 @@ export default function ReadingScreen({navigation}) {
               <View style={styles.modalItemStyle}>
                 <Icon name={IconString.moon} size={20} />
                 <Slider
-                  style={{width: 180, height: 40, marginHorizontal: 10}}
+                  style={{ width: 180, height: 40, marginHorizontal: 10 }}
                   minimumValue={0}
                   maximumValue={1}
                   minimumTrackTintColor={colors.primaryOrange}
@@ -195,11 +195,11 @@ export default function ReadingScreen({navigation}) {
                 <Icon name={IconString.sun} size={30} />
               </View>
 
-              <TouchableOpacity  onPress={getBrightness}>
+              <TouchableOpacity onPress={getBrightness}>
                 <Text>Độ sáng hiện tại</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={{marginVertical: 10}} onPress={handleResetSetting}>
+              <TouchableOpacity style={{ marginVertical: 10 }} onPress={handleResetSetting}>
                 <Text>Đặt lại tùy chỉnh</Text>
               </TouchableOpacity>
             </View>
@@ -249,7 +249,7 @@ export default function ReadingScreen({navigation}) {
       {contentVerticalOffset > 300 ? (
         <TouchableOpacity
           style={styles.backToTopStyle}
-          onPress={() => scroll.current.scrollTo(0)}
+          onPress={() => scroll.current.scrollTo({ y: 0, animated: true })}
         >
           <Icon
             name={IconString.goToTop}

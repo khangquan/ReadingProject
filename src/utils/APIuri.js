@@ -1,3 +1,3 @@
 export const APIuri = {
-    bookData: 'https://mocki.io/v1/3299e77f-07e1-4359-92e8-e4b3af4e0b5a',
+    bookData: 'https://mocki.io/v1/f64619c2-ab98-4835-a884-d88748feadc0',
 }

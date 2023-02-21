@@ -50,21 +50,11 @@ const HomeStackNavigator = () => (
     <HomeStack.Screen name="FavBooksScreen" component={FavBooksScreen} />
     <HomeStack.Screen name="UserInfoScreen" component={UserInfoScreen} />
     <HomeStack.Screen name="EditUserInfoScreen" component={EditUserInfoScreen} />
+    <HomeStack.Screen name="BooksTypeScreen" component={BooksTypeScreen} />
     <HomeStack.Screen name="ScheduleScreen" component={ScheduleScreen} />
     <HomeStack.Screen name="AppInfo" component={AppInfo} />
+    <HomeStack.Screen name="UserScreen" component={UserScreen} />
   </HomeStack.Navigator>
-)
-
-const BookTypeStackNavigator = () => (
-  <BookTypeStack.Navigator screenOptions={{ headerShown: false }}>
-    <BookTypeStack.Screen name="BooksTypeScreen" component={BooksTypeScreen} />
-  </BookTypeStack.Navigator>
-)
-
-const UserStackNavigator = () => (
-  <UserStack.Navigator screenOptions={{ headerShown: false}}>
-    <UserStack.Screen name="UserScreen" component={UserScreen}/>
-  </UserStack.Navigator>
 )
 
 const TabsNavigator = () => (
@@ -98,8 +88,8 @@ const TabsNavigator = () => (
       tabBarInactiveTintColor: colors.lightGray,
     })}>
     <Tabs.Screen name="Trang Chủ" component={HomeScreen} />
-    <Tabs.Screen name="Thể Loại" component={BookTypeStackNavigator} />
-    <Tabs.Screen name="Tài Khoản" component={UserStackNavigator} />
+    <Tabs.Screen name="Thể Loại" component={BooksTypeScreen} />
+    <Tabs.Screen name="Tài Khoản" component={UserScreen} />
   </Tabs.Navigator>
 )
 

@@ -8,25 +8,25 @@ import {
   TextInput,
   Alert,
   ScrollView,
-  TouchableWithoutFeedback,
 } from 'react-native'
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Icon from 'react-native-vector-icons/Ionicons'
 import GestureRecognizer from 'react-native-swipe-gestures'
-import {Avatar} from '@react-native-material/core'
-import {colors} from '../utils/Colors'
-import {IconString} from '../utils/Icon'
+import { Avatar } from '@react-native-material/core'
+import { colors } from '../utils/Colors'
+import { IconString } from '../utils/Icon'
 
-import {useDispatch, useSelector} from 'react-redux'
-import {postComment, deleteComment} from '../redux/actions/GetBookAction'
+import { useDispatch, useSelector } from 'react-redux'
+import { postComment, deleteComment } from '../redux/actions/GetBookAction'
 
 const windowHeight = Dimensions.get('window').height
 const windowWidth = Dimensions.get('window').width
 
-export default function Comments({onEvent, visible, userInfo}) {
+export default function Comments({ onEvent, visible, userInfo }) {
   const [commentData, setCommentData] = useState('')
   const [userComments, setUserComments] = useState([])
-  const {bookData} = useSelector(state => state.bookGetData)
+  const { bookData } = useSelector(state => state.bookGetData)
   const dispatch = useDispatch()
 
   const scroll = useRef()
@@ -65,65 +65,65 @@ export default function Comments({onEvent, visible, userInfo}) {
           )
         },
       },
-      {text: 'No', onPress: () => {}},
+      { text: 'No', onPress: () => { } },
     ])
   }
 
   return (
     <GestureRecognizer onSwipeDown={onEvent}>
       <Modal visible={visible} animationType={'slide'} transparent={true}>
-          <View style={styles.modal}>
-            <View style={styles.commentBoxStyle}>
-              <ScrollView
-                keyboardShouldPersistTaps={'handled'}
-                showsVerticalScrollIndicator={false}
-                ref={scroll}
-                onContentSizeChange={() => scroll.current.scrollToEnd()}
-              >
-                {userComments.map(item => {
-                  return (
-                    <View style={styles.comments}>
-                      {item.userAvatar == null ? (
-                        <Avatar
-                          autoColor={true}
-                          label={item.userName}
-                          size={40}
-                        />
-                      ) : (
-                        <Avatar
-                          autoColor={true}
-                          image={{uri: item.userAvatar}}
-                          size={40}
-                        />
-                      )}
-                      <View style={styles.commentWrapper}>
-                        <Text style={styles.userName}>{item.userName}</Text>
-                        <Text style={styles.userComment}>{item.comments}</Text>
-                        {userInfo.fullname !== userComments.userName ? (
-                          <TouchableOpacity
-                            style={styles.delete}
-                            onPress={() => handleDeleteComment(item)}
-                          >
-                            <Text style={styles.button}>Delete</Text>
-                          </TouchableOpacity>
-                        ) : null}
-                      </View>
+        <View style={styles.modal}>
+          <View style={styles.commentBoxStyle}>
+            <KeyboardAwareScrollView
+              keyboardShouldPersistTaps={'handled'}
+              showsVerticalScrollIndicator={false}
+              ref={scroll}
+              onContentSizeChange={() => scroll.current.scrollToEnd()}
+            >
+              {userComments.map(item => {
+                return (
+                  <View style={styles.comments}>
+                    {item.userAvatar == null ? (
+                      <Avatar
+                        autoColor={true}
+                        label={item.userName}
+                        size={40}
+                      />
+                    ) : (
+                      <Avatar
+                        autoColor={true}
+                        image={{ uri: item.userAvatar }}
+                        size={40}
+                      />
+                    )}
+                    <View style={styles.commentWrapper}>
+                      <Text style={styles.userName}>{item.userName}</Text>
+                      <Text style={styles.userComment}>{item.comments}</Text>
+                      {userInfo.fullname !== userComments.userName ? (
+                        <TouchableOpacity
+                          style={styles.delete}
+                          onPress={() => handleDeleteComment(item)}
+                        >
+                          <Text style={styles.button}>Delete</Text>
+                        </TouchableOpacity>
+                      ) : null}
                     </View>
-                  )
-                })}
-              </ScrollView>
+                  </View>
+                )
+              })}
+            </KeyboardAwareScrollView>
 
-              <View style={styles.commentsInput}>
-                <TextInput
-                  style={styles.inputComment}
-                  placeholder="Viết bình luận"
-                  value={commentData}
-                  onChangeText={text => setCommentData(text)}
-                  onSubmitEditing={() => handleSendComment(bookData)}
-                />
-              </View>
+            <View style={styles.commentsInput}>
+              <TextInput
+                style={styles.inputComment}
+                placeholder="Viết bình luận"
+                value={commentData}
+                onChangeText={text => setCommentData(text)}
+                onSubmitEditing={() => handleSendComment(bookData)}
+              />
             </View>
           </View>
+        </View>
       </Modal>
     </GestureRecognizer>
   )

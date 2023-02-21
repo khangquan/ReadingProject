@@ -94,13 +94,6 @@ export default function ScheduleScreen({ navigation, route }) {
           <Text style={{ fontSize: 15, color: colors.white }}>Chọn lại</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={() => console.log(userInfo.schedule)}
-        >
-          <Text style={{ fontSize: 15, color: colors.white }}>Chọn lại</Text>
-        </TouchableOpacity>
-
         {showPicker && (
           <DateTimePicker
             value={timeSelected}
