@@ -14,18 +14,24 @@ export default function HeaderBar({
     rightItem,
     onLeftEvent,
     onRightEvent,
+    isLeftBlank,
+    isRightBlank,
 }) {
     return (
         <View style={styles.topMenu}>
             <View style={styles.topContent}>
                 <TouchableOpacity onPress={onLeftEvent}>
-                    <Icon name={leftItem} size={30} color={colors.white} />
+                    <Icon name={leftItem} size={30} 
+                    color={isLeftBlank?colors.primaryOrange:colors.white} 
+                    />
                 </TouchableOpacity>
 
                 <Text style={styles.topTextStyle}>{title}</Text>
                 
                 <TouchableOpacity onPress={onRightEvent}>
-                    <Icon name={rightItem} size={30} color={colors.white} />
+                    <Icon name={rightItem} size={30}
+                     color={isRightBlank?colors.primaryOrange:colors.white} 
+                    />
                 </TouchableOpacity>
             </View>
         </View>
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        paddingHorizontal: 10,
+        paddingHorizontal: 20
     },
     topTextStyle: {
         fontSize: 20,
