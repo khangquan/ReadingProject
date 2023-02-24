@@ -10,15 +10,15 @@ import {
   Alert,
 } from 'react-native'
 import React from 'react'
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { getBookType, increaseBookView } from '../../redux/actions/GetBookAction'
-import { addFavBook, editFavBook } from '../../redux/actions/AccountAction'
+import {useSelector, useDispatch} from 'react-redux'
+import {getBookType, increaseBookView} from '../../redux/actions/GetBookAction'
+import {addFavBook, editFavBook} from '../../redux/actions/AccountAction'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { IconString } from '../../utils/Icon'
-import { colors } from '../../utils/Colors'
-import { shareOnFacebook } from 'react-native-social-share'
+import {IconString} from '../../utils/Icon'
+import {colors} from '../../utils/Colors'
+import {shareOnFacebook} from 'react-native-social-share'
 
 import MenuIconBar from '../../components/MenuIconBar'
 import MoreText from '../../components/MoreText'
@@ -29,16 +29,16 @@ import BookLoading from '../../components/BookLoading'
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
-export default function DetailScreen({ navigation }) {
+export default function DetailScreen({navigation}) {
   const dispatch = useDispatch()
   const [isLike, setIsLike] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [userInfo, setUserInfo] = useState([])
   const [bookLoading, setBookLoading] = useState(false)
 
-  const { currentUser } = useSelector(state => state.loginScreen)
-  const { userAccounts } = useSelector(state => state.register)
-  const { allBooksData, bookData } = useSelector(state => state.bookGetData)
+  const {currentUser} = useSelector(state => state.loginScreen)
+  const {userAccounts} = useSelector(state => state.register)
+  const {allBooksData, bookData} = useSelector(state => state.bookGetData)
 
   const bookYouMayLike = allBooksData.filter(
     (item, index) => item.type === bookData.type,
@@ -82,31 +82,32 @@ export default function DetailScreen({ navigation }) {
           text: 'Yes',
           onPress: () => {
             setIsLike(false)
-            dispatch(editFavBook({ userInfo, bookData }))
+            dispatch(editFavBook({userInfo, bookData}))
           },
         },
         {
           text: 'No',
-          onPress: () => { },
+          onPress: () => {},
         },
       ])
     } else {
       setIsLike(true)
-      dispatch(addFavBook({ userInfo, bookData }))
+      dispatch(addFavBook({userInfo, bookData}))
       Alert.alert('Thành công', 'Đã thêm vào danh sách yêu thích!')
     }
   }
 
   const handeFBShare = () => {
-    shareOnFacebook({
-      'text': 'Thư Viện Sách Hay',
-      'link': 'https://facebook.com/',
-      'image': require('../../../assets/BookTypeScreen/kynang.jpg'),
-    },
-      (results) => {
-        console.log(results);
-      }
-    );
+    shareOnFacebook(
+      {
+        text: 'Thư Viện Sách Hay',
+        link: 'https://facebook.com/',
+        image: require('../../../assets/BookTypeScreen/kynang.jpg'),
+      },
+      results => {
+        console.log(results)
+      },
+    )
   }
 
   return (
@@ -115,7 +116,7 @@ export default function DetailScreen({ navigation }) {
       <Image
         style={styles.imageBG}
         blurRadius={10}
-        source={{ uri: bookData.image }}
+        source={{uri: bookData.image}}
       />
       <View style={styles.topContent}>
         <TouchableOpacity
@@ -132,7 +133,7 @@ export default function DetailScreen({ navigation }) {
         </TouchableOpacity>
 
         <View style={styles.bookContent}>
-          <Image style={styles.bookImage} source={{ uri: bookData.image }} />
+          <Image style={styles.bookImage} source={{uri: bookData.image}} />
           <View style={styles.titleButtonStyle}>
             <Text style={styles.titleText}>{bookData.title}</Text>
             <Text style={styles.authorText}>{bookData.author}</Text>
@@ -149,9 +150,10 @@ export default function DetailScreen({ navigation }) {
         </View>
       </View>
 
-      <ScrollView style={styles.botContent}>
-        <View style={styles.iconMenuBar}>
-          <MenuIconBar
+      <View style={styles.botContent}>
+        <ScrollView>
+          <View style={styles.iconMenuBar}>
+            <MenuIconBar
               isLike={isLike}
               isAnimation={true}
               color={isLike ? colors.red : null}
@@ -159,37 +161,46 @@ export default function DetailScreen({ navigation }) {
               textTitle={'Thích'}
               onEvent={() => handleLikeBook(bookData)}
             />
-          <MenuIconBar
-            title={IconString.comment}
-            textTitle={'Bình luận'}
-            onEvent={() => setModalVisible(true)}
+            <MenuIconBar
+              title={IconString.comment}
+              textTitle={'Bình luận'}
+              onEvent={() => setModalVisible(true)}
+            />
+            <MenuIconBar
+              title={IconString.share}
+              textTitle={'Chia sẻ'}
+              onEvent={handeFBShare}
+            />
+          </View>
+
+          <View style={{margin: 20}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>Giới Thiệu</Text>
+            <MoreText content={bookData.desc} />
+          </View>
+
+          <View style={{margin: 20}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>Thông Tin</Text>
+            <Text style={{fontSize: 18}}>Thể loại: {bookData.type}</Text>
+            <Text style={{fontSize: 18}}>Lượt Xem: {bookData.views}</Text>
+            <Text style={{fontSize: 18}}>Trạng Thái: {bookData.status}</Text>
+          </View>
+
+          <BookListHorizon
+            title={'Có thể bạn quan tâm'}
+            data={bookYouMayLike.filter((item, index) => index < 5)}
+            allBookEvent={() => handleAllBook(bookData)}
+            selectBookEvent={item => dispatch(getBookType(item))}
           />
-          <MenuIconBar title={IconString.share} textTitle={'Chia sẻ'}
-            onEvent={handeFBShare}
-          />
-        </View>
+        </ScrollView>
+      </View>
 
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Giới Thiệu</Text>
-          <MoreText content={bookData.desc} />
-        </View>
-
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Thông Tin</Text>
-          <Text style={{ fontSize: 18 }}>Thể loại: {bookData.type}</Text>
-          <Text style={{ fontSize: 18 }}>Lượt Xem: {bookData.views}</Text>
-          <Text style={{ fontSize: 18 }}>Trạng Thái: {bookData.status}</Text>
-        </View>
-
-        <BookListHorizon
-          title={'Có thể bạn quan tâm'}
-          data={bookYouMayLike.filter((item, index) => index < 5)}
-          allBookEvent={() => handleAllBook(bookData)}
-          selectBookEvent={item => dispatch(getBookType(item))}
+      {modalVisible && (
+        <Comments
+          userInfo={userInfo}
+          visible={modalVisible}
+          onEvent={() => setModalVisible(false)}
         />
-
-        {modalVisible && <Comments userInfo={userInfo} visible={modalVisible} onEvent={() => setModalVisible(false)} />}
-      </ScrollView>
+      )}
 
       {bookLoading ? <BookLoading /> : null}
     </View>
@@ -244,9 +255,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
   },
-  heart: {
-
-  },
   buttonText: {
     color: colors.white,
     fontSize: 15,
@@ -285,10 +293,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   botContent: {
+    flex: 1,
     borderTopLeftRadius: 60,
     borderTopRightRadius: 60,
     backgroundColor: colors.white,
     borderWidth: 0.6,
     borderColor: colors.gray,
+    overflow: 'hidden',
   },
 })
